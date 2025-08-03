@@ -1,0 +1,70 @@
+📦 root/
+│
+├── app.js                         # Express app setup
+├── server.js                      # HTTP + WebSocket + DB connect
+├── package.json
+├── .env                           # Env variables
+│
+├── config/
+│   ├── db.js                      # Mongoose connection
+│   └── session.js                # Session store (optional)
+│
+├── constants/
+│   └── index.js                   # App-wide constants (roles, status, socket events)
+│
+├── middleware/
+│   ├── auth.middleware.js         # JWT/Session auth check
+│   ├── error.middleware.js        # Error formatter
+│   └── validate.middleware.js     # Zod/Yup validation handler
+│
+├── modules/
+│   ├── auth/
+│   │   ├── auth.controller.js
+│   │   ├── auth.routes.js
+│   │   ├── auth.service.js
+│   │   ├── auth.dto.js
+│   │   └── auth.constants.js
+│   │
+│   ├── user/
+│   │   ├── user.controller.js
+│   │   ├── user.routes.js
+│   │   ├── user.service.js
+│   │   ├── user.model.js
+│   │   └── user.dto.js
+│   │
+│   ├── chat/
+│   │   ├── chat.controller.js
+│   │   ├── chat.routes.js
+│   │   ├── chat.service.js
+│   │   ├── chat.model.js
+│   │   └── chat.dto.js
+│   │
+│   ├── message/
+│   │   ├── message.controller.js
+│   │   ├── message.routes.js
+│   │   ├── message.service.js
+│   │   ├── message.model.js
+│   │   └── message.dto.js
+│   │
+│   ├── call/
+│   │   ├── call.controller.js     # Call logs, statuses
+│   │   ├── call.routes.js         # Optional REST endpoints
+│   │   ├── call.service.js
+│   │   ├── call.model.js
+│   │   └── call.dto.js
+│
+├── sockets/
+│   ├── index.js                   # Registers all socket handlers
+│   ├── chat.socket.js             # Messaging logic
+│   └── call.socket.js             # WebRTC signaling (offer, answer, ICE, end)
+│
+├── shared/
+│   ├── utils/
+│   │   ├── hash.util.js           # Bcrypt hashing
+│   │   ├── jwt.util.js            # Sign/verify tokens
+│   │   └── logger.js              # Custom logger
+│   └── dto/
+│       └── base.dto.js            # Common DTO schema helpers
+
+
+|
