@@ -67,4 +67,14 @@
 │       └── base.dto.js            # Common DTO schema helpers
 
 
-|
+| Name                  | Tech Base           | Notes                                         |
+| --------------------- | ------------------- | --------------------------------------------- |
+| **DaisyUI**           | Tailwind CSS        | Free Tailwind plugin with lots of components. |
+| **ShadCN/UI**         | Tailwind + Radix UI | Highly customizable, built for React.         |
+| **Tailwind UI**       | Tailwind CSS        | Made by Tailwind creators, paid.              |
+| **Material UI (MUI)** | React               | Google’s Material Design for React apps.      |
+| **Chakra UI**         | React               | Clean, accessible UI components.              |
+| **Bootstrap**         | CSS/JS              | Classic responsive UI framework.              |
+| **Mantine**           | React               | Rich set of components + hooks.               |
+| **PrimeReact**        | React               | Large component set for enterprise apps.      |
+| **Tabler**            | HTML/CSS            | Free dashboard components & templates.        |
