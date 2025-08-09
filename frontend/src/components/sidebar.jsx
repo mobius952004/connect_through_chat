@@ -11,6 +11,8 @@ import { IoChatboxEllipsesOutline } from "react-icons/io5";
 import { IoCallOutline } from "react-icons/io5";
 // import { MessageCircle, Phone } from "lucide-react";
 import { useNavigate } from "react-router-dom";
+import Drawer from "./drawer";
+import "flowbite"
 
 
 export default function Sidebar() {
@@ -42,7 +44,9 @@ const navigate=useNavigate()
                             <span className="absolute bottom-full mb-1 left-1/2 -translate-x-1/4 px-2 py-1 bg-gray-700 text-white text-xs rounded-full opacity-0 group-hover:opacity-100 transition-opacity duration-100  pointer-events-none whitespace-nowrap z-50">
                                 {isMenueOpen ? "Close Menus" : "Open Menu"}
                             </span>
+                            {isMenueOpen &&<Drawer/>}
                         </div>
+                        
                         <div className="relative group sm:my-2 my-1">
                             <button className="relative" onClick={() => navigate(`/connect/home/chats`)} >
                                 <IoChatboxEllipsesOutline className="sm:w-5 sm:h-7 w-4 h-6 text-white hover:text-green-600 transition-all transform hover:scale-[1.2] cursor-pointer" />

@@ -6,7 +6,7 @@ import Profile from "./pages/Profile";
 import Login from "./pages/Login";      
 import Navbar from "./pages/Nav.jsx";
 import Home from "./pages/Home.jsx";
-import UserChats from "./pages/UserChat.jsx";
+import UserChats from "./Chat/pages/UserChat.jsx";
 
 function App() {
   return (
