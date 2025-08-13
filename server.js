@@ -2,7 +2,7 @@ import 'dotenv/config';
 
 import http from "http";
 import app from "./app.js";
-// import {Server} from "socket.io"
+import {Server} from "socket.io"
 // import registerSocketHandeler from 
 
 
@@ -13,13 +13,13 @@ const server = http.createServer(app);
 
 
 
-// const io = new Server(server, {
-//   cors: {
-//     origin: "http://localhost:5173",  // ✅ Only allow your React app
-//     methods: ["GET", "POST"],
-//     credentials: true
-//   }
-// });
+const io = new Server(server, {
+  cors: {
+    origin: "http://localhost:5173",  // ✅ Only allow your React app
+    methods: ["GET", "POST"],
+    credentials: true
+  }
+});
 
 // app.use(cors({
 //   origin: "http://localhost:5173",
