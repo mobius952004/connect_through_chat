@@ -20,6 +20,8 @@ export default function chatSocketHandler(io, socket) {
     return socket.disconnect();
   }
 
+
+  
   // Join 1-on-1 room
   socket.on(SOCKET_EVENTS.JOIN_ROOM, ({ withUserId }) => {
     const roomId = getRoomId(userId, withUserId);

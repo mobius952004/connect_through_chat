@@ -1,5 +1,6 @@
 import { createContext } from "react";
 import { socket } from "../sockets/socket";
+
 const ChatContext=createContext()
 
 
@@ -15,3 +16,5 @@ return (
 
 
 }
+
+export {ChatContext}
