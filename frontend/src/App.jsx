@@ -1,5 +1,5 @@
 import { BrowserRouter, Routes, Route } from "react-router-dom";
-
+import ChatProvider from "./store/socketContext.jsx";
 // Import your pages
 import Signup from "./pages/Signup.jsx";
 import Profile from "./pages/Profile";  
@@ -10,6 +10,8 @@ import UserChats from "./Chat/pages/UserChat.jsx";
 
 function App() {
   return (
+    <ChatProvider>
+
     <BrowserRouter> 
       <Routes>       
       
@@ -30,6 +32,7 @@ function App() {
       </Routes>
     </BrowserRouter>
   
+    </ChatProvider>
   );
 }
 

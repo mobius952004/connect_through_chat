@@ -1,6 +1,6 @@
 // sockets/chat.socket.js
-import { verifyAccessToken } from '../shared/utils/jwt.utils.js';
-import { SOCKET_EVENTS } from '../middleware/socket,events.js';
+import jwtServices from '../shared/utils/jwt.utils.js';
+import { SOCKET_EVENTS } from '../middleware/socket.events.js';
 
 const getRoomId = (id1, id2) => {
   return [id1, id2].sort().join('_');
@@ -12,7 +12,7 @@ export default function chatSocketHandler(io, socket) {
   // Authenticate using JWT
   try {
     const token = socket.handshake.auth?.token;
-    const payload = verifyAccessToken(token);
+    const payload = jwtServices.verifyAccess(token);
     userId = payload._id;
     socket.user = payload;
   } catch (err) {

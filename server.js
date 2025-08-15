@@ -3,7 +3,7 @@ import 'dotenv/config';
 import http from "http";
 import app from "./app.js";
 import {Server} from "socket.io"
-// import registerSocketHandeler from 
+import registerSocketHandeler from "./sockets/index.js"
 
 
 const PORT = process.env.PORT || 3000;
@@ -26,8 +26,7 @@ const io = new Server(server, {
 //   credentials: true
 // }));
 
-// Handle sockets
-// socketHandler(io);
+registerSocketHandeler(io)
 
 
 server.listen(PORT, () => {

@@ -12,7 +12,7 @@ const {
 } = process.env;
 
 
-console.log("[UTIL] ACCESS =", JWT_ACCESS_SECRET); 
+// console.log("[UTIL] ACCESS =", JWT_ACCESS_SECRET); 
 class jwtServices{
 
   signAccessToken(user) {
