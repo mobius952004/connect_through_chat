@@ -9,7 +9,7 @@ export default function ChatBox() {
         <div className=" flex-1 relative bg-gradient-to-t from-gray-900 to-gray-900 flex flex-col overflow-y-auto ">
 
             <ChatAvatar />
-            <div className="bg-slate-600   flex-1  flex flex-col-reverse overflow-y-scroll  ">
+            <div className="bg-slate-600   flex-1  flex flex-col-reverse overflow-y-scroll scrollbar-hide  ">
 
                 <RightChatBubble />
                 <ChatBubble />

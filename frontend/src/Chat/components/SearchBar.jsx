@@ -6,7 +6,7 @@ export default function SearchBar(){
 
     return (
         
-<form className="flex items-center max-w-sm mx-auto my-3">   
+<form className="flex items-center max-w-sm md:mx-auto my-3 bg-blend-saturation ">   
     <label htmlFor="simple-search" className="sr-only">Search</label>
     <div className="relative w-full">
         <div className="absolute inset-y-0 start-0 flex items-center ps-3 pointer-events-none">

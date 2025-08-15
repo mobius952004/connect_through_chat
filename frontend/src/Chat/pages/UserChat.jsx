@@ -10,9 +10,9 @@ export default function UserChats() {
 
     const [onadd, setonadd] = useState(false)
     return (
-        <div className="flex-1 flex gap-0.5 h-full">
+        <div className="flex-1 flex  gap-0.5 h-full">
             {/* chats containers */}
-            <div className="w-[400px] relative  bg-gradient-to-t from-gray-900 to-gray-900  border-spacing-2 border-slate-500 border-2">
+            <div className="flex flex-col w-[360px] relative  bg-gradient-to-t from-gray-900 to-gray-900  border-spacing-2 border-slate-500 border-2 ">
                 <SearchBar />
                 <ChatList />
                 <AddButton onadd={onadd} setonadd={setonadd} />

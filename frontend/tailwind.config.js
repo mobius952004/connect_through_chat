@@ -3,6 +3,7 @@ import flowbite from 'flowbite/plugin'
 import scrollbar from 'tailwind-scrollbar';
 
 
+
 export default {
   content: [
     "./index.html",                  // root HTML file
