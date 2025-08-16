@@ -1,17 +1,27 @@
 import { Send, SmileIcon, Image } from "lucide-react";
+import { useContext } from "react";
+import { ChatContext } from "../../store/socketContext";
 
-export default function TextBox({ textMessage, setTextMessage }) {
+export default function TextBox({ textMessage, setTextMessage, sendmessage }) {
+
+    const {socket}=useContext(ChatContext)
     const sendText = (e) => {
         e.preventDefault()
         if (!textMessage.trim()) {
             return;
         }
         console.log(textMessage);
+        sendmessage(textMessage);
         setTextMessage("");
     };
+socket.emit()
+    
 
     return (
-        <form onSubmit={(e) => sendText(e)}>
+        <form onSubmit={(e) => {
+            sendText(e);
+            
+        }}>
             <label htmlFor="chat" className="sr-only">
                 Your message
             </label>

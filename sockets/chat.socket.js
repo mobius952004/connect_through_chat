@@ -10,15 +10,15 @@ export default function chatSocketHandler(io, socket) {
   let userId;
 
   // Authenticate using JWT
-  try {
-    const token = socket.handshake.auth?.token;
-    const payload = jwtServices.verifyAccess(token);
-    userId = payload._id;
-    socket.user = payload;
-  } catch (err) {
-    console.error(' Socket auth failed');
-    return socket.disconnect();
-  }
+  // try {
+  //   const token = socket.handshake.auth?.token;
+  //   const payload = jwtServices.verifyAccess(token);
+  //   userId = payload._id;
+  //   socket.user = payload;
+  // } catch (err) {
+  //   console.error(' Socket auth failed');
+  //   return socket.disconnect();
+  // }
 
 
   

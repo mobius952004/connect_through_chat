@@ -2,8 +2,8 @@ import { BrowserRouter, Routes, Route } from "react-router-dom";
 import ChatProvider from "./store/socketContext.jsx";
 // Import your pages
 import Signup from "./pages/Signup.jsx";
-import Profile from "./pages/Profile";  
-import Login from "./pages/Login";      
+import Profile from "./pages/Profile";
+import Login from "./pages/Login";
 import Navbar from "./pages/Nav.jsx";
 import Home from "./pages/Home.jsx";
 import UserChats from "./Chat/pages/UserChat.jsx";
@@ -12,26 +12,27 @@ function App() {
   return (
     <ChatProvider>
 
-    <BrowserRouter> 
-      <Routes>       
-      
-        
-        <Route path="/connect" element={<Navbar />} />
-        <Route path="/connect/home" element={<Home />} >
-        <Route path="chats" element={<UserChats/>}></Route>
-        
-        </Route>
+      <BrowserRouter>
+        <Routes>
+          <Route path="/connect" element={<Navbar />} />
+          <Route path="/connect/home" element={<Home />} >
+            <Route path="chats" element={<UserChats />}></Route>
+            <Route path="calls" element={<div className="bg-blue-800 h-full w-full">
 
-        <Route path="/connect/signup" element={<Signup />} />
+            </div>}></Route>
 
-        <Route path="/connect/profile" element={<Profile />} />
+          </Route>
 
-      
-        <Route path="/connect/login" element={<Login />} />
+          <Route path="/connect/signup" element={<Signup />} />
 
-      </Routes>
-    </BrowserRouter>
-  
+          <Route path="/connect/profile" element={<Profile />} />
+
+
+          <Route path="/connect/login" element={<Login />} />
+
+        </Routes>
+      </BrowserRouter>
+
     </ChatProvider>
   );
 }
