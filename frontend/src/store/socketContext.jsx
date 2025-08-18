@@ -9,11 +9,11 @@ const ChatContext=createContext()
 export default function ChatProvider({children}){
 
     const [userinfo,setuserinfo]=useState(false)
-
+  const[sidepanel,setsidepanel]=useState("")
 
 
 return (
-    <ChatContext.Provider value={{socket,userinfo , setuserinfo} }>
+    <ChatContext.Provider value={{socket,userinfo , setuserinfo ,sidepanel,setsidepanel} }>
       {children}
     </ChatContext.Provider>
 )

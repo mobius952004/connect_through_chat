@@ -4,7 +4,7 @@ import { Send, SmileIcon, Image } from "lucide-react";
 
 export default function TextBox({ textMessage, setTextMessage, sendmessage }) {
 
-    // const {socket}=useContext(ChatContext)
+    // const {setsidepanel}=useContext(ChatContext)
     const sendText = (e) => {
         e.preventDefault()
         if (!textMessage.trim()) {

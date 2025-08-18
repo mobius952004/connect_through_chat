@@ -3,10 +3,10 @@ import { ChatContext } from "../../store/socketContext"
 
 
 export default function ChatAvatar(){
-    const { userinfo,setuserinfo} =useContext(ChatContext)
+    const { setsidepanel} =useContext(ChatContext)
 
     return (
-        <button onClick={()=>setuserinfo(!userinfo)}>
+        <button onClick={()=>setsidepanel("UserInfo")}>
 
         <div className="flex items-center gap-4 bg-gray-700 w-full py-1   ">
     <img className="w-10 h-10 rounded-full" src="/vite.svg" alt=""/>

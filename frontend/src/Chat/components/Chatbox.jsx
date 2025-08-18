@@ -45,7 +45,7 @@ export default function ChatBox() {
             <ChatAvatar />
             <div className="bg-slate-600  relative  flex-1  flex flex-col-reverse overflow-y-scroll scrollbar-hide  ">
 
-                {pastMessages.length === 0 ? (<p className="absolute bottom-0 left-120 text-gray-400">No conversation yet</p>) : (
+                {pastMessages.length === 0 ? (<p className="absolute bottom-0 text-gray-400 self-center-safe">No conversation yet</p>) : (
                     pastMessages.map((msg, key) => (
                         <PrevChat key={key} msg={msg} />
                     ))  
