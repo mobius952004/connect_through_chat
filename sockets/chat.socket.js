@@ -41,4 +41,12 @@ export default function chatSocketHandler(io, socket) {
     io.to(roomId).emit(SOCKET_EVENTS.RECEIVE_MESSAGE, msg);
     console.log(`Message sent from ${userId} to ${toUserId} in room ${roomId}`);
   });
+
+  socket.on("first_chat", (newMessage) => {
+    console.log("msgRecieved:", newMessage);
+
+    socket.broadcast.emit("recieved", newMessage);
+  });
+
+
 }

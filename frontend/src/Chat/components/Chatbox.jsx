@@ -2,13 +2,12 @@ import ChatAvatar from "./ChatAvatar";
 import RightChatBubble from "./RightChatBubble";
 import PrevChat from "./PrevChat";
 import TextBox from "./TextBox";
-import { useContext, useState } from "react";
+import { useContext, useState,useEffect } from "react";
 import { ChatContext } from "../../store/socketContext";
 
 export default function ChatBox() {
 
-    const socket = useContext(ChatContext)
-    socket.emit("first_chat",)
+    const {socket } = useContext(ChatContext)
 
     const [textMessage, setTextMessage] = useState("")
 
@@ -16,16 +15,29 @@ export default function ChatBox() {
 
     const sendmessage = (Message) => {
 
-            const newMessage = {
+    const newMessage = {
         text: Message,
         time: new Date().toLocaleTimeString([], { hour: "2-digit", minute: "2-digit" }),
-        date: new Date().toLocaleDateString([], { day: "2-digit", month: "short", year: "numeric" })
+        date: new Date().toLocaleDateString([], { day: "2-digit", month: "short", year: "numeric" }),
+        belongstouser: true,
     };
 
         setPastMessages([newMessage, ...pastMessages]);
 
-        console.log(pastMessages)
+        socket.emit("first_chat",newMessage)
     }
+
+    useEffect(() => {
+      socket.on("recieved", (recievedmessage) => {
+        recievedmessage.belongstouser = false;
+        setPastMessages(prev=>[recievedmessage, ...prev]);
+      });
+
+      return () => {
+        socket.off("recieved");
+      }
+    },[socket]);
+
 
     return (
         <div className=" flex-1 relative bg-gradient-to-t from-gray-900 to-gray-900 flex flex-col overflow-y-auto ">

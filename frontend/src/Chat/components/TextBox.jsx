@@ -1,10 +1,10 @@
 import { Send, SmileIcon, Image } from "lucide-react";
-import { useContext } from "react";
-import { ChatContext } from "../../store/socketContext";
+// import { useContext } from "react";
+// import { ChatContext } from "../../store/socketContext";
 
 export default function TextBox({ textMessage, setTextMessage, sendmessage }) {
 
-    const {socket}=useContext(ChatContext)
+    // const {socket}=useContext(ChatContext)
     const sendText = (e) => {
         e.preventDefault()
         if (!textMessage.trim()) {
@@ -14,7 +14,7 @@ export default function TextBox({ textMessage, setTextMessage, sendmessage }) {
         sendmessage(textMessage);
         setTextMessage("");
     };
-socket.emit()
+// socket.emit("Message",)
     
 
     return (
@@ -45,7 +45,7 @@ socket.emit()
                     rows="1"
                     value={textMessage}
                     onChange={(e) => setTextMessage(e.target.value)}
-                    className="block mx-4 p-2.5 w-full text-sm text-gray-900 bg-white rounded-lg border border-gray-300 focus:ring-green-500 focus:border-green-500 dark:bg-gray-800 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-green-500 dark:focus:border-green-500"
+                    className="block mx-4 p-2.5 w-full text-sm text-gray-900 bg-white rounded-lg border border-gray-300 focus:ring-green-500 focus:border-green-500 dark:bg-gray-800 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-green-500 dark:focus:border-green-500  "
                     placeholder="Your message..."
                 ></textarea>
                 <button

@@ -6,7 +6,7 @@ import "flowbite";
 export default function PrevChat({msg}) {
   
   return (
-    <div className="flex items-start gap-2.5 group relative self-start">
+    <div className={`flex items-start gap-2.5 group relative ${msg.belongstouser?"self-end":"self-start"}`}>
       <img className="w-8 h-8 rounded-full" src="/vite.svg" alt="Jese image" />
       <div className="flex flex-col gap-1 w-full max-w-[320px]">
         <div className="flex items-center space-x-2 rtl:space-x-reverse">
