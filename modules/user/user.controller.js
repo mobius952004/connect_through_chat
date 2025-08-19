@@ -3,6 +3,18 @@ import userServices from "./user.service.js"
 
 class user_controller{
 
+
+
+   async getallusers(req,res){
+
+      try{
+         const allusers=await userServices.getallusers()
+         res.json(allusers)
+      }catch(e){
+         res.status(500).json({message:e.message})
+      }
+   }
+
     async userprofile(req,res){
        
       // console.log("user from JWT:", req.user);

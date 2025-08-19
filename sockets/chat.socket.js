@@ -11,7 +11,7 @@ export default function chatSocketHandler(io, socket) {
 
   // Authenticate using JWT
   try {
-    const token = socket.handshake.auth?.token;
+    const token = socket.handshake.auth?.accessToken;
     const payload = jwtServices.verifyAccess(token);
     userId = payload._id;
     socket.user = payload;

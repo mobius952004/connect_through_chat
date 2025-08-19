@@ -3,6 +3,16 @@ import bcrypt from "bcrypt"
 
 class user_services{
 
+  async getallusers(){
+    try{
+      const users = await User.find();
+      return users;
+      
+    } catch(err) {
+      throw new Error("Error fetching users: ", err.message)
+    }
+  }
+
  async userprofile(userID){
 
     // console.log("Searching for user with ID:", userID);

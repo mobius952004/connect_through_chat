@@ -19,7 +19,7 @@ export default function Login() {
         try {
             const { accessToken } = await loginUser(formData);
             localStorage.setItem("accessToken", accessToken);
-            navigate("/profile");
+            navigate("/connect/home");
         } catch (err) {
             setError(err.message || "Login failed");
         }

@@ -14,8 +14,8 @@ export async function signupUser({ username, password, email }) {
 
   const data = await res.json()
 
-  if(!res.ok){
-    throw new Error(data|| "Signup Failed")
+  if (!res.ok) {
+    throw new Error(data.message || "Signup Failed")
   }
   return data
 }
@@ -29,10 +29,10 @@ export async function loginUser({ email, password }) {
     },
     body: JSON.stringify({ email, password }),
   });
- const data = await res.json()
+  const data = await res.json()
 
-  if(!res.ok){
-    throw new Error(data.message|| "Signup Failed")
+  if (!res.ok) {
+    throw new Error(data.message || "Signup Failed")
   }
   return data
 }
@@ -45,9 +45,9 @@ export async function fetchProfile(accessToken) {
     },
   });
 
-   const data = await res.json()
-  if(!res.ok){
-    throw new Error(data.message|| "Signup Failed")
+  const data = await res.json()
+  if (!res.ok) {
+    throw new Error(data.message || "Signup Failed")
   }
   return data
 }
@@ -60,11 +60,11 @@ export async function updateUsername(accessToken, newUsername) {
       "Content-Type": "application/json",
       Authorization: `Bearer ${accessToken}`,
     },
-    body: JSON.stringify({newUsername}),
+    body: JSON.stringify({ newUsername }),
   });
-   const data = await res.json()
-  if(!res.ok){
-    throw new Error(data.message|| "user name not changed")
+  const data = await res.json()
+  if (!res.ok) {
+    throw new Error(data.message || "user name not changed")
   }
   return data.user
 }
@@ -93,4 +93,19 @@ export async function updateProfilePic(accessToken, profilePic) {
     body: JSON.stringify({ profilePic }),
   });
   return res.json();
+}
+
+export async function getallusers(){
+  const res = await fetch(`${API_BASE}/api/user/getallusers`, {
+    method: "GET",
+    headers: {
+      // "Content-Type": "application/json",
+      // Authorization: `Bearer ${accessToken}`,
+    },
+  })
+  const data=await res.json()
+    if (!res.ok) {
+    throw new Error(data.message || "users not found")
+  }
+  return data
 }

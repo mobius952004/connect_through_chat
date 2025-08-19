@@ -2,12 +2,13 @@ import ChatAvatar from "./ChatAvatar";
 import RightChatBubble from "./RightChatBubble";
 import PrevChat from "./PrevChat";
 import TextBox from "./TextBox";
-import { useContext, useState,useEffect } from "react";
+import { useContext, useState, useEffect } from "react";
 import { ChatContext } from "../../store/socketContext";
+import { ChatEvents } from "../../sockets/chat.events";
 
 export default function ChatBox() {
 
-    const {socket } = useContext(ChatContext)
+    const { socket, selecteduser } = useContext(ChatContext)
 
     const [textMessage, setTextMessage] = useState("")
 
@@ -15,28 +16,33 @@ export default function ChatBox() {
 
     const sendmessage = (Message) => {
 
-    const newMessage = {
-        text: Message,
-        time: new Date().toLocaleTimeString([], { hour: "2-digit", minute: "2-digit" }),
-        date: new Date().toLocaleDateString([], { day: "2-digit", month: "short", year: "numeric" }),
-        belongstouser: true,
-    };
+        const newMessage = {
+            text: Message,
+            time: new Date().toLocaleTimeString([], { hour: "2-digit", minute: "2-digit" }),
+            date: new Date().toLocaleDateString([], { day: "2-digit", month: "short", year: "numeric" }),
+            belongstouser: true,
+        };
 
         setPastMessages([newMessage, ...pastMessages]);
 
-        socket.emit("first_chat",newMessage)
+        socket.emit(ChatEvents.SEND_PRIVATE_MESSAGE, newMessage)
     }
 
     useEffect(() => {
-      socket.on("recieved", (recievedmessage) => {
-        recievedmessage.belongstouser = false;
-        setPastMessages(prev=>[recievedmessage, ...prev]);
-      });
+        if (!selecteduser) return;
 
-      return () => {
-        socket.off("recieved");
-      }
-    },[socket]);
+        socket.emit("Chatevents.JOIN_ROOM", selecteduser?._id)
+
+
+        socket.on("recieved", (recievedmessage) => {
+            recievedmessage.belongstouser = false;
+            setPastMessages(prev => [recievedmessage, ...prev]);
+        });
+
+        return () => {
+            socket.off("recieved");
+        }
+    }, [socket ,selecteduser]);
 
 
     return (
@@ -48,11 +54,10 @@ export default function ChatBox() {
                 {pastMessages.length === 0 ? (<p className="absolute bottom-0 text-gray-400 self-center-safe">No conversation yet</p>) : (
                     pastMessages.map((msg, key) => (
                         <PrevChat key={key} msg={msg} />
-                    ))  
+                    ))
                 )}
-                {/* <RightChatBubble /> */}
-                {/* <PrevChat pastMessaage={pastMessage}/> */}
-                {/* text box */}
+
+
             </div>
             <div className="">
                 <TextBox textMessage={textMessage} setTextMessage={setTextMessage} sendmessage={sendmessage} />
