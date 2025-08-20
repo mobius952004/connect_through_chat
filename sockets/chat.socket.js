@@ -35,7 +35,7 @@ export default function chatSocketHandler(io, socket) {
     const msg = {
       ...newmessage,
       from: userId,
-      roomId:roomId,
+      roomId,
       to:toUserId
       
     };

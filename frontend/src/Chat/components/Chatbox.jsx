@@ -31,14 +31,14 @@ export default function ChatBox() {
 
         socket.emit(ChatEvents.SEND_PRIVATE_MESSAGE,{
             toUserId: selecteduser?._id,
-            newMessage,
+            newmessage: newMessage,
         })
     }
 
     useEffect(() => {
         if (!selecteduser) return;
 
-        socket.emit(ChatEvents.JOIN_ROOM, selecteduser?._id)
+        socket.emit(ChatEvents.JOIN_ROOM, { withUserId: selecteduser?._id });
 
 
         socket.on(ChatEvents.RECEIVE_MESSAGE, (recievedmessage) => {

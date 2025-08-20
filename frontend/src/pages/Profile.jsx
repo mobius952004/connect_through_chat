@@ -8,10 +8,6 @@ export default function Profile() {
   const [UsernameModal,setusernameModal]=useState(false)
 
 
-
-
-
-
   useEffect(() => {
     const accessToken = localStorage.getItem("accessToken");
     if (!accessToken) {
