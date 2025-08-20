@@ -30,12 +30,14 @@ export default function chatSocketHandler(io, socket) {
   });
 
   // Send private message
-  socket.on(SOCKET_EVENTS.SEND_PRIVATE_MESSAGE, ({ toUserId, message }) => {
+  socket.on(SOCKET_EVENTS.SEND_PRIVATE_MESSAGE, ({ toUserId, newmessage }) => {
     const roomId = getRoomId(userId, toUserId);
     const msg = {
+      ...newmessage,
       from: userId,
-      message,
-      timestamp: Date.now(),
+      roomId:roomId,
+      to:toUserId
+      
     };
 
     io.to(roomId).emit(SOCKET_EVENTS.RECEIVE_MESSAGE, msg);

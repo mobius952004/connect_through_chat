@@ -10,7 +10,7 @@ export default function TextBox({ textMessage, setTextMessage, sendmessage }) {
         if (!textMessage.trim()) {
             return;
         }
-        console.log(textMessage);
+        // console.log(textMessage);
         sendmessage(textMessage);
         setTextMessage("");
     };
