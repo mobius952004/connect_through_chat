@@ -45,6 +45,16 @@ export default function TextBox({ textMessage, setTextMessage, sendmessage }) {
                     rows="1"
                     value={textMessage}
                     onChange={(e) => setTextMessage(e.target.value)}
+                    onKeyDown={(event) => {
+                        if(event.key == "Enter" &&  !event.shiftKey){
+                            event.preventDefault();
+
+                            if(textMessage.trim()) {
+                                sendmessage(textMessage);
+                                setTextMessage("")
+                            }
+                        }
+                    }}
                     className="block mx-4 p-2.5 w-full text-sm text-gray-900 bg-white rounded-lg border border-gray-300 focus:ring-green-500 focus:border-green-500 dark:bg-gray-800 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-green-500 dark:focus:border-green-500  "
                     placeholder="Your message..."
                 ></textarea>

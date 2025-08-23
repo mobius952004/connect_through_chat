@@ -26,15 +26,13 @@ const navigate=useNavigate()
 
     return (
         <div className="bg-gradient-to-t from-gray-900 via-gray-600 to-gray-900  relative overflow-visible  w-8" >
-            {/* <div className="absolute inset-0 bg-gradient-to-t from-green-900/5 via-transparent to-emerald-900/5 pointer-events-none"></div> */}
+
             <aside className="     my-auto py-3 sm:py-4 lg:py-5 h-full">
 
                 <div className="flex flex-col justify-between h-full ">
 
                     <div className="flex flex-col items-center  w-8">
-                        {/* <button title="Profile" className="sm:my-2 my-1 relative">
-                            <IoLogoWechat className="sm:w-5 sm:h-7 w-4 h-6 text-white hover:text-green-600 transition-all transform  hover:scale-[1.2]cursor-pointer " />
-                        </button> */}
+
                         <div className="relative group sm:my-2 my-1">
                             <button className="relative " onClick={() => setIsMenusOpen(!isMenueOpen)}>
                                 {isMenueOpen ? <IoCloseSharp className="sm:w-5 sm:h-7 w-4 h-6 text-white hover:text-green-600 transition-all transform hover:scale-[1.2] cursor-pointer " /> : <IoMenu className="sm:w-5 sm:h-7 w-4 h-6 text-white hover:text-green-600 transition-all transform hover:scale-[1.2] cursor-pointer " />

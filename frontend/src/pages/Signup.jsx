@@ -1,7 +1,7 @@
-import {  useState } from "react";
+import { useState } from "react";
 import { signupUser } from "../api/auth";
 import { useNavigate } from "react-router-dom";
-import { LockIcon } from "lucide-react";
+import { connectSocket } from "../sockets/socket";
 
 export default function Signup() {
   const [formData, setFormData] = useState({
@@ -24,21 +24,23 @@ export default function Signup() {
     try {
       const { accessToken } = await signupUser(formData);
       localStorage.setItem("accessToken", accessToken);
+      connectSocket()
+
       navigate("/connect/home");
     } catch (err) {
       setError(err.message || "Signup failed");
     }
   };
-  const handleLoginRedirect= async ()=>{
+  const handleLoginRedirect = async () => {
 
-navigate("/connect/login")
+    navigate("/connect/login")
   }
 
 
 
-  return (  
+  return (
 
-<div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-gray-800 via-gray-600 to-gray-900 text-white relative overflow-hidden px-4">
+    <div className="min-h-screen flex items-center justify-center bg-gradient-to-t from-slate-800 via-slate-600 to-slate-800 text-white relative overflow-hidden px-4">
       {/* Animated background elements */}
       <div className="absolute inset-0 opacity-20">
         <div className="absolute top-1/4 left-1/4 w-64 h-64 bg-green-500/10 rounded-full blur-3xl animate-pulse"></div>
@@ -47,10 +49,10 @@ navigate("/connect/login")
       </div>
 
       <div className="relative z-10">
-        <div className="max-w-md mx-auto bg-gradient-to-br from-gray-900 via-gray-800 to-gray-900 p-10 border border-gray-700/50 rounded-2xl shadow-2xl backdrop-blur-sm">
+        <div className="max-w-md mx-auto bg-gradient-to-br from-slate-900 via-slate-800 to-slate-900 p-10 border border-slate-700/50 rounded-2xl shadow-2xl backdrop-blur-sm">
           {/* Subtle gradient overlay */}
-          <div className="absolute inset-0 bg-gradient-to-br from-green-900/10 via-transparent to-emerald-900/10 rounded-2xl pointer-events-none"></div>
-          
+          <div className="absolute inset-0 bg-gradient-to-br from-green-900 via-transparent to-emerald-900 rounded-2xl pointer-events-none"></div>
+
           <div className="relative z-10">
             {/* Header with icon */}
             <div className="text-center mb-8">
@@ -62,7 +64,7 @@ navigate("/connect/login")
               <h2 className="text-3xl font-bold bg-gradient-to-r from-green-400 to-emerald-400 bg-clip-text text-transparent tracking-wide">
                 Create Account
               </h2>
-              <p className="text-gray-400 mt-2">Join us today</p>
+              <p className="text-slate-400 mt-2">Join us today</p>
             </div>
 
             {error && (
@@ -79,7 +81,7 @@ navigate("/connect/login")
             <div className="space-y-6">
               {/* Username Field */}
               <div className="space-y-2">
-                <label className="block text-sm font-semibold text-gray-300">Username</label>
+                <label className="block text-sm font-semibold text-slate-300">Username</label>
                 <div className="relative">
                   <input
                     type="text"
@@ -89,9 +91,9 @@ navigate("/connect/login")
                     onChange={handleChange}
                     required
                     autoComplete="new-username"
-                    className="w-full p-4 bg-gray-800/50 text-white border border-gray-600/50 rounded-xl focus:outline-none focus:ring-2 focus:ring-green-500/50 focus:border-transparent transition-all duration-200 backdrop-blur-sm pl-12"
+                    className="w-full p-4 bg-slate-800/50 text-white border border-slate-600/50 rounded-xl focus:outline-none focus:ring-2 focus:ring-green-500/50 focus:border-transparent transition-all duration-200 backdrop-blur-sm pl-12"
                   />
-                  <svg className="absolute left-4 top-1/2 transform -translate-y-1/2 w-5 h-5 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <svg className="absolute left-4 top-1/2 transform -translate-y-1/2 w-5 h-5 text-slate-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
                   </svg>
                 </div>
@@ -99,7 +101,7 @@ navigate("/connect/login")
 
               {/* Email Field */}
               <div className="space-y-2">
-                <label className="block text-sm font-semibold text-gray-300">Email Address</label>
+                <label className="block text-sm font-semibold text-slate-300">Email Address</label>
                 <div className="relative">
                   <input
                     type="email"
@@ -109,9 +111,9 @@ navigate("/connect/login")
                     onChange={handleChange}
                     required
                     autoComplete="new-email"
-                    className="w-full p-4 bg-gray-800/50 text-white border border-gray-600/50 rounded-xl focus:outline-none focus:ring-2 focus:ring-green-500/50 focus:border-transparent transition-all duration-200 backdrop-blur-sm pl-12"
+                    className="w-full p-4 bg-slate-800/50 text-white border border-slate-600/50 rounded-xl focus:outline-none focus:ring-2 focus:ring-green-500/50 focus:border-transparent transition-all duration-200 backdrop-blur-sm pl-12"
                   />
-                  <svg className="absolute left-4 top-1/2 transform -translate-y-1/2 w-5 h-5 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <svg className="absolute left-4 top-1/2 transform -translate-y-1/2 w-5 h-5 text-slate-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M16 12a4 4 0 10-8 0 4 4 0 008 0zm0 0v1.5a2.5 2.5 0 005 0V12a9 9 0 10-9 9m4.5-1.206a8.959 8.959 0 01-4.5 1.207" />
                   </svg>
                 </div>
@@ -119,7 +121,7 @@ navigate("/connect/login")
 
               {/* Password Field */}
               <div className="space-y-2">
-                <label className="block text-sm font-semibold text-gray-300">Password</label>
+                <label className="block text-sm font-semibold text-slate-300">Password</label>
                 <div className="relative">
                   <input
                     type="password"
@@ -129,9 +131,9 @@ navigate("/connect/login")
                     onChange={handleChange}
                     required
                     autoComplete="new-password"
-                    className="w-full p-4 bg-gray-800/50 text-white border border-gray-600/50 rounded-xl focus:outline-none focus:ring-2 focus:ring-green-500/50 focus:border-transparent transition-all duration-200 backdrop-blur-sm pl-12"
+                    className="w-full p-4 bg-slate-800/50 text-white border border-slate-600/50 rounded-xl focus:outline-none focus:ring-2 focus:ring-green-500/50 focus:border-transparent transition-all duration-200 backdrop-blur-sm pl-12"
                   />
-                  <svg className="absolute left-4 top-1/2 transform -translate-y-1/2 w-5 h-5 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <svg className="absolute left-4 top-1/2 transform -translate-y-1/2 w-5 h-5 text-slate-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z" />
                   </svg>
                 </div>
@@ -151,9 +153,9 @@ navigate("/connect/login")
               {/* Divider */}
               <div className="relative flex items-center justify-center">
                 <div className="absolute inset-0 flex items-center">
-                  <div className="w-full border-t border-gray-600/50"></div>
+                  <div className="w-full border-t border-slate-600/50"></div>
                 </div>
-                <div className="relative bg-gray-800 px-4 text-sm text-gray-400">
+                <div className="relative bg-slate-800 px-4 text-sm text-slate-400">
                   or
                 </div>
               </div>
@@ -162,14 +164,14 @@ navigate("/connect/login")
               <button
                 type="button"
                 onClick={handleLoginRedirect}
-                className="w-full bg-gray-700/50 hover:bg-gray-600/50 text-white font-semibold py-4 rounded-xl transition-all duration-300 border border-gray-600/30 hover:border-gray-500/50 backdrop-blur-sm"
+                className="w-full bg-slate-700/50 hover:bg-slate-600/50 text-white font-semibold py-4 rounded-xl transition-all duration-300 border border-slate-600/30 hover:border-slate-500/50 backdrop-blur-sm"
               >
                 Already have an account? Sign In
               </button>
             </div>
 
             {/* Footer */}
-            <div className="text-center mt-8 text-xs text-gray-500">
+            <div className="text-center mt-8 text-xs text-slate-500">
               By signing up, you agree to our{" "}
               <button className="text-green-400 hover:text-green-300 transition-colors">
                 Terms of Service
@@ -184,6 +186,6 @@ navigate("/connect/login")
       </div>
     </div>
 
-);
+  );
 
 }

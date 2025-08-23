@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { loginUser } from "../api/auth";
-
+import { connectSocket } from "../sockets/socket";
 export default function Login() {
     const [formData, setFormData] = useState({ email: "", password: "" });
     const [error, setError] = useState("");
@@ -19,6 +19,8 @@ export default function Login() {
         try {
             const { accessToken } = await loginUser(formData);
             localStorage.setItem("accessToken", accessToken);
+            connectSocket()
+            
             navigate("/connect/home");
         } catch (err) {
             setError(err.message || "Login failed");

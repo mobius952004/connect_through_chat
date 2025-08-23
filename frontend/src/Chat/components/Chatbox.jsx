@@ -1,11 +1,11 @@
 import ChatAvatar from "./ChatAvatar";
-import RightChatBubble from "./RightChatBubble";
+// import RightChatBubble from "./RightChatBubble";
 import PrevChat from "./PrevChat";
 import TextBox from "./TextBox";
 import { useContext, useState, useEffect } from "react";
 import { ChatContext } from "../../store/socketContext";
 import { ChatEvents } from "../../sockets/chat.events";
-import { SOCKET_EVENTS } from "../../../../middleware/socket.events";
+
 
 export default function ChatBox() {
 
@@ -47,7 +47,7 @@ export default function ChatBox() {
         });
 
         return () => {
-            socket.off("recieved");
+            socket.off(ChatEvents.RECEIVE_MESSAGE);
         }
     }, [socket ,selecteduser]);
 

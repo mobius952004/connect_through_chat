@@ -2,8 +2,8 @@
 import jwtServices from '../shared/utils/jwt.utils.js';
 import { SOCKET_EVENTS } from '../middleware/socket.events.js';
 
-const getRoomId = (id1, id2) => {
-  return [id1, id2].sort().join('_');
+const getRoomId = ({userId, withUserId}) => {
+  return [userId, withUserId].sort().join('_');
 };
 
 export default function chatSocketHandler(io, socket) {
@@ -13,25 +13,31 @@ export default function chatSocketHandler(io, socket) {
   try {
     const token = socket.handshake.auth?.accessToken;
     const payload = jwtServices.verifyAccess(token);
-    userId = payload._id;
+      // console.log(payload)
+
+    userId = payload.sub;
     socket.user = payload;
   } catch (err) {
-    console.error(' Socket auth failed');
+    // console.error(' Socket auth failed');
     return socket.disconnect();
   }
+  console.log(userId)
 
 
   
   // Join 1-on-1 room
   socket.on(SOCKET_EVENTS.JOIN_ROOM, ({ withUserId }) => {
-    const roomId = getRoomId(userId, withUserId);
+    if (!userId || !withUserId) return;
+    const roomId = getRoomId({userId:userId,withUserId: withUserId});
     socket.join(roomId);
     console.log(` ${userId} joined room ${roomId}`);
   });
 
   // Send private message
   socket.on(SOCKET_EVENTS.SEND_PRIVATE_MESSAGE, ({ toUserId, newmessage }) => {
-    const roomId = getRoomId(userId, toUserId);
+      if (!userId || !toUserId) return;
+
+    const roomId = getRoomId({userId:userId,withUserId: toUserId});
     const msg = {
       ...newmessage,
       from: userId,
@@ -40,7 +46,7 @@ export default function chatSocketHandler(io, socket) {
       
     };
 
-    io.to(roomId).emit(SOCKET_EVENTS.RECEIVE_MESSAGE, msg);
+    socket.to(roomId).emit(SOCKET_EVENTS.RECEIVE_MESSAGE, msg);
     console.log(`Message sent from ${userId} to ${toUserId} in room ${roomId}`);
   });
 
@@ -49,6 +55,4 @@ export default function chatSocketHandler(io, socket) {
 
     socket.broadcast.emit("recieved", newMessage);
   });
-
-
 }
