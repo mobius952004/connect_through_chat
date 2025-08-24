@@ -53,12 +53,12 @@ export default function ChatBox() {
 
 
     return (
-        <div className=" flex-1 relative bg-gradient-to-t from-gray-900 to-gray-900 flex flex-col overflow-y-auto ">
+        <div className=" flex-1 relative  bg-gradient-to-r from-gray-900 via-gray-600 to-gray-900 flex flex-col overflow-y-auto ">
 
             <ChatAvatar />
-            <div className="bg-slate-600  relative  flex-1  flex flex-col-reverse overflow-y-scroll scrollbar-hide  ">
+            <div className="dark:bg-gray-800  relative  flex-1  flex flex-col-reverse overflow-y-scroll scrollbar-hide bg-gradient-to-r from-gray-900 via-gray-600 to-gray-900  ">
 
-                {pastMessages.length === 0 ? (<p className="absolute bottom-0 text-gray-400 self-center-safe">No conversation yet</p>) : (
+                {pastMessages.length === 0 ? (<p className="absolute bottom-0 text-gray-300 self-center-safe">No conversation yet</p>) : (
                     pastMessages.map((msg, key) => (
                         <PrevChat key={key} msg={msg} />
                     ))

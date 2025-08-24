@@ -1,6 +1,4 @@
-import { Send, SmileIcon, Image } from "lucide-react";
-// import { useContext } from "react";
-// import { ChatContext } from "../../store/socketContext";
+import { Send, SmileIcon, Image, SmilePlusIcon, SendHorizontalIcon } from "lucide-react";
 
 export default function TextBox({ textMessage, setTextMessage, sendmessage }) {
 
@@ -25,19 +23,21 @@ export default function TextBox({ textMessage, setTextMessage, sendmessage }) {
             <label htmlFor="chat" className="sr-only">
                 Your message
             </label>
-            <div className="flex items-center px-3 py-2 rounded-lg bg-gray-50 dark:bg-gray-700">
+            <div className="flex items-center px-3 py-2  bg-gray-50 dark:bg-gray-800">
                 <button
                     type="button"
-                    className="inline-flex justify-center p-2 text-gray-500 rounded-lg cursor-pointer hover:text-gray-900 hover:bg-gray-100 dark:text-gray-400 dark:hover:text-white dark:hover:bg-gray-600"
+                    className="inline-flex justify-center p-2 text-gray-500 rounded-lg cursor-pointer hover:text-white dark:text-gray-400 "
                 >
                     <Image />
+                    {/* <LucideImage/> */}
                     <span className="sr-only">Upload image</span>
                 </button>
                 <button
                     type="button"
-                    className="p-2 text-gray-500 rounded-lg cursor-pointer hover:text-gray-900 hover:bg-gray-100 dark:text-gray-400 dark:hover:text-white dark:hover:bg-gray-600"
+                    className="p-2 text-gray-500 rounded-lg cursor-pointer hover:text-gray-900  dark:text-gray-400 dark:hover:text-white "
                 >
-                    <SmileIcon />
+                    {/* <SmileIcon /> */}
+                    <SmilePlusIcon/>
                     <span className="sr-only">Add emoji</span>
                 </button>
                 <textarea
@@ -60,9 +60,10 @@ export default function TextBox({ textMessage, setTextMessage, sendmessage }) {
                 ></textarea>
                 <button
                     type="submit"
-                    className="inline-flex justify-center p-2 text-green-600 rounded-full cursor-pointer hover:bg-green-100 dark:text-green-500 dark:hover:bg-gray-600"
+                    className="inline-flex justify-center  text-green-600 dark:text-green-600 rounded-full cursor-pointer dark:hover:text-green-400 "
                 >
-                    <Send />
+                    <Send className="w-10 h-8"/>    
+                    {/* <SendHorizontalIcon/> */}
                     <span className="sr-only">Send message</span>
                 </button>
             </div>
