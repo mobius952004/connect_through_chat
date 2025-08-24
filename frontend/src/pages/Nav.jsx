@@ -8,7 +8,7 @@ export default function Navbar() {
   const navigate=useNavigate()
 
   return (
-    <nav className="bg-gradient-to-r from-gray-900 via-gray-800 to-gray-900 text-white border-b border-gray-700/50 backdrop-blur-sm relative overflow-hidden">
+    <nav className="bg-gradient-to-l from-gray-900 via-gray-800 to-gray-900 text-white border-b border-gray-700/50 backdrop-blur-sm relative overflow-hidden">
       {/* Subtle background gradient overlay */}
       <div className="absolute inset-0 bg-gradient-to-r from-green-900/5 via-transparent to-emerald-900/5 pointer-events-none"></div>
       
@@ -55,7 +55,7 @@ export default function Navbar() {
             <button onClick={()=>navigate("/connect/login")} className="px-3 py-2 text-gray-300 hover:text-green-400 transition-colors duration-200 font-medium text-sm sm:text-base">
               Login
             </button>
-            <button onClick={()=>navigate("/connect/signup")} className="px-4 py-2 bg-gradient-to-r from-green-600 to-emerald-600 hover:from-green-700 hover:to-emerald-700 text-white font-semibold rounded-xl transition-all duration-300 shadow-lg hover:shadow-xl hover:shadow-green-500/20 transform hover:scale-[1.02] text-sm sm:text-base">
+            <button onClick={()=>navigate("/connect/signup")} className="px-4 py-2 bg-gradient-to-l from-green-600 to-emerald-600 hover:from-green-700 hover:to-emerald-700 text-white font-semibold rounded-xl transition-all duration-300 shadow-lg hover:shadow-xl hover:shadow-green-500/20 transform hover:scale-[1.02] text-sm sm:text-base">
               Sign Up
             </button>
 

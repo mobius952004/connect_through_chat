@@ -2,6 +2,7 @@ import { useState } from "react";
 import { signupUser } from "../api/auth";
 import { useNavigate } from "react-router-dom";
 import { connectSocket } from "../sockets/socket";
+import { LockIcon } from "lucide-react";
 
 export default function Signup() {
   const [formData, setFormData] = useState({
@@ -40,23 +41,23 @@ export default function Signup() {
 
   return (
 
-    <div className="min-h-screen flex items-center justify-center bg-gradient-to-t from-slate-800 via-slate-600 to-slate-800 text-white relative overflow-hidden px-4">
+    <div className="min-h-screen flex items-center justify-center bg-gradient-to-bl from-slate-900 via-slate-800 to-slate-900 text-white relative overflow-hidden px-4">
       {/* Animated background elements */}
       <div className="absolute inset-0 opacity-20">
-        <div className="absolute top-1/4 left-1/4 w-64 h-64 bg-green-500/10 rounded-full blur-3xl animate-pulse"></div>
-        <div className="absolute bottom-1/4 right-1/4 w-64 h-64 bg-emerald-500/10 rounded-full blur-3xl animate-pulse delay-1000"></div>
-        <div className="absolute top-1/2 left-1/2 w-32 h-32 bg-green-400/10 rounded-full blur-2xl animate-pulse delay-500"></div>
+        <div className="absolute top-1/4 left-1/4 w-64 h-64 bg-green-500/50 rounded-full blur-3xl animate-pulse"></div>
+        <div className="absolute bottom-1/4 right-1/4 w-64 h-64 bg-emerald-500/50 rounded-full blur-3xl animate-pulse delay-1000"></div>
+        <div className="absolute top-1/2 left-1/2 w-32 h-32 bg-green-400/50 rounded-full blur-2xl animate-pulse delay-500"></div>
       </div>
 
       <div className="relative z-10">
-        <div className="max-w-md mx-auto bg-gradient-to-br from-slate-900 via-slate-800 to-slate-900 p-10 border border-slate-700/50 rounded-2xl shadow-2xl backdrop-blur-sm">
+        <div className="max-w-md mx-auto bg-gradient-to-bl from-slate-900 via-slate-800 to-slate-900 p-10 border border-slate-700 rounded-2xl shadow-2xl shadow-black backdrop-blur-3xl">
           {/* Subtle gradient overlay */}
           <div className="absolute inset-0 bg-gradient-to-br from-green-900 via-transparent to-emerald-900 rounded-2xl pointer-events-none"></div>
 
           <div className="relative z-10">
             {/* Header with icon */}
             <div className="text-center mb-8">
-              <div className="w-16 h-16 bg-gradient-to-br from-green-500 to-emerald-500 rounded-2xl flex items-center justify-center mx-auto mb-4 shadow-lg">
+              <div className="w-16 h-16 bg-gradient-to-bl from-green-500 to-emerald-500 rounded-2xl flex items-center justify-center mx-auto mb-4 shadow-lg">
                 <svg className="w-8 h-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M18 9v3m0 0v3m0-3h3m-3 0h-3m-2-5a4 4 0 11-8 0 4 4 0 018 0zM3 20a6 6 0 0112 0v1H3v-1z" />
                 </svg>
@@ -131,11 +132,15 @@ export default function Signup() {
                     onChange={handleChange}
                     required
                     autoComplete="new-password"
-                    className="w-full p-4 bg-slate-800/50 text-white border border-slate-600/50 rounded-xl focus:outline-none focus:ring-2 focus:ring-green-500/50 focus:border-transparent transition-all duration-200 backdrop-blur-sm pl-12"
+                    className="w-full p-4 bg-slate-800/50 text-white border border-slate-600/50 rounded-xl focus:outline-none focus:ring-2 focus:ring-green-500/50 focus:border-transparent transition-all duration-200 backdrop-blur-sm pl-14"
                   />
-                  <svg className="absolute left-4 top-1/2 transform -translate-y-1/2 w-5 h-5 text-slate-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <span>
+                    <LockIcon className=""/>
+
+                  {/* <svg className="absolute left-4 top-1/2 transform -translate-y-1/2 w-5 h-5 text-slate-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z" />
-                  </svg>
+                  </svg> */}
+                  </span>
                 </div>
               </div>
 
@@ -144,7 +149,7 @@ export default function Signup() {
                 <button
                   type="submit"
                   onClick={handleSubmit}
-                  className="w-full bg-gradient-to-r from-green-600 to-emerald-600 hover:from-green-700 hover:to-emerald-700 text-white font-semibold py-4 rounded-xl transition-all duration-300 shadow-lg hover:shadow-xl hover:shadow-green-500/20 transform hover:scale-[1.02] mb-4"
+                  className="w-full bg-gradient-to-l from-green-600 to-emerald-800 hover:from-green-700 hover:to-emerald-800 text-white font-semibold py-4 rounded-xl transition-all duration-300 shadow-lg hover:shadow-xl hover:shadow-green-500/30 transform hover:scale-[1.02] mb-4"
                 >
                   Create Account
                 </button>

@@ -32,7 +32,7 @@ export default function Login() {
     }, []);
 
     return (
-<div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-gray-900 via-black to-gray-900 text-white relative overflow-hidden">
+<div className="min-h-screen flex items-center justify-center bg-gradient-to-l from-gray-800 via-black to-gray-800 text-white relative overflow-hidden">
       {/* Animated background elements */}
       <div className="absolute inset-0 opacity-20">
         <div className="absolute top-1/4 left-1/4 w-64 h-64 bg-green-500/10 rounded-full blur-3xl animate-pulse"></div>
