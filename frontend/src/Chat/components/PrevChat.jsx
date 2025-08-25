@@ -1,12 +1,11 @@
 import { EllipsisVerticalIcon } from "lucide-react";
 import "flowbite";
-// import { useState } from "react"
 
 export default function PrevChat({msg}) {
   
   return (
     <div className={`flex items-start gap-2.5 group relative ${msg.belongstouser?"self-end":"self-start"}`}>
-      <img className="w-8 h-8 rounded-full" src="/vite.svg" alt="Jese image" />
+      <img className="w-8 h-8 rounded-full" src="/react.svg" alt="Jese image" />
       <div className="flex flex-col gap-1 w-full max-w-[320px]">
         <div className="flex items-center space-x-2 rtl:space-x-reverse">
           <span className="text-sm font-semibold text-gray-900 dark:text-white">
@@ -16,8 +15,8 @@ export default function PrevChat({msg}) {
             {msg.time }&nbsp;{msg.date}
           </span>
         </div>
-        <div className="flex flex-col flex-wrap leading-1.5 p-4 border-gray-200 bg-gray-100 rounded-e-xl rounded-es-xl dark:bg-gray-800">
-          <p className="text-sm font-normal  text-gray-900 dark:text-white">
+        <div className={`flex flex-col flex-wrap leading-1.5 p-4 border-gray-200 bg-gray-100 rounded-e-xl rounded-es-xl  ${msg.belongstouser?"dark:bg-gray-900":"dark:bg-green-600"} `}>
+          <p className="text-sm font-normal  text-gray-900 dark:text-white whitespace-pre-wrap break-all">
             {msg.text}
           </p>
         </div>
@@ -36,7 +35,7 @@ export default function PrevChat({msg}) {
       </button>
       <div
         id="dropdownDots"
-        className="z-10 hidden bg-white divide-y divide-gray-100 rounded-lg shadow-sm w-40 dark:bg-gray-700 dark:divide-gray-600"
+        className="z-10 hidden bg-white divide-y divide-gray-100 rounded-lg shadow-sm w-40 dark:bg-gray-900 dark:divide-gray-600"
       >
         <ul
           className="py-2 text-sm text-gray-700 dark:text-gray-200"
