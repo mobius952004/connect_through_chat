@@ -36,9 +36,11 @@ export default function chatSocketHandler(io, socket) {
 
   // Send private message
   //can add feedback function to confirm mesage delivery
-  socket.on(SOCKET_EVENTS.SEND_PRIVATE_MESSAGE, ({ toUserId, newmessage }) => {
-      if (!userId || !toUserId) return;
 
+  
+  socket.on(SOCKET_EVENTS.SEND_PRIVATE_MESSAGE, ({ toUserId, newmessage }) => {
+    if (!userId || !toUserId) return;
+    
     const roomId = getRoomId({userId:userId,withUserId: toUserId});
     const msg = {
       ...newmessage,
@@ -47,6 +49,9 @@ export default function chatSocketHandler(io, socket) {
       to:toUserId
       
     };
+    
+    socket.emit("UserMessage",msg)
+
 
     socket.to(roomId).emit(SOCKET_EVENTS.RECEIVE_MESSAGE, msg);
     console.log(`Message sent from ${userId} to ${toUserId} in room ${roomId}`);

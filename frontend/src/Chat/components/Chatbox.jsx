@@ -16,6 +16,7 @@ export default function ChatBox() {
 
     const [pastMessages, setPastMessages] = useState([]);
 
+    // message coming from textbox 
     const sendmessage = (Message) => {
 
         const newMessage = {
@@ -26,9 +27,10 @@ export default function ChatBox() {
             belongstouser: true,
         };
 
-
+// message sent directly to ui
         setPastMessages([newMessage, ...pastMessages]);
 
+        // message emmited
         socket.emit(ChatEvents.SEND_PRIVATE_MESSAGE, {
             toUserId: selecteduser?._id,
             newmessage: newMessage,
@@ -39,6 +41,10 @@ export default function ChatBox() {
         if (!selecteduser) return;
 
         socket.emit(ChatEvents.JOIN_ROOM, { withUserId: selecteduser?._id });
+
+        // socket.on("UserMessage",(msg)=>{
+        //     setPastMessages([msg, ...pastMessages])
+        // })
 
         //can we the to user ie selected usaer to check
         socket.on(ChatEvents.RECEIVE_MESSAGE, (recievedmessage) => {

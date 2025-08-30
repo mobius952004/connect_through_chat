@@ -12,14 +12,14 @@ export default function Profile() {
     const accessToken = localStorage.getItem("accessToken");
     if (!accessToken) {
       setError("No accessToken found");
-      return;
+      return <div>Not authorized {error}</div>;
     }
     
     fetchProfile(accessToken)
       .then((data) => setUser(data))
       .catch((err) => setError(err.message || "Failed to load profile"));
       
-  }, []);
+  }, [error]);
 
    const  handleusernamechange = async (newUsername)=>{
 

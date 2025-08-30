@@ -40,7 +40,6 @@ export default function Signup() {
 
 
   return (
-
     <div className="min-h-screen flex items-center justify-center bg-gradient-to-bl from-slate-900 via-slate-800 to-slate-900 text-white relative overflow-hidden px-4">
       {/* Animated background elements */}
       <div className="absolute inset-0 opacity-20">
@@ -50,16 +49,26 @@ export default function Signup() {
       </div>
 
       <div className="relative z-10">
-        <div className="max-w-md mx-auto bg-gradient-to-bl from-slate-900 via-slate-800 to-slate-900 p-10 border border-slate-700 rounded-2xl shadow-2xl shadow-black backdrop-blur-3xl">
+        <div className="relative max-w-md mx-auto bg-gradient-to-bl from-slate-900 via-slate-800 to-slate-900 p-10 border border-slate-700 rounded-2xl shadow-2xl shadow-black backdrop-blur-3xl">
           {/* Subtle gradient overlay */}
-          <div className="absolute inset-0 bg-gradient-to-br from-green-900 via-transparent to-emerald-900 rounded-2xl pointer-events-none"></div>
+          <div className="absolute inset-0 bg-gradient-to-br from-green-900 via-transparent to-emerald-900 rounded-2xl pointer-events-none z-0"></div>
 
           <div className="relative z-10">
             {/* Header with icon */}
             <div className="text-center mb-8">
               <div className="w-16 h-16 bg-gradient-to-bl from-green-500 to-emerald-500 rounded-2xl flex items-center justify-center mx-auto mb-4 shadow-lg">
-                <svg className="w-8 h-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M18 9v3m0 0v3m0-3h3m-3 0h-3m-2-5a4 4 0 11-8 0 4 4 0 018 0zM3 20a6 6 0 0112 0v1H3v-1z" />
+                <svg
+                  className="w-8 h-8 text-white"
+                  fill="none"
+                  stroke="currentColor"
+                  viewBox="0 0 24 24"
+                >
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    strokeWidth={2}
+                    d="M18 9v3m0 0v3m0-3h3m-3 0h-3m-2-5a4 4 0 11-8 0 4 4 0 018 0zM3 20a6 6 0 0112 0v1H3v-1z"
+                  />
                 </svg>
               </div>
               <h2 className="text-3xl font-bold bg-gradient-to-r from-green-400 to-emerald-400 bg-clip-text text-transparent tracking-wide">
@@ -71,8 +80,18 @@ export default function Signup() {
             {error && (
               <div className="bg-red-500/10 border border-red-500/20 text-red-400 text-sm p-4 rounded-xl mb-6 backdrop-blur-sm">
                 <div className="flex items-center">
-                  <svg className="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+                  <svg
+                    className="w-4 h-4 mr-2"
+                    fill="none"
+                    stroke="currentColor"
+                    viewBox="0 0 24 24"
+                  >
+                    <path
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      strokeWidth={2}
+                      d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"
+                    />
                   </svg>
                   {error}
                 </div>
@@ -82,7 +101,9 @@ export default function Signup() {
             <div className="space-y-6">
               {/* Username Field */}
               <div className="space-y-2">
-                <label className="block text-sm font-semibold text-slate-300">Username</label>
+                <label className="block text-sm font-semibold text-slate-300">
+                  Username
+                </label>
                 <div className="relative">
                   <input
                     type="text"
@@ -94,15 +115,27 @@ export default function Signup() {
                     autoComplete="new-username"
                     className="w-full p-4 bg-slate-800/50 text-white border border-slate-600/50 rounded-xl focus:outline-none focus:ring-2 focus:ring-green-500/50 focus:border-transparent transition-all duration-200 backdrop-blur-sm pl-12"
                   />
-                  <svg className="absolute left-4 top-1/2 transform -translate-y-1/2 w-5 h-5 text-slate-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
+                  <svg
+                    className="absolute left-4 top-1/2 transform -translate-y-1/2 w-5 h-5 text-slate-400"
+                    fill="none"
+                    stroke="currentColor"
+                    viewBox="0 0 24 24"
+                  >
+                    <path
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      strokeWidth={2}
+                      d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"
+                    />
                   </svg>
                 </div>
               </div>
 
               {/* Email Field */}
               <div className="space-y-2">
-                <label className="block text-sm font-semibold text-slate-300">Email Address</label>
+                <label className="block text-sm font-semibold text-slate-300">
+                  Email Address
+                </label>
                 <div className="relative">
                   <input
                     type="email"
@@ -114,15 +147,27 @@ export default function Signup() {
                     autoComplete="new-email"
                     className="w-full p-4 bg-slate-800/50 text-white border border-slate-600/50 rounded-xl focus:outline-none focus:ring-2 focus:ring-green-500/50 focus:border-transparent transition-all duration-200 backdrop-blur-sm pl-12"
                   />
-                  <svg className="absolute left-4 top-1/2 transform -translate-y-1/2 w-5 h-5 text-slate-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M16 12a4 4 0 10-8 0 4 4 0 008 0zm0 0v1.5a2.5 2.5 0 005 0V12a9 9 0 10-9 9m4.5-1.206a8.959 8.959 0 01-4.5 1.207" />
+                  <svg
+                    className="absolute left-4 top-1/2 transform -translate-y-1/2 w-5 h-5 text-slate-400"
+                    fill="none"
+                    stroke="currentColor"
+                    viewBox="0 0 24 24"
+                  >
+                    <path
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      strokeWidth={2}
+                      d="M16 12a4 4 0 10-8 0 4 4 0 008 0zm0 0v1.5a2.5 2.5 0 005 0V12a9 9 0 10-9 9m4.5-1.206a8.959 8.959 0 01-4.5 1.207"
+                    />
                   </svg>
                 </div>
               </div>
 
               {/* Password Field */}
               <div className="space-y-2">
-                <label className="block text-sm font-semibold text-slate-300">Password</label>
+                <label className="block text-sm font-semibold text-slate-300">
+                  Password
+                </label>
                 <div className="relative">
                   <input
                     type="password"
@@ -135,9 +180,9 @@ export default function Signup() {
                     className="w-full p-4 bg-slate-800/50 text-white border border-slate-600/50 rounded-xl focus:outline-none focus:ring-2 focus:ring-green-500/50 focus:border-transparent transition-all duration-200 backdrop-blur-sm pl-14"
                   />
                   <span>
-                    <LockIcon className=""/>
+                    <LockIcon className="absolute left-4 top-1/2 transform -translate-y-1/2 w-5 h-5 text-slate-400" />
 
-                  {/* <svg className="absolute left-4 top-1/2 transform -translate-y-1/2 w-5 h-5 text-slate-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    {/* <svg className="absolute left-4 top-1/2 transform -translate-y-1/2 w-5 h-5 text-slate-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z" />
                   </svg> */}
                   </span>
@@ -190,7 +235,6 @@ export default function Signup() {
         </div>
       </div>
     </div>
-
   );
 
 }
