@@ -9,6 +9,7 @@ import { ChatEvents } from "../../sockets/chat.events";
 
 export default function ChatBox() {
 
+
     const { socket, selecteduser } = useContext(ChatContext)
 
     const [textMessage, setTextMessage] = useState("")
@@ -19,17 +20,16 @@ export default function ChatBox() {
 
         const newMessage = {
             text: Message,
-            
-
+            tempid: Date.now().toString(),
             time: new Date().toLocaleTimeString([], { hour: "2-digit", minute: "2-digit" }),
             date: new Date().toLocaleDateString([], { day: "2-digit", month: "short", year: "numeric" }),
             belongstouser: true,
         };
 
-        
+
         setPastMessages([newMessage, ...pastMessages]);
 
-        socket.emit(ChatEvents.SEND_PRIVATE_MESSAGE,{
+        socket.emit(ChatEvents.SEND_PRIVATE_MESSAGE, {
             toUserId: selecteduser?._id,
             newmessage: newMessage,
         })
@@ -40,7 +40,7 @@ export default function ChatBox() {
 
         socket.emit(ChatEvents.JOIN_ROOM, { withUserId: selecteduser?._id });
 
-
+        //can we the to user ie selected usaer to check
         socket.on(ChatEvents.RECEIVE_MESSAGE, (recievedmessage) => {
             recievedmessage.belongstouser = false;
             setPastMessages(prev => [recievedmessage, ...prev]);
@@ -49,7 +49,7 @@ export default function ChatBox() {
         return () => {
             socket.off(ChatEvents.RECEIVE_MESSAGE);
         }
-    }, [socket ,selecteduser]);
+    }, [socket, selecteduser]);
 
 
     return (

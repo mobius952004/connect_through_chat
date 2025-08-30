@@ -12,7 +12,7 @@ export default function ChatProvider({ children }) {
   // const accessToken= localStorage.getItem("accessToken")
 
   // const payload=jwtServices.verifyAccess(accessToken)
-  // const userID =payload._id
+  // const userID =payload.sub
 
   const [userinfo, setuserinfo] = useState(false)
   const [sidepanel, setsidepanel] = useState("")

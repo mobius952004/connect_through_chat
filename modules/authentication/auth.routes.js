@@ -14,6 +14,4 @@ router.post("/user/Log-out",authcontroller.logout)
 
 router.post("/user/refresh",authcontroller.refresh)
 
-
-
 export default router

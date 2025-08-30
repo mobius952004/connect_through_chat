@@ -21,11 +21,12 @@ export default function chatSocketHandler(io, socket) {
     // console.error(' Socket auth failed');
     return socket.disconnect();
   }
-  console.log(userId)
-
+  // console.log(userId)
 
   
+  
   // Join 1-on-1 room
+  
   socket.on(SOCKET_EVENTS.JOIN_ROOM, ({ withUserId }) => {
     if (!userId || !withUserId) return;
     const roomId = getRoomId({userId:userId,withUserId: withUserId});
@@ -34,6 +35,7 @@ export default function chatSocketHandler(io, socket) {
   });
 
   // Send private message
+  //can add feedback function to confirm mesage delivery
   socket.on(SOCKET_EVENTS.SEND_PRIVATE_MESSAGE, ({ toUserId, newmessage }) => {
       if (!userId || !toUserId) return;
 

@@ -8,8 +8,8 @@ import userRoutes from "./modules/user/user.routes.js"
 
 
 
-console.log("ACCESS:", process.env.JWT_ACCESS_SECRET?.slice(0,10));
-console.log("REFRESH:", process.env.JWT_REFRESH_SECRET?.slice(0,10));
+// console.log("ACCESS:", process.env.JWT_ACCESS_SECRET?.slice(0,10));
+// console.log("REFRESH:", process.env.JWT_REFRESH_SECRET?.slice(0,10));
 
 
 const app = express();
