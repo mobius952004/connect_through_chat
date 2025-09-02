@@ -42,18 +42,18 @@ export default function chatSocketHandler(io, socket) {
     if (!userId || !toUserId) return;
     
     const roomId = getRoomId({userId:userId,withUserId: toUserId});
-    const msg = {
-      ...newmessage,
-      from: userId,
-      roomId,
-      to:toUserId
+    // const msg = {
+    //   ...newmessage,
+    //   from: userId,
+    //   roomId,
+    //   to:toUserId
       
-    };
+    // };
     
-    socket.emit("UserMessage",msg)
+    socket.emit("UserMessage",newmessage)
 
 
-    socket.to(roomId).emit(SOCKET_EVENTS.RECEIVE_MESSAGE, msg);
+    io.to(roomId).emit(SOCKET_EVENTS.RECEIVE_MESSAGE, newmessage);
     console.log(`Message sent from ${userId} to ${toUserId} in room ${roomId}`);
   });
 

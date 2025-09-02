@@ -4,6 +4,7 @@ import { PersonStandingIcon } from "lucide-react";
 
 export default function ChatCard({ user }) {
     const { setselecteduser } = useContext(ChatContext)
+    
 
     
     if (!user) return null; // guard against undefined

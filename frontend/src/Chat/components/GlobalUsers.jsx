@@ -1,36 +1,32 @@
-import SearchBar from "./SearchBar"
-import ChatCard from "./ChatCard"
-import { getallusers } from "../../api/auth"
-import { useEffect } from "react"
-import { useState } from "react"
+import SearchBar from "./SearchBar";
+import ChatCard from "./ChatCard";
+import { getallusers } from "../../api/auth";
+import { useEffect } from "react";
+import { useState } from "react";
+import { useContext } from "react";
+import { ChatContext } from "../../store/socketContext";
 
 export default function GlobalUsers() {
+  const { getCurrentUserId } = useContext(ChatContext);
 
+  const userid = getCurrentUserId();
+//   console.log(`${userid.type}globalusers`);
+  const [allusers, setallusers] = useState([]);
 
-    const [allusers, setallusers] = useState([])
+  useEffect(() => {
+    const showall = async () => {
+      const response = await getallusers(userid);
+      setallusers(response);
+    };
 
-    useEffect(() => {
+    showall();
+  }, [userid]);
+  return (
+    <div className="w-full h-full flex flex-col">
+      <SearchBar />
 
-        const showall = async () => {
-
-            const response = await getallusers()
-            setallusers(response)
-        }
-        
-        showall()
-    }, [])
-    return (
-
-
-        <div className="w-full h-full flex flex-col">
-            <SearchBar />
-
-            {allusers && allusers.map((user) => (
-                <ChatCard user={user} key={user._id} />
-                
-            ))}
-
-
-        </div>
-    )
+      {allusers &&
+        allusers.map((user) => <ChatCard user={user} key={user._id} />)}
+    </div>
+  );
 }

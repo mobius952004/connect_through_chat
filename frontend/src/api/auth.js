@@ -52,7 +52,7 @@ async function apiFetch(url, options = {}, retry = true) {
         false
       );
     } catch (err) {
-      throw new Error("Session expired, please login again");
+      throw new Error("Session expired, please login again", err);
     }
   }
 
@@ -121,6 +121,11 @@ export function updateProfilePic(profilePic) {
 }
 
 // Get all users (public or protected depending on backend)
-export function getallusers() {
-  return apiFetch("/api/user/getallusers", { method: "GET" });
+export function getallusers(userid) {
+  return apiFetch(`/api/user/getallusers?userid=${userid}`, { 
+    method: "GET" ,
+    headers: { "Content-Type": "application/json" },
+
+  
+  });
 }

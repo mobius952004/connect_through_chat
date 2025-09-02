@@ -5,30 +5,42 @@ import TextBox from "./TextBox";
 import { useContext, useState, useEffect } from "react";
 import { ChatContext } from "../../store/socketContext";
 import { ChatEvents } from "../../sockets/chat.events";
+import { User } from "lucide-react";
 
 
 export default function ChatBox() {
 
 
-    const { socket, selecteduser } = useContext(ChatContext)
+    const { socket, selecteduser , getCurrentUserId } = useContext(ChatContext)
 
     const [textMessage, setTextMessage] = useState("")
 
     const [pastMessages, setPastMessages] = useState([]);
 
+    //getting the current userif form the help of belo function which is using jwt-decode
+    const UserId=getCurrentUserId()
+
+    //creating unique roomid for one on one chat consistion of ids of both the users
+    const getRoomId = ({userId, withUserId}) => {
+  return [userId, withUserId].sort().join('_');
+};
     // message coming from textbox 
     const sendmessage = (Message) => {
 
+        const roomId =getRoomId({UserId:UserId,withUserId:selecteduser})
+
         const newMessage = {
             text: Message,
-            tempid: Date.now().toString(),
+            to:selecteduser,
+            from:UserId,
+            roomId,
             time: new Date().toLocaleTimeString([], { hour: "2-digit", minute: "2-digit" }),
             date: new Date().toLocaleDateString([], { day: "2-digit", month: "short", year: "numeric" }),
             belongstouser: true,
         };
 
-// message sent directly to ui
-        setPastMessages([newMessage, ...pastMessages]);
+        // message sent directly to ui
+        // setPastMessages(prev => [newMessage, ...prev]);
 
         // message emmited
         socket.emit(ChatEvents.SEND_PRIVATE_MESSAGE, {
@@ -42,20 +54,17 @@ export default function ChatBox() {
 
         socket.emit(ChatEvents.JOIN_ROOM, { withUserId: selecteduser?._id });
 
-        // socket.on("UserMessage",(msg)=>{
-        //     setPastMessages([msg, ...pastMessages])
-        // })
 
         //can we the to user ie selected usaer to check
         socket.on(ChatEvents.RECEIVE_MESSAGE, (recievedmessage) => {
-            recievedmessage.belongstouser = false;
-            setPastMessages(prev => [recievedmessage, ...prev]);
+            recievedmessage.from==UserId?recievedmessage.belongstouser=true:recievedmessage.belongstouser=false
+            setPastMessages(prev => [recievedmessage,...prev]);
         });
 
         return () => {
             socket.off(ChatEvents.RECEIVE_MESSAGE);
         }
-    }, [socket, selecteduser]);
+    }, [socket, selecteduser,UserId]);
 
 
     return (

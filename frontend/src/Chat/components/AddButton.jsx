@@ -43,10 +43,10 @@ export default function AddButton({ onadd, setonadd }) {
                   <button type="button" onClick={()=>setsidepanel("AddFriend")} className="text-start w-full rounded-t-lg px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">Add Friend</button>
                </li>
                <li>
-                  <button type="button" className="w-full block px-4 py-2 text-start hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">mark as readed</button>
+                  <button type="button" className="w-full block px-4 py-2 text-start hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">mark as read</button>
                </li>
                <li>
-                  <button type="button" className="w-full block px-4 py-2 text-start hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">removeh</button>
+                  <button type="button" className="w-full block px-4 py-2 text-start hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">remove</button>
                </li>
                <li>
                   <button type="button" className="w-full block px-4 py-2 text-start hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">Report</button>
