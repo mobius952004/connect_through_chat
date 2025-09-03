@@ -20,11 +20,13 @@ function getCurrentUserId() {
   const [userinfo, setuserinfo] = useState(false)
   const [sidepanel, setsidepanel] = useState("")
   const [selecteduser, setselecteduser] = useState(null)
+  const [chatlist,setchatlist]=useState([])
+  // setchatlist(selecteduser)
 
 
 
   return (
-    <ChatContext.Provider value={{ socket, userinfo, setuserinfo, sidepanel, setsidepanel, selecteduser, setselecteduser,getCurrentUserId }}>
+    <ChatContext.Provider value={{ socket, userinfo, setuserinfo, sidepanel, setsidepanel, selecteduser, setselecteduser,getCurrentUserId ,chatlist,setchatlist }}>
       {children}
     </ChatContext.Provider>
   )

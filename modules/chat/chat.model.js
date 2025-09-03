@@ -7,6 +7,7 @@ const chatSchema = new mongoose.Schema({
             ref: 'User'
         }
     ],
+    roomId:"string",
     createdAt: {
         type: Date,
         default: Date.now
