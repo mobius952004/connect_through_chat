@@ -6,10 +6,10 @@ class user_controller{
 
 
    async getallusers(req,res){
-     const {userid}=req.query
-     console.log(userid.type)
+   const userID=req.user.sub
+     console.log(userID)
       try{
-         const allusers=await userServices.getallusers(userid)
+         const allusers=await userServices.getallusers(userID)
          res.json(allusers)
       }catch(e){
          res.status(500).json({message:e.message})

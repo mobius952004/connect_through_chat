@@ -14,8 +14,15 @@ export default function GlobalUsers() {
   const [allusers, setallusers] = useState([]);
 
   useEffect(() => {
+    const accessToken=localStorage.getItem("accessToken")
+      // console.log(accessToken)
+
+    if(!accessToken){
+      return <div className="text-red-600"> Not authorized</div>
+    }
+
     const showall = async () => {
-      const response = await getallusers(userid);
+      const response = await getallusers(accessToken);
       setallusers(response);
     };
 

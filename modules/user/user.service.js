@@ -4,15 +4,24 @@ import mongoose from "mongoose"
 
 class user_services {
 
-  async getallusers(userid) {
+
+  
+
+  async getallusers(userID) {
     try {
-      const users = await User.find({ _id: { $ne: new mongoose.Types.ObjectId(userid) } });
+      const users = await User.find({ _id: { $ne: new mongoose.Types.ObjectId(userID) } });
       return users;
 
     } catch (err) {
       throw new Error("Error fetching users: ", err.message)
     }
   }
+
+  // add Chat rooms
+  // async userChats(userID){
+
+  //   const user=User.findByIdAndUpdate(userId)
+  // }
 
   async userprofile(userID) {
 

@@ -30,7 +30,7 @@ const userSchema = new mongoose.Schema(
             type: Boolean,
             default: false,
         },
-        Chats:{type:mongoose.Schema.Types.ObjectId ,ref:"Chat"}
+        Chats:[{type:mongoose.Schema.Types.ObjectId ,ref:"Chat"}]
     },
     { timestamps: true }
 );
