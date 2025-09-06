@@ -1,4 +1,4 @@
-import ChatAvatar from "./ChatAvatar";
+import ChatAvatar from "./ChatAvatar";                                                 
 // import RightChatBubble from "./RightChatBubble";
 import PrevChat from "./PrevChat";
 import TextBox from "./TextBox";
@@ -11,41 +11,45 @@ import { User } from "lucide-react";
 export default function ChatBox() {
 
 
-    const { socket, selecteduser , getCurrentUserId } = useContext(ChatContext)
+    const { socket, selecteduser, getCurrentUserId } = useContext(ChatContext)
 
     const [textMessage, setTextMessage] = useState("")
 
     const [pastMessages, setPastMessages] = useState([]);
 
     //getting the current userif form the help of belo function which is using jwt-decode
-    const UserId=getCurrentUserId()
+    const UserId = getCurrentUserId()
 
     //creating unique roomid for one on one chat consistion of ids of both the users
-    const getRoomId = ({userId, withUserId}) => {
-  return [userId, withUserId].sort().join('_');
-};
+    const getRoomId = ({ userId, withUserId }) => {
+        return [userId, withUserId].sort().join('_');
+    };
     // message coming from textbox 
     const sendmessage = (Message) => {
 
-        const roomId =getRoomId({UserId:UserId,withUserId:selecteduser})
+        const roomId = getRoomId({ UserId: UserId, withUserId: selecteduser })
 
         const newMessage = {
-            text: Message,
-            to:selecteduser,
-            from:UserId,
+            content: Message,
+            to: selecteduser,
+            from: UserId,
             roomId,
             time: new Date().toLocaleTimeString([], { hour: "2-digit", minute: "2-digit" }),
             date: new Date().toLocaleDateString([], { day: "2-digit", month: "short", year: "numeric" }),
             belongstouser: true,
+            status: "Pending"
         };
 
         // message sent directly to ui
-        // setPastMessages(prev => [newMessage, ...prev]);
+        setPastMessages(prev => [newMessage, ...prev]);
 
         // message emmited
         socket.emit(ChatEvents.SEND_PRIVATE_MESSAGE, {
             toUserId: selecteduser?._id,
             newmessage: newMessage,
+                    
+        }, (response) => {
+            console.log(response.status)
         })
     }
 
@@ -56,15 +60,38 @@ export default function ChatBox() {
 
 
         //can we the to user ie selected usaer to check
-        socket.on(ChatEvents.RECEIVE_MESSAGE, (recievedmessage) => {
-            recievedmessage.from==UserId?recievedmessage.belongstouser=true:recievedmessage.belongstouser=false
-            setPastMessages(prev => [recievedmessage,...prev]);
+        
+        socket.on(ChatEvents.RECEIVE_MESSAGE, async (recievedmessage) => {
+        //   recievedmessage.map(msg => {
+        //         if (msg.to === UserId && msg.status !== "read") {
+        //             socket.emit("MESSAGE_READ", { messageId: msg._id });
+        //         }
+        //     });
+
+        //for a single message
+        if (recievedmessage.to==selecteduser && recievedmessage.status!="Read"){
+            socket.emit("MESSAGE_READ",{messageId:recievedmessage._id})
+        }
+
+            recievedmessage.from == UserId ? recievedmessage.belongstouser : recievedmessage.belongstouser = false
+
+
+            setPastMessages(prev => [recievedmessage, ...prev]);
+
+            
+            
+        });
+        socket.on("MESSAGE_UPDATED", (updatedMsg) => {
+            setPastMessages(prev =>
+                prev.map(m => m._id === updatedMsg._id ? updatedMsg : m)
+            );
         });
 
         return () => {
             socket.off(ChatEvents.RECEIVE_MESSAGE);
+            socket.off("MESSAGE_UPDATED")
         }
-    }, [socket, selecteduser,UserId]);
+    }, [socket, selecteduser, UserId]);
 
 
     return (

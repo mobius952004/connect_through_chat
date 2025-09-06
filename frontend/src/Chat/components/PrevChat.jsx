@@ -17,11 +17,11 @@ export default function PrevChat({msg}) {
         </div>
         <div className={`flex flex-col flex-wrap leading-1.5 p-4 border-gray-200 bg-gray-100 rounded-e-xl rounded-es-xl  ${msg.belongstouser?"dark:bg-gray-900":"dark:bg-green-600"} `}>
           <p className="text-sm font-normal  text-gray-900 dark:text-white whitespace-pre-wrap break-all">
-            {msg.text}
+            {msg.content}
           </p>
         </div>
         <span className="text-sm font-normal text-gray-500 dark:text-gray-400">
-          Delivered
+          {msg.status}
         </span>
       </div>
       <button

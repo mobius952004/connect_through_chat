@@ -98,7 +98,7 @@ export async function updateProfilePic(accessToken, profilePic) {
 }
 
 export async function getallusers(accessToken) {
-  console.log(accessToken)
+  // console.log(accessToken)
   const res = await fetch(`${API_BASE}/api/user/getallusers`, {
     method: "GET",
     headers: {
