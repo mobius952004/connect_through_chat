@@ -7,18 +7,18 @@ import { useContext } from "react";
 import { ChatContext } from "../../store/socketContext";
 
 export default function GlobalUsers() {
-  const { getCurrentUserId } = useContext(ChatContext);
+  const { getCurrentUser } = useContext(ChatContext);
 
-  const userid = getCurrentUserId();
-//   console.log(`${userid.type}globalusers`);
+  const userid = getCurrentUser();
+  //   console.log(`${userid.type}globalusers`);
   const [allusers, setallusers] = useState([]);
 
   useEffect(() => {
-    const accessToken=localStorage.getItem("accessToken")
-      // console.log(accessToken)
+    const accessToken = localStorage.getItem("accessToken");
+    // console.log(accessToken)
 
-    if(!accessToken){
-      return <div className="text-red-600"> Not authorized</div>
+    if (!accessToken) {
+      return <div className="text-red-600"> Not authorized</div>;
     }
 
     const showall = async () => {

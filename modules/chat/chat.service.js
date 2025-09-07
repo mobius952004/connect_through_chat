@@ -1,5 +1,13 @@
-import chat from './chat.model.js';
+import Chat from "./chat.model";
 
-export const findorCreateChat = async (userId) => {
-    let chat = await Chat.findOne({ users: { $all}})    
+class chatService{
+
+    async getChatList(users){
+        try{
+            const user = await Chat.findOne({
+                
+            })
+        }
+    }
 }
+
