@@ -13,10 +13,6 @@ export default function ChatList() {
 
         if (!selecteduser) return;
 
-        // const exists = chatlist.some(user => user._id === selecteduser._id)
-        // console.log(exists)
-        // if (!exists) {setchatlist(prev=> [...prev,selecteduser])}
-        // setchatlist(prev=> [...prev,selecteduser, ])
         setchatlist(prev => {
             const filtered = prev.filter(user => user._id !== selecteduser._id);
             return [selecteduser, ...filtered];
