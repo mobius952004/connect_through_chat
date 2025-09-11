@@ -2,26 +2,27 @@ import Chat from "./chat.model";
 
 class chat_Services {
 
-async setCHatList(userId,){
+    async setChatList(userId,) {
 
-try{
+        try {
 
-}
-
-}
+        } catch (err) {
 
 
+        }
+
+    }
 
     async getChatList(userId) {
 
-
         try {
-            const chatlist = await Chat.find({users:userId}).populate("users" , "username  profilePic  status isonline ")
+            const chatlist = await Chat.find({ users: userId }).populate("users", "username  profilePic  status isonline ")
+            console.log(chatlist)
             return chatlist
-            
-        }catch(err){
+
+        } catch (err) {
             throw new Error(err)
-    
+
         }
     }
 }

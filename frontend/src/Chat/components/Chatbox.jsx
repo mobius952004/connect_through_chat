@@ -65,6 +65,9 @@ export default function ChatBox() {
     useEffect(() => {
         if (!selecteduser) return;
 
+        //whenever selected user changes  import the messsages sonsisting the chat id /roomid ,
+        //use chat id as it represent the connection between users itself 
+
         socket.emit(ChatEvents.JOIN_ROOM, { withUserId: selecteduser?._id });
 
         //can we the to user ie selected usaer to check

@@ -9,24 +9,21 @@ const messageSchema = new mongoose.Schema({
         type: mongoose.Schema.Types.ObjectId,
         ref: "User",
     },
-    to: {
-        type: mongoose.Schema.Types.ObjectId,
-        ref: "User",
-    },
+    // to: {
+    //     type: mongoose.Schema.Types.ObjectId,
+    //     ref: "User",
+    // },
     content: {
         type: String,
         // required: true
     },
     roomId:String,
-    // timestamp: {
-    //     type: Date,
-    //     default: Date.now
-    // }  ,
     time: { type: String },
     date: { type: String },
     status: {
         type: String,
-        // required:true
+        enum: ["sent", "delivered", "seen"],
+        default: "Pending"
     },
 });
 
