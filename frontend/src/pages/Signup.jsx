@@ -113,7 +113,7 @@ export default function Signup() {
                     onChange={handleChange}
                     required
                     autoComplete="new-username"
-                    className="w-full p-4 bg-slate-800/50 text-white border border-slate-600/50 rounded-xl focus:outline-none focus:ring-2 focus:ring-green-500/50 focus:border-transparent transition-all duration-200 backdrop-blur-sm pl-12"
+                    className="w-full bg-slate-800/50 text-white border border-slate-600/50 rounded-xl focus:outline-none focus:ring-2 focus:ring-green-500/50 focus:border-transparent transition-all duration-200 backdrop-blur-sm pl-12"
                   />
                   <svg
                     className="absolute left-4 top-1/2 transform -translate-y-1/2 w-5 h-5 text-slate-400"
@@ -145,7 +145,7 @@ export default function Signup() {
                     onChange={handleChange}
                     required
                     autoComplete="new-email"
-                    className="w-full p-4 bg-slate-800/50 text-white border border-slate-600/50 rounded-xl focus:outline-none focus:ring-2 focus:ring-green-500/50 focus:border-transparent transition-all duration-200 backdrop-blur-sm pl-12"
+                    className="w-full bg-slate-800/50 text-white border border-slate-600/50 rounded-xl focus:outline-none focus:ring-2 focus:ring-green-500/50 focus:border-transparent transition-all duration-200 backdrop-blur-sm pl-12"
                   />
                   <svg
                     className="absolute left-4 top-1/2 transform -translate-y-1/2 w-5 h-5 text-slate-400"
@@ -177,7 +177,7 @@ export default function Signup() {
                     onChange={handleChange}
                     required
                     autoComplete="new-password"
-                    className="w-full p-4 bg-slate-800/50 text-white border border-slate-600/50 rounded-xl focus:outline-none focus:ring-2 focus:ring-green-500/50 focus:border-transparent transition-all duration-200 backdrop-blur-sm pl-14"
+                    className="w-full bg-slate-800/50 text-white border border-slate-600/50 rounded-xl focus:outline-none focus:ring-2 focus:ring-green-500/50 focus:border-transparent transition-all duration-200 backdrop-blur-sm pl-14"
                   />
                   <span>
                     <LockIcon className="absolute left-4 top-1/2 transform -translate-y-1/2 w-5 h-5 text-slate-400" />

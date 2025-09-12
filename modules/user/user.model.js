@@ -3,15 +3,17 @@ import mongoose from "mongoose";
 const userSchema = new mongoose.Schema(
 
     {
-        username: { 
-            type: String, 
-            required: true, 
-            unique: true },
+        username: {
+            type: String,
+            required: true,
+            unique: true
+        },
 
         email: {
-            type:String, unique: true,
-    //   lowercase: true,
-    //         trim: true,
+            type: String, unique: true,
+            //uncommenting
+            lowercase: true,
+            trim: true,
         },
         password: {
             type: String,
@@ -30,7 +32,7 @@ const userSchema = new mongoose.Schema(
             type: Boolean,
             default: false,
         },
-        Chats:[{type:mongoose.Schema.Types.ObjectId ,ref:"Chat"}]
+
     },
     { timestamps: true }
 );

@@ -9,6 +9,9 @@ export default function ChatAvatar(){
 
     if(!selecteduser) return null
 
+    //whenever teh selected user cahnges , the user from the selected caht or the new chat ,should be the one  other than the current user , if it is not a gorup
+    
+
     return (
         <button type="button" onClick={()=>setsidepanel("UserInfo")}>
 
