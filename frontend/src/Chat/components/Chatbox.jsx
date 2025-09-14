@@ -17,7 +17,7 @@ export default function ChatBox() {
     //getting the current userif form the help of belo function which is using jwt-decode
     const UserId = getCurrentUser().userId;
     const username = getCurrentUser().username
-    console.log(username)
+    // console.log(username)
 
     //creating unique roomid for one on one chat consistion of ids of both the users
     const getRoomId = ({ userId, withUserId }) => {

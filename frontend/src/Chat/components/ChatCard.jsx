@@ -6,7 +6,7 @@ export default function ChatCard({ user }) {
   const { setselecteduser } = useContext(ChatContext);
 
   if (!user) return null; // guard against undefined
-
+  // console.log(user)
   return (
     <button
       type="button"

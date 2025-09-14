@@ -3,7 +3,7 @@ import "flowbite";
 
 export default function PrevChat({msg}) {
 
-  console.log(` prevchat ${msg.username}`)
+  // console.log(` prevchat ${msg.username}`)
   
   return (
     <div className={`flex items-start gap-2.5 group relative ${msg.belongstouser?"self-end":"self-start"}`}>

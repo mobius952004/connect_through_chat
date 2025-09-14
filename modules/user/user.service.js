@@ -8,6 +8,7 @@ class user_services {
   
 
   async getallusers(userID) {
+    // console.log(userID);
     try {
       const users = await User.find({ _id: { $ne: new mongoose.Types.ObjectId(userID) } });
       return users;

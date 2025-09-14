@@ -9,10 +9,10 @@ const messageSchema = new mongoose.Schema({
         type: mongoose.Schema.Types.ObjectId,
         ref: "User",
     },
-    // to: {
-    //     type: mongoose.Schema.Types.ObjectId,
-    //     ref: "User",
-    // },
+    to: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: "User",
+    },
     content: {
         type: String,
         // required: true
@@ -22,7 +22,7 @@ const messageSchema = new mongoose.Schema({
     date: { type: String },
     status: {
         type: String,
-        enum: ["sent", "delivered", "seen"],
+        enum: ["Pending","sent", "delivered", "seen"],
         default: "Pending"
     },
 });

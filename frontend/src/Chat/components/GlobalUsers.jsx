@@ -3,13 +3,13 @@ import ChatCard from "./ChatCard";
 import { getallusers } from "../../api/auth";
 import { useEffect } from "react";
 import { useState } from "react";
-import { useContext } from "react";
+// import { useContext } from "react";
 import { ChatContext } from "../../store/socketContext";
 
 export default function GlobalUsers() {
-  const { getCurrentUser } = useContext(ChatContext);
+  // const { getCurrentUser } = useContext(ChatContext);
 
-  const userid = getCurrentUser();
+  // const userid = getCurrentUser();
   //   console.log(`${userid.type}globalusers`);
   const [allusers, setallusers] = useState([]);
 
@@ -27,7 +27,7 @@ export default function GlobalUsers() {
     };
 
     showall();
-  }, [userid]);
+  }, []);
   return (
     <div className="w-full h-full flex flex-col">
       <SearchBar />

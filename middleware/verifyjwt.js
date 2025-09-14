@@ -10,7 +10,7 @@ const verifyToken = (req, res, next) => {
   }
 
   const token = authHeader.split(" ")[1]; // extract the token part
-  console.log(token)
+  // console.log(token)
 
   try {
     const payload = jwtServices.verifyAccess(token); // your util method

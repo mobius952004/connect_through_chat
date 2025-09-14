@@ -7,7 +7,7 @@ class user_controller{
 
    async getallusers(req,res){
    const userID=req.user.sub
-     console.log(userID)
+   //   console.log(userID)
       try{
          const allusers=await userServices.getallusers(userID)
          res.json(allusers)
