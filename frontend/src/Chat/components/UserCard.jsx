@@ -2,16 +2,16 @@ import { useContext } from "react";
 import { ChatContext } from "../../store/socketContext";
 import { PersonStandingIcon } from "lucide-react";
 
-export default function ChatCard({ chat }) {
+export default function UserCard({ user }) {
   const { setselecteduser } = useContext(ChatContext);
 
-  if (!chat) return null; // guard against undefined
+  if (!user) return null; // guard against undefined
   // console.log(user)
   return (
     <button
       type="button"
       onClick={() => {
-        setselecteduser();
+        setselecteduser(user);
       }}
       className=" w-full bg-gradient-to-r from-bg-slate-700 via-bg-slate-800 to-bg-slate-700 hover:bg-slate-800 rounded-2xl my-1 "
     >
@@ -24,10 +24,10 @@ export default function ChatCard({ chat }) {
         <div className=" flex-1 text-left sm:text-left items-center">
           <div className="space-y-0">
             <p className="text-lg font-semibold dark:text-zinc-300 text-zinc-500">
-              {chat.chatName || "Unknown"}
+              {user.username || "Unknown"}
             </p>
             <p className="font-medium dark:text-zinc-400 text-gray-500">
-              {chat.lastmessage || "hey "}
+              {user.status || "hey "}
             </p>
           </div>
         </div>

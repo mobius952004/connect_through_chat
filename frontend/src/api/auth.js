@@ -1,4 +1,3 @@
-
 // 📁 front/src/api/auth.js
 
 const API_BASE = "http://localhost:3000";
@@ -113,8 +112,43 @@ export async function getallusers(accessToken) {
   return data
 }
 
+export async function setChatList({accessToken,selecteduserId, selectedusername})
+ {
 
-// export function getallusers(userid) {
+  const res = await fetch(`${API_BASE}/api/chat/setChatList`, {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+      Authorization: `Bearer ${accessToken}`,
+    },
+    body: JSON.stringify({
+      selecteduserId,
+      selectedusername,
+    }) 
+
+  })
+  return res.json();
+}
+
+export async function getChatList(accessToken){
+  const res = await fetch(`${API_BASE}/api/chat/getChatList`, {
+    method: "GET",
+    headers: {
+      "Content-Type": "application/json",
+      Authorization: `Bearer ${accessToken}`,
+    },
+
+  })
+  const data = await res.json();
+  if(!res.ok){
+     throw new Error(data.message || "Chat list getting error");
+  }
+
+  return data;
+}
+
+
+// edxport function getallusers(userid) {
 //   return apiFetch(`/api/user/getallusers?userid=${userid}`, { 
 //     method: "GET" ,
 //     headers: { "Content-Type": "application/json" },

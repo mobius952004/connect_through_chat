@@ -1,42 +1,53 @@
-import { useContext } from "react"
-import ChatCard from "./ChatCard"
-import { ChatContext } from "../../store/socketContext"
-import { useEffect } from "react"
+import { useContext } from "react";
+import ChatCard from "./ChatCard";
+import { ChatContext } from "../../store/socketContext";
+import { useEffect } from "react";
+import { getChatList, setChatList } from "../../api/auth";
 // import { useEffect } from "react"
 
 export default function ChatList() {
+  const { chatlist, setchatlist, selecteduser } = useContext(ChatContext);
 
 
-    const { chatlist, setchatlist, selecteduser } = useContext(ChatContext)
 
-    useEffect(() => {
-
-        if (!selecteduser) return;
-
-        // const exists = chatlist.some(user => user._id === selecteduser._id)
-        // console.log(exists)
-        // if (!exists) {setchatlist(prev=> [...prev,selecteduser])}
-        // setchatlist(prev=> [...prev,selecteduser, ])
-        setchatlist(prev => {
-            const filtered = prev.filter(user => user._id !== selecteduser._id);
-            return [selecteduser, ...filtered];
-        });
-
-
-    }, [selecteduser,setchatlist])
- 
+useEffect(()=>{
+  const accessToken=localStorage.getItem("accessToken")
     
+    const getchats=async ()=>{
+    
+      const chats= await getChatList(accessToken)
+      console.log(chats)
+      setchatlist(chats);
+    }
 
-    return (
-        <div className="flex-1 min-h-0 overflow-y-scroll scrollbar-hide">
+    console.log(chatlist)
+    getchats()
 
-            {chatlist && chatlist.map((user) => (
-                <ChatCard user={user} key={user._id} />
-
-            ))}
+// eslint-disable-next-line react-hooks/exhaustive-deps
+},[])
 
 
-        </div>
 
-    )
+  useEffect(() => {
+    // console.log(selecteduser)
+    //re render if the selected user cahnges
+    if (!selecteduser) return; //check if the chatarray exists or not , rermove this line
+    const accessToken=localStorage.getItem("accessToken")
+    
+ const createChat = async () => {
+        await setChatList({
+            accessToken,
+            selecteduserId: selecteduser._id,
+            selectedusername: selecteduser.username,
+        });
+    };
+    createChat();
+  }, [selecteduser]);
+
+  return (
+    <div className="flex-1 min-h-0 overflow-y-scroll scrollbar-hide">
+      {chatlist &&
+        chatlist.map((chat) => <ChatCard chat={chat} key={chat._id} />)}
+    </div>
+  );
 }

@@ -18,15 +18,12 @@ const messageSchema = new mongoose.Schema({
         // required: true
     },
     roomId:String,
-    // timestamp: {
-    //     type: Date,
-    //     default: Date.now
-    // }  ,
     time: { type: String },
     date: { type: String },
     status: {
         type: String,
-        // required:true
+        // enum: ["Pending","sent", "delivered", "seen"],
+        // default: "Pending"
     },
 });
 

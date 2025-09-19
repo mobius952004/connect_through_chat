@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import { useNavigate } from "react-router-dom";
 import { loginUser } from "../api/auth";
 import { connectSocket } from "../sockets/socket";
@@ -31,14 +31,65 @@ export default function Login() {
         setFadeIn(true);
     }, []);
 
+  const canvasRef = useRef(null);
+
+  useEffect(() => {
+    const canvas = canvasRef.current;
+    const ctx = canvas.getContext('2d');
+    canvas.width = window.innerWidth;
+    canvas.height = window.innerHeight;
+
+    const NUM_NODES = 28;
+    const nodes = [];
+    for (let i = 0; i < NUM_NODES; i++) {
+      nodes.push({
+        x: Math.random() * canvas.width,
+        y: Math.random() * canvas.height,
+        glow: 0.7 + Math.random() * 0.3,
+      });
+    }
+
+    // Draw lines
+    for (let i = 0; i < NUM_NODES; i++) {
+      for (let j = i + 1; j < NUM_NODES; j++) {
+        const dist = Math.hypot(nodes[i].x - nodes[j].x, nodes[i].y - nodes[j].y);
+        if (dist < 200) {
+          ctx.save();
+          ctx.globalAlpha = 0.13;
+          ctx.strokeStyle = 'cyan';
+          ctx.shadowColor = '#00ffa0';
+          ctx.shadowBlur = 12;
+          ctx.beginPath();
+          ctx.moveTo(nodes[i].x, nodes[i].y);
+          ctx.lineTo(nodes[j].x, nodes[j].y);
+          ctx.stroke();
+          ctx.restore();
+        }
+      }
+    }
+
+    // Draw glowing nodes
+    for (const node of nodes) {
+      ctx.save();
+      ctx.globalAlpha = node.glow;
+      ctx.beginPath();
+      ctx.arc(node.x, node.y, 8, 0, 2 * Math.PI);
+      ctx.fillStyle = '#10ffde';
+      ctx.shadowColor = '#00ffdc';
+      ctx.shadowBlur = 24;
+      ctx.fill();
+      ctx.restore();
+    }
+  }, []);
+
     return (
-<div className="min-h-screen flex items-center justify-center bg-gradient-to-l from-gray-800 via-black to-gray-800 text-white relative overflow-hidden">
-      {/* Animated background elements */}
-      <div className="absolute inset-0 opacity-20">
-        <div className="absolute top-1/4 left-1/4 w-64 h-64 bg-green-500/10 rounded-full blur-3xl animate-pulse"></div>
-        <div className="absolute bottom-1/4 right-1/4 w-64 h-64 bg-emerald-500/10 rounded-full blur-3xl animate-pulse delay-1000"></div>
-        <div className="absolute top-1/2 left-1/2 w-32 h-32 bg-green-400/10 rounded-full blur-2xl animate-pulse delay-500"></div>
-      </div>
+       <div className="min-h-screen flex items-center justify-center bg-gradient-to-l from-gray-800 via-black to-gray-800 text-white relative overflow-hidden">
+      {/* Neural Network Canvas Background */}
+      <canvas
+        ref={canvasRef}
+        className="absolute inset-0 z-0"
+        style={{ width: '100vw', height: '100vh' }}
+      />
 
       <div className="relative z-10">
         <div
@@ -85,7 +136,7 @@ export default function Login() {
                     onChange={handleChange}
                     required
                     autoComplete="new-email"
-                    className="w-full p-4 bg-gray-800/50 text-white border border-gray-600/50 rounded-xl focus:outline-none focus:ring-2 focus:ring-green-500/50 focus:border-transparent transition-all duration-200 backdrop-blur-sm pl-12"
+                    className="w-full bg-gray-800/50 text-white border border-gray-600/50 rounded-xl focus:outline-none focus:ring-2 focus:ring-green-500/50 focus:border-transparent transition-all duration-200 backdrop-blur-sm pl-12"
                     placeholder="Enter your email"
                   />
                   <svg className="absolute left-4 top-1/2 transform -translate-y-1/2 w-5 h-5 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -104,7 +155,7 @@ export default function Login() {
                     onChange={handleChange}
                     required
                     autoComplete="new-password"
-                    className="w-full p-4 bg-gray-800/50 text-white border border-gray-600/50 rounded-xl focus:outline-none focus:ring-2 focus:ring-green-500/50 focus:border-transparent transition-all duration-200 backdrop-blur-sm pl-12 pr-12"
+                    className="w-full bg-gray-800/50 text-white border border-gray-600/50 rounded-xl focus:outline-none focus:ring-2 focus:ring-green-500/50 focus:border-transparent transition-all duration-200 backdrop-blur-sm pl-12 pr-12"
                     placeholder="Enter your password"
                   />
                   <svg className="absolute left-4 top-1/2 transform -translate-y-1/2 w-5 h-5 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -133,7 +184,7 @@ export default function Login() {
                 <button
                   type="submit"
                   onClick={handleSubmit}
-                  className="w-full bg-gradient-to-r from-green-600 to-emerald-600 hover:from-green-700 hover:to-emerald-700 text-white font-semibold py-4 rounded-xl transition-all duration-300 shadow-lg hover:shadow-xl hover:shadow-green-500/20 transform hover:scale-[1.02]"
+                  className="w-full bg-gradient-to-l from-green-600 to-emerald-800 hover:from-green-700 hover:to-emerald-800 text-white font-semibold py-4 rounded-xl transition-all duration-300 shadow-lg hover:shadow-xl hover:shadow-green-500/20 transform hover:scale-[1.02]"
                 >
                   Sign In
                 </button>
@@ -152,5 +203,6 @@ export default function Login() {
         </div>
       </div>
     </div>
+    
     );
 }

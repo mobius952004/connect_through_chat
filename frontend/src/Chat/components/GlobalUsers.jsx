@@ -1,15 +1,15 @@
 import SearchBar from "./SearchBar";
-import ChatCard from "./ChatCard";
+import UserCard from "./UserCard";
 import { getallusers } from "../../api/auth";
 import { useEffect } from "react";
 import { useState } from "react";
-import { useContext } from "react";
+// import { useContext } from "react";
 import { ChatContext } from "../../store/socketContext";
 
 export default function GlobalUsers() {
-  const { getCurrentUser } = useContext(ChatContext);
+  // const { getCurrentUser } = useContext(ChatContext);
 
-  const userid = getCurrentUser();
+  // const userid = getCurrentUser();
   //   console.log(`${userid.type}globalusers`);
   const [allusers, setallusers] = useState([]);
 
@@ -27,13 +27,13 @@ export default function GlobalUsers() {
     };
 
     showall();
-  }, [userid]);
+  }, []);
   return (
     <div className="w-full h-full flex flex-col">
       <SearchBar />
 
       {allusers &&
-        allusers.map((user) => <ChatCard user={user} key={user._id} />)}
+        allusers.map((user) => <UserCard user={user} key={user._id} />)}
     </div>
   );
 }
