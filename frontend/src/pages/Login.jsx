@@ -19,9 +19,9 @@ export default function Login() {
         try {
             const { accessToken } = await loginUser(formData);
             localStorage.setItem("accessToken", accessToken);
-            connectSocket()
             
             navigate("/connect/home");
+            connectSocket()
         } catch (err) {
             setError(err.message || "Login failed");
         }

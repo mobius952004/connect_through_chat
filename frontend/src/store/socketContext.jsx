@@ -22,8 +22,7 @@ export default function ChatProvider({ children }) {
   const [sidepanel, setsidepanel] = useState("");
   const [selecteduser, setselecteduser] = useState(null);
   const [chatlist, setchatlist] = useState([]);
-  // setchatlist(selecteduser)
-
+    const [selectedChat,setSelectedChat]=useState(null)
   return (
     <ChatContext.Provider
       value={{
@@ -37,6 +36,9 @@ export default function ChatProvider({ children }) {
         getCurrentUser,
         chatlist,
         setchatlist,
+        selectedChat,
+        setSelectedChat
+        
       }}
     >
       {children}
