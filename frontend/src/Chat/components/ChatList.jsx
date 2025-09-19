@@ -23,15 +23,15 @@ useEffect(()=>{
     console.log(chatlist)
     getchats()
 
+
 // eslint-disable-next-line react-hooks/exhaustive-deps
 },[])
 
 
 
   useEffect(() => {
-    // console.log(selecteduser)
-    //re render if the selected user cahnges
-    if (!selecteduser) return; //check if the chatarray exists or not , rermove this line
+
+    if (!selecteduser) return; 
     const accessToken=localStorage.getItem("accessToken")
     
  const createChat = async () => {

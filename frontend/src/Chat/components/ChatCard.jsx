@@ -3,7 +3,7 @@ import { ChatContext } from "../../store/socketContext";
 import { PersonStandingIcon } from "lucide-react";
 
 export default function ChatCard({ chat }) {
-  const { setselecteduser } = useContext(ChatContext);
+  const {  setSelectedChat } = useContext(ChatContext);
 
   if (!chat) return null; // guard against undefined
   // console.log(user)
@@ -11,7 +11,7 @@ export default function ChatCard({ chat }) {
     <button
       type="button"
       onClick={() => {
-        setselecteduser();
+        setSelectedChat(chat);
       }}
       className=" w-full bg-gradient-to-r from-bg-slate-700 via-bg-slate-800 to-bg-slate-700 hover:bg-slate-800 rounded-2xl my-1 "
     >
