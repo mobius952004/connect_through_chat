@@ -6,17 +6,14 @@ class Chat_controller {
     const userId = req.user.sub
     const otherUserId = req.body.selecteduserId
     const otherUserName = req.body.selectedusername
-    console.log("H2")
-    console.log(userId)
-    console.log(otherUserName)
+    // console.log("H2")
+    // console.log(userId)
+    // console.log(otherUserName)
 
     try {
       console.log("H3")
       const chat = await chatServices.setChatList(userId, otherUserId, otherUserName)
-      // if(!chat){
-      //   res.status(500)
-      // }
-      res.status(200).json(`${chat} created between ${req.user.usernamme}and ${otherUserName}`)
+      res.status(200).json(chat)
     } catch (err) {
       res.status(404).json({ msg: `chat not created${err}` })
     }

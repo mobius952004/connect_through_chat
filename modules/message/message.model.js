@@ -22,8 +22,8 @@ const messageSchema = new mongoose.Schema({
     date: { type: String },
     status: {
         type: String,
-        enum: ["Pending","sent", "delivered", "seen"],
-        default: "Pending"
+        // enum: ["Pending","sent", "delivered", "seen"],
+        // default: "Pending"
     },
 });
 

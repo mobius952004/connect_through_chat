@@ -5,14 +5,18 @@ class chat_Services {
 
     console.log('H1')
 
-    const chat = await Chat.findOne({ users: userId, otherUserId , $size: 2 }  )
-    if(chat) return ;
-  console.log("H4")
+    const chat = await Chat.findOne({
+        users: { $all: [userId, otherUserId], $size: 2 }
+    });
+
+    if (chat) return chat; // chat already exists
+  // console.log("H4")
     try {
+      // console.log("h5")
       const chat = await Chat.create({ users: [userId, otherUserId] ,
         chatName:otherUserName
       });
-      console.log(`controller-${chat}`)
+      // console.log(`controller-${chat}`)
       return chat;
     } catch (err) {
       throw new Error(err);
