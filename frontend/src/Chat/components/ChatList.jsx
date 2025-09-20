@@ -3,7 +3,6 @@ import ChatCard from "./ChatCard";
 import { ChatContext } from "../../store/socketContext";
 import { useEffect } from "react";
 import { getChatList, setChatList } from "../../api/auth";
-// import { useEffect } from "react"
 
 export default function ChatList() {
   const { chatlist, setchatlist, selecteduser } = useContext(ChatContext);
