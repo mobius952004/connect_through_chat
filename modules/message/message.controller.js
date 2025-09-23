@@ -1,7 +1,7 @@
 import messageService from "./message.service.js";
 
 class MessageController {
-  async sendMessage(req, res) {
+  async sendMessages(req, res) {
     try {
       const { chatId } = req.params;
       const { from, content } = req.body;
@@ -21,7 +21,9 @@ class MessageController {
   async getMessages(req, res) {
     try {
       const { chatId } = req.params;
+      console.log(chatId)
       const messages = await messageService.getMessages(chatId);
+      // console.log(messages)
       res.status(200).json(messages);
     } catch (error) {
       res.status(500).json({ error: error.message });

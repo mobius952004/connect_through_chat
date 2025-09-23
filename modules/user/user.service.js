@@ -10,7 +10,7 @@ class user_services {
   async getallusers(userID) {
     // console.log(userID);
     try {
-      const users = await User.find({ _id: { $ne: new mongoose.Types.ObjectId(userID) } });
+      const users = await User.find({ _id: { $ne: new mongoose.Types.ObjectId(userID) } }).select("-passowrd -email");
       return users;
 
     } catch (err) {

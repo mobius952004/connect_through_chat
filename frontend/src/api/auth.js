@@ -1,5 +1,7 @@
 // 📁 front/src/api/auth.js
 
+// import { json } from "express";
+
 const API_BASE = "http://localhost:3000";
 
 // ✅ Signup user
@@ -137,6 +139,23 @@ export async function getChatList(accessToken){
       "Content-Type": "application/json",
       Authorization: `Bearer ${accessToken}`,
     },
+
+  })
+  const data = await res.json();
+  if(!res.ok){
+     throw new Error(data.message || "Chat list getting error");
+  }
+
+  return data;
+}
+export async function getMessages(accessToken,chatId){
+  const res = await fetch(`${API_BASE}/api/messages/${chatId}`, {
+    method: "GET",
+    headers: {
+      "Content-Type": "application/json",
+      Authorization: `Bearer ${accessToken}`,
+    },
+
 
   })
   const data = await res.json();

@@ -19,12 +19,12 @@ useEffect(()=>{
       setchatlist(chats);
     }
 
-    console.log(chatlist)
+    // console.log(chatlist)
     getchats()
 
 
 // eslint-disable-next-line react-hooks/exhaustive-deps
-},[])
+},[selecteduser,])
 
 
 

@@ -40,6 +40,7 @@ export default function chatSocketHandler(io, socket) {
     SOCKET_EVENTS.SEND_PRIVATE_MESSAGE,
     async ({ toUserId, newmessage }, callback) => {
       if (!userId || !toUserId) return;
+      
 
       const roomId = getRoomId({ userId: userId, withUserId: toUserId });
 
@@ -49,10 +50,10 @@ export default function chatSocketHandler(io, socket) {
       callback(updatedmessage);
 
       
-      updatedmessage.status = "Delivered";
-      await updatedmessage.save();
       
       io.to(roomId).emit(SOCKET_EVENTS.RECEIVE_MESSAGE, updatedmessage);
+      updatedmessage.status = "Delivered";
+      await updatedmessage.save();
 
       io.to(userId).emit("MESSAGE_STATUS", updatedmessage);
       console.log(

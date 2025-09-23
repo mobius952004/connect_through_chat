@@ -8,7 +8,7 @@ class Chat_controller {
     const otherUserName = req.body.selectedusername
     // console.log("H2")
     // console.log(userId)
-    // console.log(otherUserName)
+    console.log(otherUserName)
 
     try {
       console.log("H3")

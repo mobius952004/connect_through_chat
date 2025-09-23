@@ -14,7 +14,7 @@ class chat_Services {
     try {
       // console.log("h5")
       const chat = await Chat.create({ users: [userId, otherUserId] ,
-        chatName:otherUserName
+       
       });
       // console.log(`controller-${chat}`)
       return chat;
@@ -29,7 +29,7 @@ class chat_Services {
         "users",
         "username profilePic status isOnline"
       );
-      console.log(chatlist);
+      // console.log(chatlist);
       return chatlist;
     } catch (err) {
       throw new Error(err);

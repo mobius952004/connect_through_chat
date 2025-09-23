@@ -5,6 +5,7 @@ import connectDB from "./config/db.js";
 import authRoutes from "./modules/authentication/auth.routes.js"
 import userRoutes from "./modules/user/user.routes.js"
 import chatRouter from "./modules/chat/chat.routes.js"
+import messageRouter from "./modules/message/message.routes.js"
 
 
 
@@ -31,6 +32,7 @@ app.use(express.json());
 app.use("/api/auth/", authRoutes);
 app.use("/api/user/",userRoutes)
 app.use("/api/chat/",chatRouter)
+app.use("/api/messages/",messageRouter)
 
 app.get("/",(req,res)=>{
     res.send({msg:"hlo"})
