@@ -80,6 +80,8 @@ export default function ChatBox() {
             }));
 
             setPastMessages(transformed);
+            // setPastMessages(prev => [...prev, transformed]);
+
         }
         messages()
 
@@ -113,6 +115,7 @@ export default function ChatBox() {
               recievedmessage.belongstouser = recievedmessage.from === UserId;
 
             setPastMessages((prev) => [recievedmessage, ...prev]);
+            // setPastMessages((prev) => [ ...prev,recievedmessage]);
         });
         socket.on("MESSAGE_UPDATED", (updatedMsg) => {
             setPastMessages((prev) =>
@@ -130,7 +133,7 @@ export default function ChatBox() {
     return (
         <div className=" flex-1 relative  bg-gradient-to-r from-gray-900 via-gray-600 to-gray-900 flex flex-col overflow-y-auto ">
             <ChatAvatar UserId={UserId} />
-            <div className="dark:bg-gray-800  relative  flex-1  flex flex-col-reverse overflow-y-scroll scrollbar-hide bg-gradient-to-r from-gray-900 via-gray-600 to-gray-900  ">
+            <div className="dark:bg-gray-900  relative  flex-1  flex flex-col-reverse overflow-y-scroll scrollbar-hide bg-graay-800 ">
                 {pastMessages.length === 0 ? (
                     <p className="absolute bottom-0 text-gray-300 self-center-safe">
                         No conversation yet
