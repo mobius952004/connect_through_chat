@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect, useRef } from "react";
 import { signupUser } from "../api/auth";
 import { useNavigate } from "react-router-dom";
 import { connectSocket } from "../sockets/socket";
@@ -25,23 +25,86 @@ export default function Signup() {
     try {
       const { accessToken } = await signupUser(formData);
       localStorage.setItem("accessToken", accessToken);
-      
+
       navigate("/connect/home");
-      connectSocket()
+      connectSocket();
     } catch (err) {
       setError(err.message || "Signup failed");
     }
   };
   const handleLoginRedirect = async () => {
+    navigate("/connect/login");
+  };
 
-    navigate("/connect/login")
-  }
+  const [fadeIn, setFadeIn] = useState(false);
 
+  useEffect(() => {
+    // Trigger fade-in animation once component mounts
+    setFadeIn(true);
+  }, []);
 
+  const canvasRef = useRef(null);
+
+  useEffect(() => {
+    const canvas = canvasRef.current;
+    const ctx = canvas.getContext("2d");
+    canvas.width = window.innerWidth;
+    canvas.height = window.innerHeight;
+
+    const NUM_NODES = 45;
+    const nodes = [];
+    for (let i = 0; i < NUM_NODES; i++) {
+      nodes.push({
+        x: Math.random() * canvas.width,
+        y: Math.random() * canvas.height,
+        glow: 0.7 + Math.random() * 0.3,
+      });
+    }
+
+    // Draw lines
+    for (let i = 0; i < NUM_NODES; i++) {
+      for (let j = i + 1; j < NUM_NODES; j++) {
+        const dist = Math.hypot(
+          nodes[i].x - nodes[j].x,
+          nodes[i].y - nodes[j].y
+        );
+        if (dist < 200) {
+          ctx.save();
+          ctx.globalAlpha = 0.13;
+          ctx.strokeStyle = "cyan";
+          ctx.shadowColor = "#00ffa0";
+          ctx.shadowBlur = 12;
+          ctx.beginPath();
+          ctx.moveTo(nodes[i].x, nodes[i].y);
+          ctx.lineTo(nodes[j].x, nodes[j].y);
+          ctx.stroke();
+          ctx.restore();
+        }
+      }
+    }
+
+    // Draw glowing nodes
+    for (const node of nodes) {
+      ctx.save();
+      ctx.globalAlpha = node.glow;
+      ctx.beginPath();
+      ctx.arc(node.x, node.y, 8, 0, 2 * Math.PI);
+      ctx.fillStyle = "#10ffde";
+      ctx.shadowColor = "#00ffdc";
+      ctx.shadowBlur = 24;
+      ctx.fill();
+      ctx.restore();
+    }
+  }, []);
 
   return (
     <div className="min-h-screen flex items-center justify-center bg-gradient-to-bl from-slate-900 via-slate-800 to-slate-900 text-white relative overflow-hidden px-4">
       {/* Animated background elements */}
+      <canvas
+        ref={canvasRef}
+        className="absolute inset-0 z-0"
+        style={{ width: "100vw", height: "100vh" }}
+      />
       <div className="absolute inset-0 opacity-20">
         <div className="absolute top-1/4 left-1/4 w-64 h-64 bg-green-500/50 rounded-full blur-3xl animate-pulse"></div>
         <div className="absolute bottom-1/4 right-1/4 w-64 h-64 bg-emerald-500/50 rounded-full blur-3xl animate-pulse delay-1000"></div>
@@ -49,9 +112,13 @@ export default function Signup() {
       </div>
 
       <div className="relative z-10">
-        <div className="relative max-w-md mx-auto bg-gradient-to-bl from-slate-900 via-slate-800 to-slate-900 p-10 border border-slate-700 rounded-2xl shadow-2xl shadow-black backdrop-blur-3xl">
+        <div
+          className={`relative max-w-md mx-auto bg-slate-900 p-10 border border-slate-700 rounded-2xl shadow-2xl shadow-black transform transition-all duration-700 ${
+            fadeIn ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"
+          }`}
+        >
           {/* Subtle gradient overlay */}
-          <div className="absolute inset-0 bg-gradient-to-br from-green-900 via-transparent to-emerald-900 rounded-2xl pointer-events-none z-0"></div>
+          {/* <div className="absolute inset-0 bg-gradient-to-br from-green-900 via-transparent to-emerald-900 rounded-2xl pointer-events-none z-0"></div> */}
 
           <div className="relative z-10">
             {/* Header with icon */}
@@ -236,5 +303,4 @@ export default function Signup() {
       </div>
     </div>
   );
-
 }

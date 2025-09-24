@@ -55,8 +55,8 @@ export default function Navbar() {
             <button onClick={()=>navigate("/connect/login")} className="px-3 py-2 text-gray-300 hover:text-green-400 transition-colors duration-200 font-medium text-sm sm:text-base">
               Login
             </button>
-            <button onClick={()=>navigate("/connect/signup")} className="px-4 py-2 bg-gradient-to-l from-green-600 to-emerald-600 hover:from-green-700 hover:to-emerald-700 text-white font-semibold rounded-xl transition-all duration-300 shadow-lg hover:shadow-xl hover:shadow-green-500/20 transform hover:scale-[1.02] text-sm sm:text-base">
-              Sign Up
+            <button onClick={()=>navigate("/connect/signup")} className="px-3 py-2 text-gray-300 hover:text-green-400 transition-colors duration-200 font-medium text-sm sm:text-base">
+              Signup
             </button>
 
             {/* Mobile Menu Button */}
