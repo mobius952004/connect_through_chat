@@ -12,15 +12,15 @@ class MessageService{
 
         await msg.save();
 
-        await Chat.findByIdAndUpdate(chatId, { lastMessage: Message._id });
-        return Message.populate("from Chat");
+        await Chat.findByIdAndUpdate(chatId, { lastMessage: msg._id });
+        return msg.populate("from Chat");
     }
 
     async getMessages(chatId) {
         return Message.find({ Chat: chatId })
           .populate("from")
           .populate("Chat")
-          .sort({ createdAt: 1 });
+          .sort({ createdAt: -1 });
     }
 }
 

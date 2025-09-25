@@ -7,38 +7,31 @@ import { getChatList, setChatList } from "../../api/auth";
 export default function ChatList() {
   const { chatlist, setchatlist, selecteduser } = useContext(ChatContext);
 
+  useEffect(() => {
+    const accessToken = localStorage.getItem("accessToken");
 
-
-useEffect(()=>{
-  const accessToken=localStorage.getItem("accessToken")
-    
-    const getchats=async ()=>{
-    
-      const chats= await getChatList(accessToken)
-      console.log(chats)
+    const getchats = async () => {
+      const chats = await getChatList(accessToken);
+      console.log(chats);
       setchatlist(chats);
-    }
+    };
 
     // console.log(chatlist)
-    getchats()
+    getchats();
 
-
-// eslint-disable-next-line react-hooks/exhaustive-deps
-},[selecteduser,])
-
-
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [selecteduser]);
 
   useEffect(() => {
+    if (!selecteduser) return;
+    const accessToken = localStorage.getItem("accessToken");
 
-    if (!selecteduser) return; 
-    const accessToken=localStorage.getItem("accessToken")
-    
- const createChat = async () => {
-        await setChatList({
-            accessToken,
-            selecteduserId: selecteduser._id,
-            selectedusername: selecteduser.username,
-        });
+    const createChat = async () => {
+      await setChatList({
+        accessToken,
+        selecteduserId: selecteduser._id,
+        selectedusername: selecteduser.username,
+      });
     };
     createChat();
   }, [selecteduser]);

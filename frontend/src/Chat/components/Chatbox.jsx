@@ -90,9 +90,9 @@ export default function ChatBox() {
 
         // for selected user
         // socket.emit(ChatEvents.JOIN_ROOM, { withUserId: selecteduser?._id });
+        socket.emit(ChatEvents.JOIN_ROOM, { withUserId: otheruser?._id });
 
         // for selected chat
-        socket.emit(ChatEvents.JOIN_ROOM, { withUserId: otheruser?._id });
 
         socket.on(ChatEvents.RECEIVE_MESSAGE, async (recievedmessage) => {
             //   recievedmessage.map(msg => {

@@ -23,7 +23,7 @@ export default function UserChats() {
     useEffect(() => {
       const accessToken = localStorage.getItem("accessToken");
       if (!accessToken) {
-        setError("No accessToken found");
+        setError("Session Expired");
         return ;
       }
   },[]);
