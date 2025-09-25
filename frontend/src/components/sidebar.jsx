@@ -25,7 +25,7 @@ const navigate=useNavigate()
     // const {dopost,setdopost} = useContext(Postlist)
 
     return (
-        <div className="bg-gradient-to-t from-gray-900 via-gray-600 to-gray-900  relative overflow-visible  w-8" >
+        <div className="bg-gray-950 relative overflow-visible  w-8" >
 
             <aside className="     my-auto py-3 sm:py-4 lg:py-5 h-full">
 

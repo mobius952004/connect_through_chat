@@ -29,7 +29,7 @@ export default function GlobalUsers() {
     showall();
   }, []);
   return (
-    <div className="w-full h-full flex flex-col">
+    <div className="w-full h-full flex flex-col bg-gray-950 border-emerald-300/60 border-1">
       <SearchBar />
 
       {allusers &&

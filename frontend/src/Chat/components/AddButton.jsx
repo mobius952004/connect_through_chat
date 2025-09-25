@@ -43,16 +43,16 @@ export default function AddButton({ onadd, setonadd }) {
                   <button type="button" onClick={()=>setsidepanel("AddFriend")} className="text-start w-full rounded-t-lg px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">Add Friend</button>
                </li>
                <li>
-                  <button type="button" className="w-full block px-4 py-2 text-start hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">mark as read</button>
+                  <button type="button" className="w-full block px-4 py-2 text-start hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">Create Group</button>
                </li>
                <li>
-                  <button type="button" className="w-full block px-4 py-2 text-start hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">remove</button>
+                  <button type="button" className="w-full block px-4 py-2 text-start hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">Join Group</button>
                </li>
                <li>
-                  <button type="button" className="w-full block px-4 py-2 text-start hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">Report</button>
+                  <button type="button" className="w-full block px-4 py-2 text-start hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">Manage Chats</button>
                </li>
                <li>
-                  <button type="button" className="w-full block text-start rounded-b-lg px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">Delete</button>
+                  <button type="button" className="w-full block text-start rounded-b-lg px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">Archive</button>
                </li>
             </ul>
          </div>

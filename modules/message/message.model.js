@@ -25,7 +25,7 @@ const messageSchema = new mongoose.Schema({
         // enum: ["Pending","sent", "delivered", "seen"],
         // default: "Pending"
     },
-});
+}, { timestamps: true });
 
 const Message = mongoose.model("Message", messageSchema);
 export default Message;

@@ -1,9 +1,17 @@
 import { EllipsisVerticalIcon } from "lucide-react";
-import "flowbite";
+// import { useEffect } from "react";
+// import "flowbite";
+import { useState } from "react";
 
 export default function PrevChat({msg}) {
 
+  const [menueopen,setmenueopen]=useState(false)
   // console.log(` prevchat ${msg.username}`)
+  //  useEffect(() => {
+  //   import("flowbite").then((flowbite) => {
+  //     flowbite.initDropdowns();
+  //   });
+  // }, []);
   
   return (
     <div className={`flex items-start gap-2.5 group relative ${msg.belongstouser?"self-end":"self-start"}`}>
@@ -17,7 +25,7 @@ export default function PrevChat({msg}) {
             {msg.time }&nbsp;{msg.date}
           </span>
         </div>
-        <div className={`flex flex-col flex-wrap leading-1.5 p-4 border-gray-200 bg-gray-100 rounded-e-xl rounded-es-xl  ${msg.belongstouser?"dark:bg-gray-900":"dark:bg-green-600"} `}>
+        <div className={`flex flex-col flex-wrap leading-1.5 p-4 border-gray-200 bg-gray-100 rounded-e-xl rounded-es-xl  ${msg.belongstouser?"bg-gray-600":"dark:bg-green-600"} `}>
           <p className="text-sm font-normal  text-gray-900 dark:text-white whitespace-pre-wrap break-all">
             {msg.content}
           </p>
@@ -27,21 +35,25 @@ export default function PrevChat({msg}) {
         </span>
       </div>
       <button
-        id="dropdownMenuIconButton"
-        data-dropdown-toggle="dropdownDots"
-        data-dropdown-placement="bottom-start"
+        // id="dropdownMenuIconButton"
+        // data-dropdown-toggle="dropdownDots"
+        // data-dropdown-placement="bottom-start"
         className="inline-flex self-center items-center p-2 text-sm font-medium text-center text-gray-900 rounded-lg focus:ring-0 focus:outline-none dark:text-white opacity-0 group-hover:opacity-100 "
         type="button"
+        onClick={()=>setmenueopen(!menueopen)}
+
       >
         <EllipsisVerticalIcon />
       </button>
+
+      {menueopen && 
       <div
-        id="dropdownDots"
-        className="z-10 hidden bg-white divide-y divide-gray-100 rounded-lg shadow-sm w-40 dark:bg-gray-900 dark:divide-gray-600"
+      // id="dropdownDots"
+      className="absolute right-0 mt-2  z-50  bg-white divide-y divide-gray-100 rounded-lg shadow-sm w-40 dark:bg-gray-900 dark:divide-gray-600"
       >
         <ul
           className="py-2 text-sm text-gray-700 dark:text-gray-200"
-          aria-labelledby="dropdownMenuIconButton"
+          // aria-labelledby="dropdownMenuIconButton"
         >
           <li>
             <a
@@ -63,7 +75,7 @@ export default function PrevChat({msg}) {
             <a
               href="#"
               className="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white"
-            >
+              >
               Copy
             </a>
           </li>
@@ -71,7 +83,7 @@ export default function PrevChat({msg}) {
             <a
               href="#"
               className="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white"
-            >
+              >
               Report
             </a>
           </li>
@@ -79,12 +91,13 @@ export default function PrevChat({msg}) {
             <a
               href="#"
               className="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white"
-            >
+              >
               Delete
             </a>
           </li>
         </ul>
       </div>
+            }
     </div>
   );
 }
