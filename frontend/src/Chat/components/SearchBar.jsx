@@ -1,6 +1,15 @@
 import { Search } from "lucide-react";
+import { useState } from "react";
 
-export default function SearchBar() {
+export default function SearchBar({onSearch}) {
+
+    const [input, setInput] = useState("");
+
+    const handleInput = (event) => {
+      setInput(event.target.value);
+      onSearch(event.target.value);
+    }
+
   return (
     <form className="flex items-center max-w-sm mx-2 my-3 bg-blend-saturation ">
       <label htmlFor="simple-search" className="sr-only">
@@ -13,6 +22,8 @@ export default function SearchBar() {
         <input
           type="text"
           id="simple-search"
+          value={input}
+          onChange={handleInput}
           className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-3xl focus:ring-green-500 focus:border-green-500 block w-full ps-10 p-2.5  dark:bg-gray-800 dark:border-gray-400 dark:hover:border-gray-300 dark:placeholder-gray-400 dark:text-white dark:focus:ring-green-500 dark:focus:border-green-500"
           placeholder="Search User..."
           required
