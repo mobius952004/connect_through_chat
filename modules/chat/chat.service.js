@@ -3,7 +3,7 @@ import Chat from "./chat.model.js";
 class chat_Services {
   async setChatList(userId, otherUserId, otherUserName) {
 
-    console.log('H1')
+    // console.log('H1')
 
     const chat = await Chat.findOne({
         users: { $all: [userId, otherUserId], $size: 2 }

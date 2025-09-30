@@ -7,6 +7,7 @@ import Login from "./pages/Login";
 import Navbar from "./pages/Nav.jsx";
 import Home from "./pages/Home.jsx";
 import UserChats from "./Chat/pages/UserChat.jsx";
+import ProfileStatistics from "./pages/setUserInfo.jsx";
 // import { useState } from "react";
 
 function App() {
@@ -20,13 +21,16 @@ function App() {
           <Route path="/connect/home" element={<Home />} >
             <Route path="chats" element={<UserChats />}></Route>
             <Route path="calls" element={<div className="bg-blue-800 h-full w-full">
-              
 
             </div>}></Route>
 
           </Route>
 
           <Route path="/connect/signup" element={<Signup />} />
+
+          <Route path ="/connect/signup/setProfileInformation" element={<ProfileStatistics/>} />
+          
+          
 
           <Route path="/connect/profile" element={<Profile />} />
 

@@ -1,4 +1,4 @@
-// import { CgProfile } from "react-icons/cg";
+import { CgProfile } from "react-icons/cg";
 import { IoMenu } from "react-icons/io5";
 import { CgRemote } from "react-icons/cg";
 import { IoIosSettings } from "react-icons/io";
@@ -25,17 +25,17 @@ const navigate=useNavigate()
     // const {dopost,setdopost} = useContext(Postlist)
 
     return (
-        <div className="bg-gray-950 relative overflow-visible  w-8" >
+        <div className="bg-gray-950 relative overflow-visible  w-15" >
 
             <aside className="     my-auto py-3 sm:py-4 lg:py-5 h-full">
 
                 <div className="flex flex-col justify-between h-full ">
 
-                    <div className="flex flex-col items-center  w-8">
+                    <div className="flex flex-col items-center  w-15">
 
                         <div className="relative group sm:my-2 my-1">
                             <button className="relative " onClick={() => setIsMenusOpen(!isMenueOpen)}>
-                                {isMenueOpen ? <IoCloseSharp className="sm:w-5 sm:h-7 w-4 h-6 text-white hover:text-green-600 transition-all transform hover:scale-[1.2] cursor-pointer " /> : <IoMenu className="sm:w-5 sm:h-7 w-4 h-6 text-white hover:text-green-600 transition-all transform hover:scale-[1.2] cursor-pointer " />
+                                {isMenueOpen ? <IoCloseSharp className="sm:w-5 sm:h-7 w-4 h-6 text-white hover:text-green-600 transition-all transform hover:scale-[1.2] cursor-pointer " /> : <IoMenu className="sm:w-7 sm:h-9 w-6 h-8 text-white hover:text-green-600 transition-all transform hover:scale-[1.2] cursor-pointer " />
                                 }
                             </button>
 
@@ -85,7 +85,7 @@ const navigate=useNavigate()
 
 
                     </div>
-                    <div className="flex flex-col items-center  w-8">
+                    <div className="flex flex-col items-center  w-15">
 
 
 
@@ -100,6 +100,15 @@ const navigate=useNavigate()
                         </div>
 
 
+                        <div className="relative group sm:my-2 my-1">
+                            <button className="relative">
+                                <CgProfile className="sm:w-5 sm:h-7 w-4 h-6 text-white hover:text-green-600 transition-all transform hover:scale-[1.2] cursor-pointer" />
+                            </button>
+
+                            <span className="absolute bottom-full mb-1 left-1/2 -translate-x-1/4 px-2 py-1 bg-gray-700 text-white text-xs rounded-full opacity-0 group-hover:opacity-100 transition-opacity duration-100 pointer-events-none whitespace-nowrap z-50">
+                                Profile
+                            </span>
+                        </div>
                         <div className="relative group sm:my-2 my-1">
                             <button className="relative">
                                 <IoIosSettings className="sm:w-5 sm:h-7 w-4 h-6 text-white hover:text-green-600 transition-all transform hover:scale-[1.2] cursor-pointer" />

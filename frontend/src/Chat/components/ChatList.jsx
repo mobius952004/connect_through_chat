@@ -1,11 +1,13 @@
-import { useContext } from "react";
+import { useContext, useState } from "react";
 import ChatCard from "./ChatCard";
 import { ChatContext } from "../../store/socketContext";
 import { useEffect } from "react";
 import { getChatList, setChatList } from "../../api/auth";
+import SearchBar from "./SearchBar";
 
 export default function ChatList() {
   const { chatlist, setchatlist, selecteduser } = useContext(ChatContext);
+  const[filtereChats,setFilteredChats]=useState([])
 
   useEffect(() => {
     const accessToken = localStorage.getItem("accessToken");
@@ -13,14 +15,15 @@ export default function ChatList() {
     const getchats = async () => {
       const chats = await getChatList(accessToken);
       console.log(chats);
-      setchatlist(chats);
+      setchatlist(chats)
+      setFilteredChats(chats);
     };
 
     // console.log(chatlist)
     getchats();
 
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [selecteduser]);
+  }, []);
 
   useEffect(() => {
     if (!selecteduser) return;
@@ -36,10 +39,27 @@ export default function ChatList() {
     createChat();
   }, [selecteduser]);
 
+
+  const search=(query)=>{
+   console.log(query)
+     if(!query.trim()){
+      setFilteredChats(chatlist)
+      return 
+     }
+
+     const searchText=query.toLowerCase()
+    //  console.log(searchText)
+     const searched= chatlist.filter(chat=> chat.chatName?.toLowerCase().includes(searchText))
+    //  console.log(searched)
+     setFilteredChats(searched)
+
+  }
+
   return (
     <div className="flex-1 min-h-0 overflow-y-scroll scrollbar-hide">
-      {chatlist &&
-        chatlist.map((chat) => <ChatCard chat={chat} key={chat._id} />)}
+      <SearchBar onSearch={search}/>
+      {filtereChats &&
+        filtereChats.map((chat) => <ChatCard chat={chat} key={chat._id} />)}
     </div>
   );
 }

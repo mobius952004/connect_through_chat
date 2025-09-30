@@ -12,9 +12,9 @@ export default function SearchBar({onSearch}) {
 
   return (
     <form className="flex items-center max-w-sm mx-2 my-3 bg-blend-saturation ">
-      <label htmlFor="simple-search" className="sr-only">
+      {/* <label htmlFor="simple-search" className="sr-only">
         Search
-      </label>
+      </label> */}
       <div className="relative w-full">
         <div className="absolute inset-y-0 start-0 flex items-center ps-3 dark:text-white pointer-events-none">
           <Search />

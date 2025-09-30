@@ -9,7 +9,7 @@ export default function PrevChat({ msg }) {
 
   const menueRef = useRef(null)
   const [menueopen, setmenueopen] = useState(false)
-
+  console.log(msg)
 
   useEffect(() => {
 
@@ -27,7 +27,7 @@ export default function PrevChat({ msg }) {
       <div className="flex flex-col gap-1 w-full max-w-[320px]">
         <div className={` flex items-center ${msg.belongstouser ? "justify-start flex-row-reverse space-x-reverse gap-4" : "gap-2"}`}>
           <span className="text-sm font-semibold text-emerald-300 dark:text-emerald-100">
-            {msg.from.username}
+            {msg.from.username ||msg.fromName}
           </span>
           <span className="text-sm font-normal text-gray-500 dark:text-gray-400">
             {msg.time}

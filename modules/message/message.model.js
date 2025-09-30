@@ -9,6 +9,7 @@ const messageSchema = new mongoose.Schema({
         type: mongoose.Schema.Types.ObjectId,
         ref: "User",
     },
+    fromName:{type:String},
     to: {
         type: mongoose.Schema.Types.ObjectId,
         ref: "User",

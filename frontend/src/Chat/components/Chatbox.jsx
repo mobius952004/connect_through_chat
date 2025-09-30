@@ -18,7 +18,7 @@ export default function ChatBox() {
     const username = getCurrentUser().username
     // console.log(username)
     const otheruser = selectedChat?.users.find(u => u._id !== UserId);
-    console.log(otheruser)
+
     //creating unique roomid for one on one chat consistion of ids of both the users
     const getRoomId = ({ userId, withUserId }) => {
         return [userId, withUserId].sort().join("_");
@@ -31,7 +31,8 @@ export default function ChatBox() {
         const newMessage = {
             content: Message,
             to: otheruser._id,
-            from: UserId,
+            from:UserId,
+            fromName:username,
             roomId,
             Chat: selectedChat._id,
             time: new Date().toLocaleTimeString([], {
@@ -48,8 +49,7 @@ export default function ChatBox() {
             username,
         };
 
-        // message sent directly to ui
-        // setPastMessages(prev => [newMessage, ...prev]);
+
 
         // message emmited
         socket.emit(
@@ -85,8 +85,6 @@ export default function ChatBox() {
         }
         messages()
 
-        //whenever selected user changes  import the messsages sonsisting the chat id /roomid ,
-        //use chat id as it represent the connection between users itself 
 
         // for selected user
         // socket.emit(ChatEvents.JOIN_ROOM, { withUserId: selecteduser?._id });

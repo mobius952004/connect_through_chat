@@ -34,7 +34,7 @@ export default function UserChats() {
         <div className="flex-1 flex  gap-0.5 h-full">
             {/* chats containers */}
             <div className="flex flex-col w-[340px] relative  bg-gray-950 border-spacing-2 border-emerald-300/60 border-1">
-                <SearchBar />
+                {/* <SearchBar /> */}
                 <ChatList />
                 <AddButton onadd={onadd} setonadd={setonadd} />
 
