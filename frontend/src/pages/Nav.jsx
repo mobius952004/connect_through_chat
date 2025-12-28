@@ -8,6 +8,9 @@ export default function Navbar() {
   const navigate=useNavigate()
 
   return (
+    <div>
+
+  
     <nav className="bg-gradient-to-l from-gray-900 via-gray-800 to-gray-900 text-white border-b border-gray-700/50 backdrop-blur-sm relative overflow-hidden">
       {/* Subtle background gradient overlay */}
       <div className="absolute inset-0 bg-gradient-to-r from-green-900/5 via-transparent to-emerald-900/5 pointer-events-none"></div>
@@ -101,5 +104,15 @@ export default function Navbar() {
         </div>
       )}
     </nav>
+
+  <div
+  className="w-full h-[815px] bg-cover bg-center"
+  style={{ backgroundImage: "url('/Halo.png')" }}
+>
+  Content
+</div>
+
+
+  </div>
   );
 }

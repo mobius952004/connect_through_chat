@@ -16,7 +16,10 @@ const server = http.createServer(app);
 const io = new Server(server, {
   connectionStateRecovery: {},
   cors: {
-    origin: "http://localhost:5173",  
+  origin: [
+      "http://localhost:5173",
+      "http://10.239.239.186:5173",
+    ],
     methods: ["GET", "POST"],
     credentials: true
   }
@@ -26,6 +29,6 @@ const io = new Server(server, {
 registerSocketHandeler(io)
 
 
-server.listen(PORT, () => {
+server.listen(PORT,'0.0.0.0', () => {
   console.log(`Server running at http://localhost:${PORT}`);
 });

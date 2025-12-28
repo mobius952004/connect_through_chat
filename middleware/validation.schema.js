@@ -34,7 +34,7 @@ export const signinValidation =
     },
        email: {
         notEmpty: {
-            errorMessage: "yo! yo! dont Fuck with Me , u bitch"
+            errorMessage: "........................."
         }
 
     }
