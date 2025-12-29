@@ -4,14 +4,12 @@ import { CgRemote } from "react-icons/cg";
 import { IoIosSettings } from "react-icons/io";
 import { MdOutlineLightMode } from "react-icons/md";
 import { IoCloseSharp } from "react-icons/io5";
-import { MdOutlineAddCircle } from "react-icons/md";
 import { PiGlobeStandDuotone } from "react-icons/pi";
 import { useState } from "react";
 import { IoChatboxEllipsesOutline } from "react-icons/io5";
 import { IoCallOutline } from "react-icons/io5";
-// import { MessageCircle, Phone } from "lucide-react";
 import { useNavigate } from "react-router-dom";
-import Drawer from "./drawer";
+// import Drawer from "./drawer";
 import "flowbite"
 
 
@@ -42,7 +40,7 @@ const navigate=useNavigate()
                             <span className="absolute bottom-full mb-1 left-1/2 -translate-x-1/4 px-2 py-1 bg-gray-700 text-white text-xs rounded-full opacity-0 group-hover:opacity-100 transition-opacity duration-100  pointer-events-none whitespace-nowrap z-50">
                                 {isMenueOpen ? "Close Menus" : "Open Menu"}
                             </span>
-                            {isMenueOpen &&<Drawer/>}
+                            {/* {isMenueOpen &&<Drawer/>} */}
                         </div>
                         
                         <div className="relative group sm:my-2 my-1">

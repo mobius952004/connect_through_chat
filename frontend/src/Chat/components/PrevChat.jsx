@@ -1,5 +1,4 @@
 import { EllipsisVerticalIcon } from "lucide-react";
-import { PinIcon } from "lucide-react";
 import { useEffect } from "react";
 import { useRef } from "react";
 // import "flowbite";
@@ -9,7 +8,7 @@ export default function PrevChat({ msg }) {
 
   const menueRef = useRef(null)
   const [menueopen, setmenueopen] = useState(false)
-  console.log(msg)
+  // console.log(msg)
 
   useEffect(() => {
 

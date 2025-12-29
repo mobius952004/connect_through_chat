@@ -8,9 +8,21 @@ import Navbar from "./pages/Nav.jsx";
 import Home from "./pages/Home.jsx";
 import UserChats from "./Chat/pages/UserChat.jsx";
 import ProfileStatistics from "./pages/setUserInfo.jsx";
+import { useEffect } from "react";
+import { scheduleTokenRefresh } from "./utils/authScheduler.js";
+import { connectSocket } from "./sockets/socket.js";
 // import { useState } from "react";
 
 function App() {
+
+  useEffect(() => {
+  const token = localStorage.getItem("accessToken");
+  if (token) {
+    scheduleTokenRefresh();
+    connectSocket();
+  }
+}, []);
+
 
   return (
     <ChatProvider>

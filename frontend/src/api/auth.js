@@ -1,6 +1,7 @@
 // 📁 front/src/api/auth.js
 
 // import { json } from "express";
+import { saveAccessToken } from "../utils/token";
 
 const API_BASE = import.meta.env.VITE_API_BASE_URL;
 
@@ -174,3 +175,16 @@ export async function getMessages(accessToken,chatId){
 
   
 //   });
+
+export async function refreshAccessToken() {
+  const res = await fetch("api/auth/user/refresh", {
+    method: "POST",
+    credentials: "include",
+  });
+
+  if (!res.ok) throw new Error("Refresh failed");
+
+  const { accessToken } = await res.json();
+  saveAccessToken(accessToken);
+  return accessToken;
+}

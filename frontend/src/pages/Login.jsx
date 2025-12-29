@@ -2,6 +2,7 @@ import { useState, useEffect, useRef } from "react";
 import { useNavigate } from "react-router-dom";
 import { loginUser } from "../api/auth";
 import { connectSocket } from "../sockets/socket";
+import { saveAccessToken } from "../utils/token";
 export default function Login() {
   const [formData, setFormData] = useState({ email: "", password: "" });
   const [error, setError] = useState("");
@@ -18,7 +19,10 @@ export default function Login() {
     setError("");
     try {
       const { accessToken } = await loginUser(formData);
-      localStorage.setItem("accessToken", accessToken);
+      saveAccessToken(accessToken)
+      // localStorage.setItem("accessToken", accessToken);
+     const  exp=localStorage.getItem("accessTokenExp")
+      console.log(exp)
 
       navigate("/connect/home");
       connectSocket();

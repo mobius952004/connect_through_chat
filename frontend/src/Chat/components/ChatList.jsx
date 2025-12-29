@@ -14,7 +14,7 @@ export default function ChatList() {
 
     const getchats = async () => {
       const chats = await getChatList(accessToken);
-      console.log(chats);
+      // console.log(chats);
       setchatlist(chats)
       setFilteredChats(chats);
     };

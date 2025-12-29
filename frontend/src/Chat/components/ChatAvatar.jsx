@@ -9,7 +9,7 @@ export default function ChatAvatar({ UserId }) {
 
         if (!selectedChat) return null
         const otheruser = selectedChat.users.find(u => u._id !== UserId);
-        console.log(otheruser)
+        // console.log(otheruser)
 
     //whenever teh selected user cahnges , the user from the selected caht or the new chat ,should be the one  other than the current user , if it is not a gorup
 

@@ -1,5 +1,5 @@
 import { EllipsisVerticalIcon } from "lucide-react"
-import "flowbite"
+// import "flowbite"
 
 
 export default function RightChatBubble(){
