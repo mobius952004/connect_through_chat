@@ -6,13 +6,13 @@ import ChatList from "../components/ChatList";
 import ChatBox from "../components/Chatbox";
 import { ChatContext } from "../../store/socketContext";
 import GlobalUsers from "../components/GlobalUsers";
-import { useEffect } from "react";
+// import { useEffect } from "react";
 
 
 
 export default function UserChats() {
 
-      const [error, setError] = useState(null);
+    //   const [error, setError] = useState(null);
 
     const [onadd, setonadd] = useState(false)
     const { sidepanel ,setsidepanel} = useContext(ChatContext)
@@ -20,15 +20,15 @@ export default function UserChats() {
    
    
    
-    useEffect(() => {
-      const accessToken = localStorage.getItem("accessToken");
-      if (!accessToken) {
-        setError("Session Expired");
-        return ;
-      }
-  },[]);
+//     useEffect(() => {
+//       const accessToken = localStorage.getItem("accessToken");
+//       if (!accessToken) {
+//         setError("Session Expired");
+//         return ;
+//       }
+//   },[]);
 
-  if (error) return <div className="text-red-400 text-center mt-6">{error}</div>;
+//   if (error) return <div className="text-red-400 text-center mt-6">{error}</div>;
 
     return (
         <div className="flex-1 flex  gap-0.5 h-full">
