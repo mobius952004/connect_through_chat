@@ -4,16 +4,17 @@ import { ChatContext } from "../../store/socketContext";
 import { useEffect } from "react";
 import { getChatList, setChatList } from "../../api/auth";
 import SearchBar from "./SearchBar";
+import { getAccessToken } from "../../utils/token";
 
 export default function ChatList() {
   const { chatlist, setchatlist, selecteduser } = useContext(ChatContext);
   const[filtereChats,setFilteredChats]=useState([])
 
   useEffect(() => {
-    const accessToken = localStorage.getItem("accessToken");
+    // const accessToken = getAccessToken();
 
     const getchats = async () => {
-      const chats = await getChatList(accessToken);
+      const chats = await getChatList();
       // console.log(chats);
       setchatlist(chats)
       setFilteredChats(chats);
@@ -23,7 +24,7 @@ export default function ChatList() {
     getchats();
 
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+  }, [getAccessToken()]);
 
   useEffect(() => {
     if (!selecteduser) return;

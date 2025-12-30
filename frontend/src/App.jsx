@@ -11,6 +11,8 @@ import ProfileStatistics from "./pages/setUserInfo.jsx";
 import { useEffect } from "react";
 import { scheduleTokenRefresh } from "./utils/authScheduler.js";
 import { connectSocket } from "./sockets/socket.js";
+import Call from "./Call/Calls_entry_point.jsx";
+import { clearRefreshTimer } from "./utils/authScheduler.js";
 // import { useState } from "react";
 
 function App() {
@@ -18,6 +20,7 @@ function App() {
   useEffect(() => {
   const token = localStorage.getItem("accessToken");
   if (token) {
+    clearRefreshTimer(); 
     scheduleTokenRefresh();
     connectSocket();
   }
@@ -32,9 +35,7 @@ function App() {
           <Route path="/connect" element={<Navbar />} />
           <Route path="/connect/home" element={<Home />} >
             <Route path="chats" element={<UserChats />}></Route>
-            <Route path="calls" element={<div className="bg-blue-800 h-full w-full">
-
-            </div>}></Route>
+            <Route path="calls" element={<Call/>}></Route>
 
           </Route>
 

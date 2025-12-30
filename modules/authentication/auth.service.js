@@ -38,7 +38,8 @@ class AuthServices {
       ),
       agent,
     });
-
+ 
+    
     return {
       user: { _id: newuser._id, username: newuser.username },
       deviceId,

@@ -17,7 +17,7 @@ export default function ChatAvatar({ UserId }) {
         <button type="button" onClick={() => setsidepanel("UserInfo")}>
 
             <div className="flex  items-center gap-4 bg-gray w-full py-2  ">
-                <img className="w-10 h-10 rounded-full" src="/vite.svg" alt="" />
+                <img className="w-10 h-10 rounded-full" src="/persondp.png" alt="" />
                 <div className="font-medium dark:text-white">
                     <div>{otheruser.username}</div>
                     <div className="text-sm text-gray-500 dark:text-gray-400">Joined in August 2014</div>

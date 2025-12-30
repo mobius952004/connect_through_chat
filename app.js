@@ -6,6 +6,7 @@ import authRoutes from "./modules/authentication/auth.routes.js";
 import userRoutes from "./modules/user/user.routes.js";
 import chatRouter from "./modules/chat/chat.routes.js";
 import messageRouter from "./modules/message/message.routes.js";
+import cookieParser from "cookie-parser"
 
 console.log("ACCESS:", process.env.JWT_ACCESS_SECRET?.slice(0, 10));
 console.log("REFRESH:", process.env.JWT_REFRESH_SECRET?.slice(0, 10));
@@ -21,12 +22,13 @@ app.use(
       "http://10.239.239.186:5173",
       "http://192.168.1.10:5173"
     ],
-    credentials: true,
+    credentials:true,
   })
 );
 
 // JSON parsing
 app.use(express.json());
+app.use(cookieParser())
 
 // Routes
 app.use("/api/auth/", authRoutes);

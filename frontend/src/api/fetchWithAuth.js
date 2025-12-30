@@ -1,8 +1,9 @@
-import { refreshAccessToken } from "./auth";
 import { getAccessToken } from "../utils/token";
+const API_BASE = import.meta.env.VITE_API_BASE_URL;
+
 
 export async function fetchWithAuth(url, options = {}) {
-  const token = getAccessToken();
+  let token = getAccessToken();
 
   let res = await fetch(url, {
     ...options,
@@ -15,13 +16,23 @@ export async function fetchWithAuth(url, options = {}) {
 
   if (res.status !== 401) return res;
 
-  const newToken = await refreshAccessToken();
+  // refresh token
+  const refreshRes = await fetch(`${API_BASE}/api/auth/user/refresh`, {
+    method: "POST",
+    credentials: "include",
+  });
 
+  if (!refreshRes.ok) throw new Error("Session expired");
+
+  const { accessToken } = await refreshRes.json();
+  localStorage.setItem("accessToken", accessToken);
+
+  // retry original request
   return fetch(url, {
     ...options,
     headers: {
       ...(options.headers || {}),
-      Authorization: `Bearer ${newToken}`,
+      Authorization: `Bearer ${accessToken}`,
     },
     credentials: "include",
   });

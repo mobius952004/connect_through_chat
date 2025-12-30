@@ -2,6 +2,7 @@
 
 // import { json } from "express";
 import { saveAccessToken } from "../utils/token";
+import { fetchWithAuth } from "./fetchWithAuth";
 
 const API_BASE = import.meta.env.VITE_API_BASE_URL;
 
@@ -132,14 +133,12 @@ export async function setChatList({accessToken,selecteduserId, selectedusername}
   })
   return res.json();
 }
-
-export async function getChatList(accessToken){
-  const res = await fetch(`${API_BASE}/api/chat/getChatList`, {
+//
+//
+//
+export async function getChatList(){
+  const res = await fetchWithAuth(`${API_BASE}/api/chat/getChatList`, {
     method: "GET",
-    headers: {
-      "Content-Type": "application/json",
-      Authorization: `Bearer ${accessToken}`,
-    },
 
   })
   const data = await res.json();
@@ -177,7 +176,7 @@ export async function getMessages(accessToken,chatId){
 //   });
 
 export async function refreshAccessToken() {
-  const res = await fetch("api/auth/user/refresh", {
+  const res = await fetch(`${API_BASE}/api/auth/user/refresh`, {
     method: "POST",
     credentials: "include",
   });
@@ -185,6 +184,7 @@ export async function refreshAccessToken() {
   if (!res.ok) throw new Error("Refresh failed");
 
   const { accessToken } = await res.json();
+  console.log("new access token",accessToken)
   saveAccessToken(accessToken);
   return accessToken;
 }

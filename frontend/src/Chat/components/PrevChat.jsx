@@ -22,7 +22,7 @@ export default function PrevChat({ msg }) {
 
   return (
     <div className={`flex my-2 items-start gap-2.5 group relative  ${msg.belongstouser ? "self-end flex-row-reverse" : "self-start flex-row"}`} ref={menueRef}>
-      <img className="w-8 h-8 rounded-full" src="/react.svg" alt="Jese image" />
+      <img className="w-8 h-8 rounded-full" src="/persondp.png" alt="Jese image" />
       <div className="flex flex-col gap-1 w-full max-w-[320px]">
         <div className={` flex items-center ${msg.belongstouser ? "justify-start flex-row-reverse space-x-reverse gap-4" : "gap-2"}`}>
           <span className="text-sm font-semibold text-emerald-300 dark:text-emerald-100">

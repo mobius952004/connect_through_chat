@@ -52,26 +52,60 @@ class AuthController {
     const { password, email } = UserData;
 
     try {
-      const result = await authservices.userlogin(
+      const {
+        user,
+        deviceId,
+        accessToken,
+        refreshToken,
+      } = await authservices.userlogin(
         password,
         email,
         req.headers["user-agent"]
       );
+     const result = { user, deviceId, accessToken }
+      res.cookie('refreshToken', refreshToken, {
+        httpOnly: true,
+        secure: false,
+        sameSite: "lax",
+        path: "/api/auth/user/refresh",
+        maxAge: 30 * 24 * 60 * 60 * 1000
+      })
       res.status(200).send(result);
     } catch (err) {
       res.status(401).json("user not found");
     }
   }
 
-  refresh = async (req, res, next) => {
-    try {
-      const { refreshToken } = req.body; // client sends only the long‑lived token
-      const out = await authservices.refreshTokens(refreshToken);
-      res.json(out);
-    } catch (e) {
-      next(e);
+  // refresh = async (req, res, next) => {
+  //   try {
+  //     const { refreshToken } = req.body; // client sends only the long‑lived token
+  //     const out = await authservices.refreshTokens(refreshToken);
+  //     res.json(out);
+  //   } catch (e) {
+  //     next(e);
+  //   }
+  // };
+  async refresh(req, res) {
+    const refreshToken = req.cookies?.refreshToken;
+    if (!refreshToken) {
+      return res.status(401).json({ message: "No refresh token" });
     }
-  };
+
+    const { accessToken, refreshToken: newRefresh } =
+      await authservices.refreshTokens(refreshToken);
+
+    // rotate cookie
+    res.cookie("refreshToken", newRefresh, {
+      httpOnly: true,
+      secure: false,
+      sameSite: "none",
+      path: "/api/auth/user/refresh",
+      maxAge: 30 * 24 * 60 * 60 * 1000
+    });
+
+    res.json({ accessToken });
+  }
+
 
   logout = async (req, res, next) => {
     try {

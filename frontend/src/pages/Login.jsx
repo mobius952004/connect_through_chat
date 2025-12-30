@@ -1,7 +1,7 @@
 import { useState, useEffect, useRef } from "react";
 import { useNavigate } from "react-router-dom";
 import { loginUser } from "../api/auth";
-import { connectSocket } from "../sockets/socket";
+// import { connectSocket } from "../sockets/socket";
 import { saveAccessToken } from "../utils/token";
 export default function Login() {
   const [formData, setFormData] = useState({ email: "", password: "" });
@@ -25,9 +25,9 @@ export default function Login() {
       console.log(exp)
 
       navigate("/connect/home");
-      connectSocket();
+      // connectSocket();
     } catch (err) {
-      setError(err.message || "Login failed");
+      setError(err.message );
     }
   };
   useEffect(() => {

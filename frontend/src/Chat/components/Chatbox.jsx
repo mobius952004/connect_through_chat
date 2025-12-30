@@ -5,7 +5,6 @@ import TextBox from "./TextBox";
 import { useContext, useState, useEffect } from "react";
 import { ChatContext } from "../../store/socketContext";
 import { ChatEvents } from "../../sockets/chat.events";
-import { User } from "lucide-react";
 import { getMessages } from "../../api/auth";
 
 export default function ChatBox() {

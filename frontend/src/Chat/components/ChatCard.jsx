@@ -21,7 +21,7 @@ export default function ChatCard({ chat }) {
       <div className="flex flex-row gap-4 px-3 sm:flex-row items-center sm:gap-6 sm:py-1 ... ">
         <img
           className="mx-2 block h-12 rounded-full sm:mx-0 items-center bg-slate-400 sm:shrink-0"
-          src="/vite.svg"
+          src="/persondp.png"
           alt={<PersonStandingIcon />}
         />
         <div className=" flex-1 text-left sm:text-left items-center">

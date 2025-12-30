@@ -1,6 +1,5 @@
 import { refreshAccessToken } from "../api/auth";
 
-// eslint-disable-next-line no-unused-vars
 let refreshTimeout;
 
 export function clearRefreshTimer() {
@@ -17,7 +16,7 @@ export function scheduleTokenRefresh() {
   const delay = exp - Date.now() - 60_000;
 
   if (delay <= 0) {
-    refreshAccessToken().then(()=>scheduleTokenRefresh()).catch(()=>console.log("invalid"));
+    refreshAccessToken().then(()=>scheduleTokenRefresh()).catch(()=>console.log("refresh failed"));
     return;
   }
 
