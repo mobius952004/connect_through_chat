@@ -69,10 +69,10 @@ export default function ChatBox() {
         // if (!selecteduser) return;
         if (!otheruser) return;
 
-        const accessToken = localStorage.getItem("accessToken")
+        // const accessToken = localStorage.getItem("accessToken")
         const messages = async () => {
 
-            const allMessages = await getMessages(accessToken, selectedChat._id)
+            const allMessages = await getMessages(selectedChat._id)
             const transformed = allMessages.map(msg => ({
                 ...msg,
                 belongstouser: msg.from._id === UserId

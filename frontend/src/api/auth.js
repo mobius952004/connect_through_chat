@@ -45,11 +45,10 @@ export async function loginUser({ email, password }) {
 }
 
 // ✅ Get user profile (requires access token)
-export async function fetchProfile(accessToken) {
-  const res = await fetch(`${API_BASE}/api/user/profile`, {
-    headers: {
-      Authorization: `Bearer ${accessToken}`,
-    },
+export async function fetchProfile() {
+  const res = await fetchWithAuth(`${API_BASE}/api/user/profile`, {
+    method:"GET",
+
   });
 
   const data = await res.json()
@@ -102,14 +101,14 @@ export async function updateProfilePic(accessToken, profilePic) {
   return res.json();
 }
 
-export async function getallusers(accessToken) {
+export async function getallusers() {
   // console.log(accessToken)
-  const res = await fetch(`${API_BASE}/api/user/getallusers`, {
+  const res = await fetchWithAuth(`${API_BASE}/api/user/getallusers`, {
     method: "GET",
-    headers: {
-      "Content-Type": "application/json",
-      Authorization: `Bearer ${accessToken}`,
-    },
+    // headers: {
+    //   "Content-Type": "application/json",
+    //   // Authorization: `Bearer ${accessToken}`,
+    // },
   })
   const data = await res.json()
   if (!res.ok) {
@@ -118,19 +117,18 @@ export async function getallusers(accessToken) {
   return data
 }
 
-export async function setChatList({accessToken,selecteduserId, selectedusername})
- {
+export async function setChatList({ selecteduserId, selectedusername }) {
 
-  const res = await fetch(`${API_BASE}/api/chat/setChatList`, {
+  const res = await fetchWithAuth(`${API_BASE}/api/chat/setChatList`, {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
-      Authorization: `Bearer ${accessToken}`,
+      // Authorization: `Bearer ${accessToken}`,
     },
     body: JSON.stringify({
       selecteduserId,
       selectedusername,
-    }) 
+    })
 
   })
   return res.json();
@@ -138,55 +136,59 @@ export async function setChatList({accessToken,selecteduserId, selectedusername}
 //
 //
 //
-export async function getChatList(){
+export async function getChatList() {
   const res = await fetchWithAuth(`${API_BASE}/api/chat/getChatList`, {
     method: "GET",
 
   })
   const data = await res.json();
-  if(!res.ok){
-     throw new Error(data.message || "Chat list getting error");
+  if (!res.ok) {
+    throw new Error(data.message || "Chat list getting error");
   }
 
   return data;
 }
-export async function getMessages(accessToken,chatId){
-  const res = await fetch(`${API_BASE}/api/messages/${chatId}`, {
+export async function getMessages(chatId) {
+  const res = await fetchWithAuth(`${API_BASE}/api/messages/${chatId}`, {
     method: "GET",
-    headers: {
-      "Content-Type": "application/json",
-      Authorization: `Bearer ${accessToken}`,
-    },
+    // headers: {
+    
+    //   Authorization: `Bearer ${accessToken}`,
+    // },
 
 
   })
   const data = await res.json();
-  if(!res.ok){
-     throw new Error(data.message || "Chat list getting error");
+  if (!res.ok) {
+    throw new Error(data.message || "Chat list getting error");
   }
 
   return data;
 }
 
 
-// edxport function getallusers(userid) {
-//   return apiFetch(`/api/user/getallusers?userid=${userid}`, { 
-//     method: "GET" ,
-//     headers: { "Content-Type": "application/json" },
-
-  
-//   });
-
+let refreshPromise = null
 export async function refreshAccessToken() {
-  const res = await fetch(`${API_BASE}/api/auth/user/refresh`, {
-    method: "POST",
-    credentials: "include",
-  });
+  if (!refreshPromise) {
+    refreshPromise = fetch(`${API_BASE}/api/auth/user/refresh`, {
+      method: "POST",
+      credentials: "include",
+    }).then(async (res) => {
+      if (!res.ok) throw new Error("Refresh Failed")
+      const { accessToken } = await res.json()
+      saveAccessToken(accessToken)
+      return accessToken
+    })
+      .finally(() => {
+        refreshPromise = null
+      });
+  }
+  return refreshPromise
 
-  if (!res.ok) throw new Error("Refresh failed");
+  // if (!res.ok) throw new Error("Refresh failed");
 
-  const { accessToken } = await res.json();
-  console.log("new access token",accessToken)
-  saveAccessToken(accessToken);
-  return accessToken;
+  // const { accessToken } = await res.json();
+  // console.log("new access token",accessToken)
+  // saveAccessToken(accessToken);
+  // return accessToken;
 }

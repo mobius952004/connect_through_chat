@@ -21,7 +21,7 @@ export default function GlobalUsers() {
     }
 
     const showAll = async () => {
-      const response = await getallusers(accessToken);
+      const response = await getallusers();
       setallusers(response);
       setFilteredUsers(response);
     };
