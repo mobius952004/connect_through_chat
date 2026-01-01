@@ -11,6 +11,7 @@ export async function signupUser({ username, password, email }) {
   const res = await fetch(`${API_BASE}/api/auth/user/signup`, {
 
     method: "POST",
+    credentials: "include",
     headers: {
       "Content-Type": "application/json",
     },
@@ -29,6 +30,7 @@ export async function signupUser({ username, password, email }) {
 export async function loginUser({ email, password }) {
   const res = await fetch(`${API_BASE}/api/auth/user/login`, {
     method: "POST",
+    credentials: "include",
     headers: {
       "Content-Type": "application/json",
     },

@@ -7,7 +7,7 @@ import crypto from "crypto";
 const {
   JWT_ACCESS_SECRET, // short‑lived – sign access JWT
   JWT_REFRESH_SECRET, // long‑lived – sign refresh JWT
-  ACCESS_EXPIRES_IN = "2m",
+  ACCESS_EXPIRES_IN = "15m",
   REFRESH_EXPIRES_IN = "30d",
 } = process.env;
 
