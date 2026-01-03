@@ -1,10 +1,10 @@
 import SearchBar from "./SearchBar";
 import UserCard from "./UserCard";
-import { getallusers } from "../../api/auth";
+import { getallusers } from "../../api/userApi";
 import { useEffect } from "react";
 import { useState } from "react";
 // import { useContext } from "react";
-import { ChatContext } from "../../store/socketContext";
+// import { ChatContext } from "../../store/socketContext";
 
 export default function GlobalUsers() {
 

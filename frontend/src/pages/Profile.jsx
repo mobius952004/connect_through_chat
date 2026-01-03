@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { fetchProfile, updateUsername } from "../api/auth";
+import { fetchProfile, updateUsername } from "../api/userApi";
 import ChangeUsernameModal from "../components/changeusernamemodal";
 
 export default function Profile() {

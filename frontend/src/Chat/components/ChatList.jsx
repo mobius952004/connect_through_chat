@@ -2,7 +2,7 @@ import { useContext, useState } from "react";
 import ChatCard from "./ChatCard";
 import { ChatContext } from "../../store/socketContext";
 import { useEffect } from "react";
-import { getChatList, setChatList } from "../../api/auth";
+import { getChatList, setChatList } from "../../api/chat";
 import SearchBar from "./SearchBar";
 import { getAccessToken } from "../../utils/token";
 
