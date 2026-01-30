@@ -6,11 +6,6 @@ const API_BASE = import.meta.env.VITE_API_BASE_URL;
 export async function fetchWithAuth(url, options = {}) {
   let token = getAccessToken();
 
-// const headers={
-//   ...(options.headers || {}),
-//   Authorization: `Bearer ${token}`
-
-// }
 
   let res = await fetch(url, {
     ...options,

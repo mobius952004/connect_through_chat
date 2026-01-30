@@ -57,7 +57,7 @@ export default function ChatList() {
   }
 
   return (
-    <div className="flex-1 min-h-0 overflow-y-scroll scrollbar-hide">
+    <div className="flex-1 min-h-0 lg:w-[340px] overflow-y-scroll scrollbar-hide">
       <SearchBar onSearch={search}/>
       {filtereChats &&
         filtereChats.map((chat) => <ChatCard chat={chat} key={chat._id} />)}

@@ -5,114 +5,116 @@ import { IoIosSettings } from "react-icons/io";
 import { MdOutlineLightMode } from "react-icons/md";
 import { IoCloseSharp } from "react-icons/io5";
 import { PiGlobeStandDuotone } from "react-icons/pi";
-import { useState } from "react";
+import { useState, useContext } from "react";
 import { IoChatboxEllipsesOutline } from "react-icons/io5";
 import { IoCallOutline } from "react-icons/io5";
 import { useNavigate } from "react-router-dom";
 // import Drawer from "./drawer";
 import "flowbite"
+import { ChatContext } from "../store/socketContext";
 
 
 export default function Sidebar() {
 
-//  const{username}=useParams()
-const navigate=useNavigate()
+    //  const{username}=useParams()
+    const navigate = useNavigate()
 
 
-    const [isMenueOpen, setIsMenusOpen] = useState(false)
+    const [isMenuOpen, setIsMenuOpen] = useState(false)
+    const { selectedChat } = useContext(ChatContext);
     // const {dopost,setdopost} = useContext(Postlist)
 
     return (
-        <div className="bg-gray-950 relative overflow-visible  w-15" >
+        <div className={`bg-gray-950 relative overflow-visible w-14 md:w-16 ${selectedChat ? "hidden md:block" : "block"}`} >
 
-            <aside className="     my-auto py-3 sm:py-4 lg:py-5 h-full">
+            <aside className="my-auto py-3 sm:py-4 lg:py-5 h-full">
 
                 <div className="flex flex-col justify-between h-full ">
 
-                    <div className="flex flex-col items-center  w-15">
+                    <div className="flex flex-col items-center w-14 md:w-16">
 
                         <div className="relative group sm:my-2 my-1">
-                            <button className="relative " onClick={() => setIsMenusOpen(!isMenueOpen)}>
-                                {isMenueOpen ? <IoCloseSharp className="sm:w-5 sm:h-7 w-4 h-6 text-white hover:text-green-600 transition-all transform hover:scale-[1.2] cursor-pointer " /> : <IoMenu className="sm:w-7 sm:h-9 w-6 h-8 text-white hover:text-green-600 transition-all transform hover:scale-[1.2] cursor-pointer " />
+                            <button className="relative p-2 rounded-lg hover:bg-gray-800 transition-colors" onClick={() => setIsMenuOpen(!isMenuOpen)}>
+                                {isMenuOpen ? <IoCloseSharp className="sm:w-7 sm:h-9 w-6 h-8 text-white hover:text-green-600 transition-all transform hover:scale-[1.1] cursor-pointer" /> : <IoMenu className="sm:w-7 sm:h-9 w-6 h-8 text-white hover:text-green-600 transition-all transform hover:scale-[1.1] cursor-pointer" />
                                 }
                             </button>
 
-                            <span className="absolute bottom-full mb-1 left-1/2 -translate-x-1/4 px-2 py-1 bg-gray-700 text-white text-xs rounded-full opacity-0 group-hover:opacity-100 transition-opacity duration-100  pointer-events-none whitespace-nowrap z-50">
-                                {isMenueOpen ? "Close Menus" : "Open Menu"}
+                            <span className="hidden md:block absolute bottom-full mb-1 left-1/2 -translate-x-1/4 px-2 py-1 bg-gray-700 text-white text-xs rounded-full opacity-0 group-hover:opacity-100 transition-opacity duration-100  pointer-events-none whitespace-nowrap z-50">
+                                {isMenuOpen ? "Close Menus" : "Open Menu"}
                             </span>
-                            {/* {isMenueOpen &&<Drawer/>} */}
+                            {/* {isMenuOpen &&<Drawer/>} */}
                         </div>
-                        
+
                         <div className="relative group sm:my-2 my-1">
-                            <button className="relative" onClick={() => navigate(`/connect/home/chats`)} >
-                                <IoChatboxEllipsesOutline className="sm:w-5 sm:h-7 w-4 h-6 text-white hover:text-green-600 transition-all transform hover:scale-[1.2] cursor-pointer" />
+                            <button className="relative p-2 rounded-lg hover:bg-gray-800 transition-colors" onClick={() => navigate(`/connect/home/chats`)} >
+                                <IoChatboxEllipsesOutline className="sm:w-7 sm:h-7 w-6 h-6 text-white hover:text-green-600 transition-all transform hover:scale-[1.1] cursor-pointer" />
                             </button>
 
-                            <span className="absolute bottom-full mb-1 left-1/2 -translate-x-1/4 px-2 py-1 bg-gray-700 text-white text-xs rounded-full opacity-0 group-hover:opacity-100 transition-opacity duration-100  pointer-events-none whitespace-nowrap z-50">
+                            <span className="hidden md:block absolute bottom-full mb-1 left-1/2 -translate-x-1/4 px-2 py-1 bg-gray-700 text-white text-xs rounded-full opacity-0 group-hover:opacity-100 transition-opacity duration-100  pointer-events-none whitespace-nowrap z-50">
                                 Chats
                             </span>
                         </div>
                         <div className="relative group sm:my-2 my-1">
-                            <button className="relative" 
-                            onClick={()=>navigate(`/connect/home/calls`)}>
-                                <IoCallOutline className="sm:w-5 sm:h-7 w-4 h-6 text-white hover:text-green-600 transition-all transform hover:scale-[1.2] cursor-pointer"  />
+                            <button className="relative p-2 rounded-lg hover:bg-gray-800 transition-colors"
+                                onClick={() => navigate(`/connect/home/calls`)}>
+                                <IoCallOutline className="sm:w-7 sm:h-7 w-6 h-6 text-white hover:text-green-600 transition-all transform hover:scale-[1.1] cursor-pointer" />
                             </button>
 
-                            <span className="absolute bottom-full mb-1 left-1/2 -translate-x-1/4 px-2 py-1 bg-gray-700 text-white text-xs rounded-full opacity-0 group-hover:opacity-100 transition-opacity duration-100 pointer-events-none whitespace-nowrap z-50">
+                            <span className="hidden md:block absolute bottom-full mb-1 left-1/2 -translate-x-1/4 px-2 py-1 bg-gray-700 text-white text-xs rounded-full opacity-0 group-hover:opacity-100 transition-opacity duration-100 pointer-events-none whitespace-nowrap z-50">
                                 Calls
                             </span>
                         </div>
                         <div className="relative group sm:my-2 my-1">
-                            <button className="relative">
-                                <PiGlobeStandDuotone className="sm:w-5 sm:h-7 w-4 h-6 text-white hover:text-green-600 transition-all transform hover:scale-[1.2] cursor-pointer" />
+                            <button className="relative p-2 rounded-lg hover:bg-gray-800 transition-colors">
+                                <PiGlobeStandDuotone className="sm:w-7 sm:h-7 w-6 h-6 text-white hover:text-green-600 transition-all transform hover:scale-[1.1] cursor-pointer" />
                             </button>
 
-                            <span className="absolute bottom-full mb-1 left-1/2 -translate-x-1/4 px-2 py-1 bg-gray-700 text-white text-xs rounded-full opacity-0 group-hover:opacity-100 transition-opacity duration-100 pointer-events-none whitespace-nowrap z-50">
+                            <span className="hidden md:block absolute bottom-full mb-1 left-1/2 -translate-x-1/4 px-2 py-1 bg-gray-700 text-white text-xs rounded-full opacity-0 group-hover:opacity-100 transition-opacity duration-100 pointer-events-none whitespace-nowrap z-50">
                                 Community
                             </span>
                         </div>
                         <div className="relative group sm:my-2 my-1">
-                            <button className="relative">
-                                <CgRemote className="sm:w-5 sm:h-7 w-4 h-6 text-white hover:text-green-600 transition-all transform hover:scale-[1.2] cursor-pointer" />
+                            <button className="relative p-2 rounded-lg hover:bg-gray-800 transition-colors">
+                                <CgRemote className="sm:w-7 sm:h-7 w-6 h-6 text-white hover:text-green-600 transition-all transform hover:scale-[1.1] cursor-pointer" />
                             </button>
 
-                            <span className="absolute bottom-full mb-1 left-1/2 -translate-x-1/4 px-2 py-1 bg-gray-700 text-white text-xs rounded-full opacity-0 group-hover:opacity-100 transition-opacity duration-100 pointer-events-none whitespace-nowrap z-50">
+                            <span className="hidden md:block absolute bottom-full mb-1 left-1/2 -translate-x-1/4 px-2 py-1 bg-gray-700 text-white text-xs rounded-full opacity-0 group-hover:opacity-100 transition-opacity duration-100 pointer-events-none whitespace-nowrap z-50">
                                 Channels
                             </span>
                         </div>
 
 
                     </div>
-                    <div className="flex flex-col items-center  w-15">
+                    <div className="flex flex-col items-center w-14 md:w-16">
 
 
 
                         <div className="relative group sm:my-2 my-1">
-                            <button className="relative">
-                                <MdOutlineLightMode className="sm:w-5 sm:h-7 w-4 h-6 text-white hover:text-green-600 transition-all transform hover:scale-[1.2] cursor-pointer" />
+                            <button className="relative p-2 rounded-lg hover:bg-gray-800 transition-colors">
+                                <MdOutlineLightMode className="sm:w-7 sm:h-7 w-6 h-6 text-white hover:text-green-600 transition-all transform hover:scale-[1.1] cursor-pointer" />
                             </button>
 
-                            <span className="absolute bottom-full mb-1 left-1/2 -translate-x-1/4 px-2 py-1 bg-gray-700 text-white text-xs rounded-full opacity-0 group-hover:opacity-100 transition-opacity duration-100 pointer-events-none whitespace-nowrap z-50">
+                            <span className="hidden md:block absolute bottom-full mb-1 left-1/2 -translate-x-1/4 px-2 py-1 bg-gray-700 text-white text-xs rounded-full opacity-0 group-hover:opacity-100 transition-opacity duration-100 pointer-events-none whitespace-nowrap z-50">
                                 Light Mode
                             </span>
                         </div>
 
 
                         <div className="relative group sm:my-2 my-1">
-                            <button className="relative">
-                                <CgProfile className="sm:w-5 sm:h-7 w-4 h-6 text-white hover:text-green-600 transition-all transform hover:scale-[1.2] cursor-pointer" />
+                            <button className="relative p-2 rounded-lg hover:bg-gray-800 transition-colors">
+                                <CgProfile className="sm:w-7 sm:h-7 w-6 h-6 text-white hover:text-green-600 transition-all transform hover:scale-[1.1] cursor-pointer" />
                             </button>
 
-                            <span className="absolute bottom-full mb-1 left-1/2 -translate-x-1/4 px-2 py-1 bg-gray-700 text-white text-xs rounded-full opacity-0 group-hover:opacity-100 transition-opacity duration-100 pointer-events-none whitespace-nowrap z-50">
+                            <span className="hidden md:block absolute bottom-full mb-1 left-1/2 -translate-x-1/4 px-2 py-1 bg-gray-700 text-white text-xs rounded-full opacity-0 group-hover:opacity-100 transition-opacity duration-100 pointer-events-none whitespace-nowrap z-50">
                                 Profile
                             </span>
                         </div>
                         <div className="relative group sm:my-2 my-1">
-                            <button className="relative">
-                                <IoIosSettings className="sm:w-5 sm:h-7 w-4 h-6 text-white hover:text-green-600 transition-all transform hover:scale-[1.2] cursor-pointer" />
+                            <button className="relative p-2 rounded-lg hover:bg-gray-800 transition-colors">
+                                <IoIosSettings className="sm:w-7 sm:h-7 w-6 h-6 text-white hover:text-green-600 transition-all transform hover:scale-[1.1] cursor-pointer" />
                             </button>
 
-                            <span className="absolute bottom-full mb-1 left-1/2 -translate-x-1/4 px-2 py-1 bg-gray-700 text-white text-xs rounded-full opacity-0 group-hover:opacity-100 transition-opacity duration-100 pointer-events-none whitespace-nowrap z-50">
+                            <span className="hidden md:block absolute bottom-full mb-1 left-1/2 -translate-x-1/4 px-2 py-1 bg-gray-700 text-white text-xs rounded-full opacity-0 group-hover:opacity-100 transition-opacity duration-100 pointer-events-none whitespace-nowrap z-50">
                                 Settings
                             </span>
                         </div>

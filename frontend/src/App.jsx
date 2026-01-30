@@ -1,58 +1,58 @@
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import ChatProvider from "./store/socketContext.jsx";
-// Import your pages
-import Signup from "./pages/Signup.jsx";
-import Profile from "./pages/Profile";
-import Login from "./pages/Login";
-import Navbar from "./pages/Nav.jsx";
-import Home from "./pages/Home.jsx";
-import UserChats from "./Chat/pages/UserChat.jsx";
-import ProfileStatistics from "./pages/setUserInfo.jsx";
-import { useEffect } from "react";
-import { scheduleTokenRefresh } from "./utils/authScheduler.js";
+import { useEffect, lazy, Suspense } from "react";
+import { scheduleTokenRefresh, clearRefreshTimer } from "./utils/authScheduler.js";
 import { connectSocket } from "./sockets/socket.js";
-import Call from "./Call/Calls_entry_point.jsx";
-import { clearRefreshTimer } from "./utils/authScheduler.js";
-// import { useState } from "react";
+
+// Lazy load pages
+const Signup = lazy(() => import("./pages/Signup.jsx"));
+const Profile = lazy(() => import("./pages/Profile"));
+const Login = lazy(() => import("./pages/Login"));
+const Navbar = lazy(() => import("./pages/Nav.jsx"));
+const Home = lazy(() => import("./pages/Home.jsx"));
+const UserChats = lazy(() => import("./Chat/pages/UserChat.jsx"));
+const ProfileStatistics = lazy(() => import("./pages/setUserInfo.jsx"));
+const Call = lazy(() => import("./Call/Calls_entry_point.jsx"));
+
+// Loading component
+const Loading = () => (
+  <div className="flex items-center justify-center min-h-screen bg-black text-white">
+    <div className="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-green-500"></div>
+  </div>
+);
 
 function App() {
 
   useEffect(() => {
-  const token = localStorage.getItem("accessToken");
-  if (token) {
-    clearRefreshTimer(); 
-    scheduleTokenRefresh();
-    connectSocket();
-  }
-}, []);
-
+    const token = localStorage.getItem("accessToken");
+    if (token) {
+      clearRefreshTimer();
+      scheduleTokenRefresh();
+      connectSocket();
+    }
+  }, []);
 
   return (
     <ChatProvider>
-
       <BrowserRouter>
-        <Routes>
-          <Route path="/connect" element={<Navbar />} />
-          <Route path="/connect/home" element={<Home />} >
-            <Route path="chats" element={<UserChats />}></Route>
-            <Route path="calls" element={<Call/>}></Route>
+        <Suspense fallback={<Loading />}>
+          <Routes>
+            <Route path="/connect" element={<Navbar />} />
+            <Route path="/connect/home" element={<Home />} >
+              <Route path="chats" element={<UserChats />}></Route>
+              <Route path="calls" element={<Call />}></Route>
+            </Route>
 
-          </Route>
+            <Route path="/connect/signup" element={<Signup />} />
 
-          <Route path="/connect/signup" element={<Signup />} />
+            <Route path="/connect/signup/setProfileInformation" element={<ProfileStatistics />} />
 
-          <Route path ="/connect/signup/setProfileInformation" element={<ProfileStatistics/>} />
-          
-          
+            <Route path="/connect/profile" element={<Profile />} />
 
-          <Route path="/connect/profile" element={<Profile />} />
-
-
-          <Route path="/connect/login" element={<Login />} />
-
-        </Routes>
+            <Route path="/connect/login" element={<Login />} />
+          </Routes>
+        </Suspense>
       </BrowserRouter>
-
     </ChatProvider>
   );
 }
