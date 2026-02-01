@@ -143,11 +143,11 @@ export default function Signup() {
         className="absolute inset-0 z-0"
         style={{ width: "100vw", height: "100vh" }}
       />
-      {/* <div className="absolute inset-0 opacity-20">
-        <div className="absolute top-1/4 left-1/4 w-64 h-64 bg-green-500/50 rounded-full blur-3xl animate-pulse"></div>
-        <div className="absolute bottom-1/4 right-1/4 w-64 h-64 bg-emerald-500/50 rounded-full blur-3xl animate-pulse delay-1000"></div>
-        <div className="absolute top-1/2 left-1/2 w-32 h-32 bg-green-400/50 rounded-full blur-2xl animate-pulse delay-500"></div>
-      </div> */}
+     <div className="absolute inset-0 opacity-20">
+        <div className="absolute top-1/4 left-1/4 w-64 h-64 bg-green-500 rounded-full blur-3xl animate-pulse"></div>
+        <div className="absolute bottom-1/4 right-1/4 w-64 h-64 bg-emerald-500 rounded-full blur-3xl animate-pulse delay-1000"></div>
+        <div className="absolute top-1/2 left-1/2 w-32 h-32 bg-green-400 rounded-full blur-2xl animate-pulse delay-500"></div>
+      </div>
 
       <div className="relative z-10">
         <div
@@ -155,7 +155,7 @@ export default function Signup() {
             }`}
         >
           {/* Subtle gradient overlay */}
-          {/* <div className="absolute inset-0 bg-gradient-to-br from-green-900 via-transparent to-emerald-900 rounded-2xl pointer-events-none z-0"></div> */}
+          <div className="absolute inset-0 bg-gradient-to-l from-slate-900 via-transparent to-slate-900 rounded-2xl pointer-events-none z-0"></div>
 
           <div className="relative z-10">
             {/* Header with icon */}

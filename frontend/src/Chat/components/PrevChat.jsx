@@ -1,7 +1,6 @@
 import { EllipsisVerticalIcon } from "lucide-react";
 import { useEffect, useRef, useState, useContext } from "react";
 import { ChatContext } from "../../store/socketContext";
-// Removed IoCheckmark imports as we use custom dots now
 
 export default function PrevChat({ msg }) {
   const { selectedChat } = useContext(ChatContext);
@@ -109,7 +108,7 @@ export default function PrevChat({ msg }) {
         className="opacity-100 text-gray-500 hover:text-white p-2 rounded-full hover:bg-white/10 transition-colors"
         onClick={toggleMenu}
       >
-        <EllipsisVerticalIcon size={16} />
+        <EllipsisVerticalIcon size={20} />
       </button>
 
       {/* Menu */}

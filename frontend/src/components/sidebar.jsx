@@ -9,7 +9,6 @@ import { useState, useContext } from "react";
 import { IoChatboxEllipsesOutline } from "react-icons/io5";
 import { IoCallOutline } from "react-icons/io5";
 import { useNavigate } from "react-router-dom";
-// import Drawer from "./drawer";
 import "flowbite"
 import { ChatContext } from "../store/socketContext";
 
@@ -25,13 +24,13 @@ export default function Sidebar() {
     // const {dopost,setdopost} = useContext(Postlist)
 
     return (
-        <div className={`bg-gray-950 relative overflow-visible w-14 md:w-16 ${selectedChat ? "hidden md:block" : "block"}`} >
+        <div className={`bg-gray-950 relative overflow-visible w-14 sm:w-10 md:w-16 ${selectedChat ? "hidden md:block" : "block"}`} >
 
-            <aside className="my-auto py-3 sm:py-4 lg:py-5 h-full">
+            <aside className="my-auto py-2 sm:py-4 md:py-5 h-full">
 
                 <div className="flex flex-col justify-between h-full ">
 
-                    <div className="flex flex-col items-center w-14 md:w-16">
+                    <div className="flex flex-col items-center w-14 sm:w-10 md:w-16">
 
                         <div className="relative group sm:my-2 my-1">
                             <button className="relative p-2 rounded-lg hover:bg-gray-800 transition-colors" onClick={() => setIsMenuOpen(!isMenuOpen)}>
@@ -101,7 +100,8 @@ export default function Sidebar() {
 
 
                         <div className="relative group sm:my-2 my-1">
-                            <button className="relative p-2 rounded-lg hover:bg-gray-800 transition-colors">
+                            <button className="relative p-2 rounded-lg hover:bg-gray-800 transition-colors"  onClick={() => navigate(`/connect/home/profile`)}>
+
                                 <CgProfile className="sm:w-7 sm:h-7 w-6 h-6 text-white hover:text-green-600 transition-all transform hover:scale-[1.1] cursor-pointer" />
                             </button>
 

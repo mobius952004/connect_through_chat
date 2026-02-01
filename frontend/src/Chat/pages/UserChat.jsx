@@ -6,35 +6,22 @@ import ChatList from "../components/ChatList";
 import ChatBox from "../components/Chatbox";
 import { ChatContext } from "../../store/socketContext";
 import GlobalUsers from "../components/GlobalUsers";
-// import { useEffect } from "react";
+import UserInfoPanel from "../components/UserInfoPanel";
 
 
 
 export default function UserChats() {
 
-    //   const [error, setError] = useState(null);
 
     const [onadd, setonadd] = useState(false)
     const { sidepanel, setsidepanel, selectedChat } = useContext(ChatContext)
 
 
-
-
-    //     useEffect(() => {
-    //       const accessToken = localStorage.getItem("accessToken");
-    //       if (!accessToken) {
-    //         setError("Session Expired");
-    //         return ;
-    //       }
-    //   },[]);
-
-    //   if (error) return <div className="text-red-400 text-center mt-6">{error}</div>;
-
     return (
         <div className="flex-1 flex  gap-0.5 h-full">
             {/* chats containers */}
             {/* Hidden on mobile if chat selected, visible on md+ always */}
-            <div className={`flex-col  md:w-[340px] lg:w-[340px] relative bg-gray-900 border-spacing-2  border-1 ${selectedChat ? "hidden md:flex" : "flex"
+            <div className={`flex-col  md:w-[340px]  bg-gray-900 border-spacing-2  border-1 ${selectedChat ? "hidden md:flex" : "flex"
                 }`}>
                 {/* <SearchBar /> */}
                 <ChatList />
@@ -43,24 +30,51 @@ export default function UserChats() {
             </div>
             {/* single chat / message container */}
             {/* Hidden on mobile if no chat selected, visible on md+ always (if space allows, typically flex-1) */}
-            <div className={`flex-1 flex-col ${selectedChat ? "flex" : "hidden md:flex"}`}>
-                <ChatBox />
-            </div>
+           <div
+  className={`
+    flex-1 flex-col overflow-y-scroll scrollbar-hide
+    ${selectedChat ? "flex" : "hidden md:flex"}
+    ${sidepanel ? "hidden md:flex" : ""}
+  `}
+>
+  {selectedChat ? (
+    <ChatBox />
+  ) : (
+    <div className="hidden md:flex h-full items-center justify-center text-gray-400 flex-col gap-4">
+      <img src="/chat-logo.svg" className="w-20 opacity-70" />
+      <p className="text-lg">Select a chat to get started</p>
+    </div>
+  )}
+</div>
             <div
-                className={`overflow-hidden transition-all duration-500 bg-slate-500/50 ease-in-out 
-          ${sidepanel ? "w-[400px] opacity-100" : "w-0 opacity-0"}`}
-            >
-                <div className="flex justify-between items-center p-4 border-b bg-gray-950 border-slate-900">
-                    <h2 className="text-lg text-emerald-200 font-semibold capitalize">{sidepanel}</h2>
-                    <button
-                        onClick={() => setsidepanel(null)}
-                        className="text-xl text-emerald-200 font-bold hover:text-slate-400"
-                    >
-                        ✕
-                    </button>
-                </div>
+        className={`
+    bg-gray-950 border-l border-slate-900
+    transition-all duration-300 ease-in-out
 
-                {sidepanel == "UserInfo" && <div className="h-full w-full bg-gray-950  overflow-y-scroll scrollbar-hidden"> </div>}
+    fixed inset-0 z-40
+    ${sidepanel ? "opacity-100" : "opacity-0 pointer-events-none"}
+    md:overflow-hidden
+    md:z-auto
+    md:inset-auto
+    md:relative
+    md:opacity-100 md:pointer-events-auto
+    md:transition-[width] md:duration-300
+    ${sidepanel ? "md:w-[450px]" : "md:opacity-0 md:w-0"}
+  `}
+            >
+                {sidepanel !== "UserInfo" && (
+                    <div className="flex justify-between items-center p-4 border-b bg-gray-950 border-slate-900">
+                        <h2 className="text-lg text-emerald-200 font-semibold capitalize">{sidepanel}</h2>
+                        <button
+                            onClick={() => setsidepanel(null)}
+                            className="text-xl text-emerald-200 font-bold hover:text-slate-400"
+                        >
+                            ✕
+                        </button>
+                    </div>
+                )}
+
+                {sidepanel == "UserInfo" && <UserInfoPanel />}
                 {sidepanel == "AddFriend" && <GlobalUsers />}
 
             </div>

@@ -6,7 +6,7 @@ import { connectSocket } from "./sockets/socket.js";
 
 // Lazy load pages
 const Signup = lazy(() => import("./pages/Signup.jsx"));
-const Profile = lazy(() => import("./pages/Profile"));
+const Profile = lazy(() => import("./pages/Profile.jsx"));
 const Login = lazy(() => import("./pages/Login"));
 const Navbar = lazy(() => import("./pages/Nav.jsx"));
 const Home = lazy(() => import("./pages/Home.jsx"));
@@ -41,6 +41,7 @@ function App() {
             <Route path="/connect/home" element={<Home />} >
               <Route path="chats" element={<UserChats />}></Route>
               <Route path="calls" element={<Call />}></Route>
+              <Route path="profile" element={<Profile />}></Route>
             </Route>
 
             <Route path="/connect/signup" element={<Signup />} />

@@ -27,9 +27,9 @@ export default function Navbar() {
               </div>
               <div>
                 <h1 className="text-xl font-bold bg-gradient-to-r from-green-400 to-emerald-400 bg-clip-text text-transparent">
-                  YourSite
+                  Connect
                 </h1>
-                <p className="text-xs text-gray-400 -mt-1">Premium Platform</p>
+                <p className="text-xs text-gray-400 -mt-1">trying to be a Platform</p>
               </div>
             </div>
 

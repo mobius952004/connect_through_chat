@@ -128,21 +128,27 @@ export default function Login() {
   }, []);
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-gradient-to-l from-gray-800 via-black to-gray-800 text-white relative overflow-hidden">
+    <div className="min-h-screen flex items-center justify-center bg-gradient-to-l from-gray-800/70 via-black to-gray-800/70 text-white relative overflow-hidden">
+      
       {/* Neural Network Canvas Background */}
       <canvas
         ref={canvasRef}
         className="absolute inset-0 z-0"
         style={{ width: "100vw", height: "100vh" }}
       />
-
+<div className="absolute inset-0 opacity-20">
+        <div className="absolute top-1/4 left-1/4 w-64 h-64 bg-green-500 rounded-full blur-3xl animate-pulse"></div>
+        <div className="absolute bottom-1/4 right-1/4 w-64 h-64 bg-emerald-500 rounded-full blur-3xl animate-pulse delay-1000"></div>
+        <div className="absolute top-1/2 left-1/2 w-32 h-32 bg-green-400 rounded-full blur-2xl animate-pulse delay-500"></div>
+      </div>
       <div className="relative z-10">
+        
         <div
-          className={`bg-gray-900 p-10 rounded-2xl shadow-2xl w-full max-w-md border border-gray-700/50 transform transition-all duration-700 ${fadeIn ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"
+          className={`bg-gray-900 p-10 rounded-2xl shadow-2xl shadow-green-800 w-full max-w-md border border-gray-800/50 transform transition-all duration-700 ${fadeIn ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"
             }`}
         >
           {/* Subtle gradient overlay */}
-          <div className="absolute inset-0 bg-gradient-to-br from-green-900/10 via-transparent to-emerald-900/10 rounded-2xl pointer-events-none"></div>
+          <div className="absolute inset-0 bg-gradient-to-l from-gray-800/75 via-gray-800 to-black-900  rounded-2xl pointer-events-none"></div>
 
           <div className="relative z-10">
             {/* Header with icon */}
@@ -297,7 +303,7 @@ export default function Login() {
                 <button
                   type="submit"
                   onClick={handleSubmit}
-                  className="w-full bg-gradient-to-l from-green-600 to-emerald-800 hover:from-green-700 hover:to-emerald-800 text-white font-semibold py-4 rounded-xl transition-all duration-300 shadow-lg hover:shadow-xl hover:shadow-green-500/20 transform hover:scale-[1.02]"
+                  className="w-full bg-gradient-to-l from-green-500 to-emerald-700 hover:from-green-500 hover:to-emerald-600 text-white font-semibold py-4 rounded-xl transition-all duration-300 shadow-lg hover:shadow-xl hover:shadow-green-500/20 transform hover:scale-[1.02]"
                 >
                   Sign In
                 </button>

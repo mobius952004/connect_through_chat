@@ -1,12 +1,9 @@
+// Calls_entry_point.jsx
+import React from 'react';
+import CallPage from './pages/CallPage'; // Import the new page component
 
-
-export default function Call(){
-
-
-
+export default function Call() {
     return (
-        <div className="bg-emerald-700 w-full h-full">
-
-        </div>
-    )
+        <CallPage />
+    );
 }

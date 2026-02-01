@@ -42,16 +42,16 @@ export default function Profile() {
     return <div className="text-white text-center mt-6">Loading...</div>;
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-slate-900 via-slate-800 to-slate-900 text-white flex items-center justify-center relative overflow-hidden">
+    <div className="min-h-screen bg-gradient-to-l from-slate-900 via-slate-800 to-slate-900 text-white flex items-center justify-center relative overflow-hidden">
       {/* Animated background elements */}
       <div className="absolute inset-0 opacity-20">
-        <div className="absolute top-1/4 left-1/4 w-64 h-64 bg-green-500/10 rounded-full blur-3xl animate-pulse"></div>
-        <div className="absolute bottom-1/4 right-1/4 w-64 h-64 bg-emerald-500/10 rounded-full blur-3xl animate-pulse delay-1000"></div>
-        <div className="absolute top-1/2 left-1/2 w-32 h-32 bg-green-400/10 rounded-full blur-2xl animate-pulse delay-500"></div>
+        <div className="absolute top-1/4 left-1/4 w-64 h-64 bg-green-500 rounded-full blur-3xl animate-pulse"></div>
+        <div className="absolute bottom-1/4 right-1/4 w-64 h-64 bg-emerald-500 rounded-full blur-3xl animate-pulse delay-1000"></div>
+        <div className="absolute top-1/2 left-1/2 w-32 h-32 bg-green-400 rounded-full blur-2xl animate-pulse delay-500"></div>
       </div>
 
       <div className="relative z-10 w-full max-w-lg mx-4">
-        <div className="bg-gradient-to-br from-slate-700 via-slate-500 to-slate-900 p-8 rounded-2xl shadow-2xl border border-slate-700/50 backdrop-blur-sm relative overflow-hidden">
+        <div className="bg-gradient-to-l from-slate-800 via-slate-800/50 to-slate-900 p-8 rounded-2xl shadow-2xl border border-slate-700/50 backdrop-blur-sm relative overflow-hidden">
           {/* Subtle gradient overlay */}
           <div className="absolute inset-0 bg-gradient-to-br from-green-900/10 via-transparent to-emerald-900/10 rounded-2xl pointer-events-none"></div>
 
@@ -190,7 +190,7 @@ export default function Profile() {
             {/* Action Buttons */}
             <div className="space-y-3">
               <button
-                className="w-full bg-gradient-to-r from-green-600 to-emerald-600 hover:from-green-700 hover:to-emerald-700 text-white py-4 rounded-xl font-semibold transition-all duration-300 shadow-lg hover:shadow-xl hover:shadow-green-500/20 transform hover:scale-[1.02] flex items-center justify-center space-x-2"
+                className="w-full bg-gradient-to-l from-green-400 to-emerald-600 hover:from-green-600 hover:to-emerald-500 text-white py-4 rounded-xl font-semibold transition-all duration-300 shadow-lg hover:shadow-xl hover:shadow-green-500/20 transform hover:scale-[1.02] flex items-center justify-center space-x-2"
                 onClick={() => setusernameModal(true)}
               >
                 <svg
