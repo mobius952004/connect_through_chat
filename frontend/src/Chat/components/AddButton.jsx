@@ -28,13 +28,13 @@ export default function AddButton({ onadd, setonadd }) {
    return (<>
       <div className="relative inline-block text-left" ref={menuRef}>
 
-         <button type="button" id="AddButton" onClick={() => setonadd(!onadd)} className="text-green-700 hover:text-white border border-green-700 hover:bg-green-800 focus:ring-3 focus:outline-none  focus:ring-green-300 font-medium rounded-full text-sm px-4 py-4 text-center me-2 mb-2 dark:border-green-500 dark:text-green-500 dark:hover:text-white dark:hover:bg-green-300 dark:focus:ring-green-800 absolute bottom-4 right-4 ">
+         <button type="button" id="AddButton" onClick={() => setonadd(!onadd)} className="text-green-700 hover:text-white border border-green-700 hover:bg-green-800 focus:ring-3 focus:outline-none  focus:ring-green-300 font-medium rounded-full text-sm px-4 py-4 text-center me-2 mb-2  dark:text-green-500 dark:hover:text-white dark:focus:ring-green-800 absolute bottom-4 right-4 ">
             <span>
                <PlusCircle />
             </span>
          </button>
          {onadd && <div
-            className={`absolute bottom-20 right-4 w-64 h-45 bg-slate-800 shadow-lg rounded-lg transition-transform duration-1000 text-slate-400 ${onadd ? "translate-y-0 opacity-100" : "translate-y-10 opacity-0 pointer-events-none "
+            className={`absolute bottom-25 right-4 w-64 h-45 bg-slate-800 shadow-lg rounded-lg transition-transform duration-1000 text-slate-400 ${onadd ? "translate-y-0 opacity-100" : "translate-y-10 opacity-0 pointer-events-none "
                }`}
          >
 

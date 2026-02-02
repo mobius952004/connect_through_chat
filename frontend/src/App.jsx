@@ -3,6 +3,7 @@ import ChatProvider from "./store/socketContext.jsx";
 import { useEffect, lazy, Suspense } from "react";
 import { scheduleTokenRefresh, clearRefreshTimer } from "./utils/authScheduler.js";
 import { connectSocket } from "./sockets/socket.js";
+import RequireAuth from "./pages/requireauth.jsx";
 
 // Lazy load pages
 const Signup = lazy(() => import("./pages/Signup.jsx"));
@@ -11,7 +12,7 @@ const Login = lazy(() => import("./pages/Login"));
 const Navbar = lazy(() => import("./pages/Nav.jsx"));
 const Home = lazy(() => import("./pages/Home.jsx"));
 const UserChats = lazy(() => import("./Chat/pages/UserChat.jsx"));
-const ProfileStatistics = lazy(() => import("./pages/setUserInfo.jsx"));
+const SetProfileInformation = lazy(() => import("./pages/setUserInfo.jsx"));
 const Call = lazy(() => import("./Call/Calls_entry_point.jsx"));
 
 // Loading component
@@ -36,21 +37,26 @@ function App() {
     <ChatProvider>
       <BrowserRouter>
         <Suspense fallback={<Loading />}>
+
           <Routes>
-            <Route path="/connect" element={<Navbar />} />
-            <Route path="/connect/home" element={<Home />} >
-              <Route path="chats" element={<UserChats />}></Route>
-              <Route path="calls" element={<Call />}></Route>
-              <Route path="profile" element={<Profile />}></Route>
+              <Route path="/connect/signup" element={<Signup />} />
+              <Route path="/connect/login" element={<Login />} />
+            <Route element={<RequireAuth />}>
+
+              <Route path="/connect" element={<Navbar />} />
+
+              <Route path="/connect/home" element={<Home />} >
+                <Route path="chats" element={<UserChats />}></Route>
+                <Route path="calls" element={<Call />}></Route>
+                <Route path="profile" element={<Profile />}></Route>
+              </Route>
+
+
+              <Route path="/connect/signup/setProfileInformation" element={<SetProfileInformation />} />
+
+              <Route path="/connect/profile" element={<Profile />} />
+
             </Route>
-
-            <Route path="/connect/signup" element={<Signup />} />
-
-            <Route path="/connect/signup/setProfileInformation" element={<ProfileStatistics />} />
-
-            <Route path="/connect/profile" element={<Profile />} />
-
-            <Route path="/connect/login" element={<Login />} />
           </Routes>
         </Suspense>
       </BrowserRouter>

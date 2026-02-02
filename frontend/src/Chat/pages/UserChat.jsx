@@ -21,7 +21,7 @@ export default function UserChats() {
         <div className="flex-1 flex  gap-0.5 h-full">
             {/* chats containers */}
             {/* Hidden on mobile if chat selected, visible on md+ always */}
-            <div className={`flex-col  md:w-[340px]  bg-gray-900 border-spacing-2  border-1 ${selectedChat ? "hidden md:flex" : "flex"
+            <div className={`flex-col  md:w-[340px]  bg-gray-900 border-spacing-2  border-2 border-white ${selectedChat ? "hidden md:flex" : "flex"
                 }`}>
                 {/* <SearchBar /> */}
                 <ChatList />

@@ -23,19 +23,29 @@ class AuthController {
 
     const alreadyexists = await User.findOne({ email });
 
+
     if (alreadyexists)
       return res.status(409).json("User with Username Or email Already Exists");
 
     try {
-      const user = await authservices.usersignup(
+      const{ user,deviceId,accessToken,refreshToken} = await authservices.usersignup(
         username,
         password,
         email,
         req.headers["user-agent"]
       );
+res.cookie('refreshToken',refreshToken,{
+  httponly:true,
+  secure:false,
+  sameSite:"lax",
+  path:"/api/auth/user/refresh",
+  maxAge:30*24*60*60*1000
+})
+
+
       console.log(user);
       console.log("congratulations u are now signedup ");
-      res.status(200).json(user);
+      res.status(200).json(user,deviceId,accessToken);
     } catch (err) {
       console.error(err);
       return res.status(500).json("Something went wrong");

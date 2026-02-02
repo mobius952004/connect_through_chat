@@ -32,6 +32,12 @@ const userSchema = new mongoose.Schema(
             type: Boolean,
             default: false,
         },
+        socialLinks: [
+            {
+                platform: String,
+                url: String
+            }
+        ]
 
     },
     { timestamps: true }

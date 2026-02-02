@@ -130,6 +130,17 @@ export default function Profile() {
                   </div>
                 </div>
               </div>
+              {user.socialLinks.map(link => (
+                <a
+                  key={link.url}
+                  href={link.url}
+                  target="_blank"
+                  rel="noreferrer"
+                  className="text-emerald-400 hover:underline"
+                >
+                  {link.platform}
+                </a>
+              ))}
 
               <div className="bg-slate-800/30 p-4 rounded-xl backdrop-blur-sm border border-slate-700/30">
                 <div className="flex items-center justify-between">

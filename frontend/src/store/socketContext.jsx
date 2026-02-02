@@ -10,6 +10,7 @@ export default function ChatProvider({ children }) {
     const token = localStorage.getItem("accessToken");
     if (!token) return null;
     const decoded = jwtDecode(token);
+    if(decoded.exp*1000<Date.now()) return null
     // console.log(decoded.username);
 
     return {
