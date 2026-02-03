@@ -1,16 +1,20 @@
 import { createContext } from "react";
 import { socket } from "../sockets/socket";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { jwtDecode } from "jwt-decode";
-import { ThermometerSnowflakeIcon } from "lucide-react";
+// import { ThermometerSnowflakeIcon } from "lucide-react";
 const ChatContext = createContext();
 
 export default function ChatProvider({ children }) {
+
+
+
+
   function getCurrentUser() {
     const token = localStorage.getItem("accessToken");
     if (!token) return null;
     const decoded = jwtDecode(token);
-    if(decoded.exp*1000<Date.now()) return null
+    if (decoded.exp * 1000 < Date.now()) return null
     // console.log(decoded.username);
 
     return {
@@ -19,11 +23,55 @@ export default function ChatProvider({ children }) {
     };
   }
 
+
+
   const [userinfo, setuserinfo] = useState(false);
   const [sidepanel, setsidepanel] = useState("");
   const [selecteduser, setselecteduser] = useState(null);
   const [chatlist, setchatlist] = useState([]);
-    const [selectedChat,setSelectedChat]=useState(null)
+  const [selectedChat, setSelectedChat] = useState(null)
+
+
+
+  const [unreadCounts, setUnreadCounts] = useState({});
+
+  useEffect(() => {
+    const handleNewMessage = (newMessage) => {
+      // 1. Don't count own messages
+      const currentUser = getCurrentUser();
+      if (newMessage.from === currentUser?.userId) return;
+
+      // 2. If the message belongs to the currently open chat, do NOT increment
+      //    (Using a functional state update to access the LATEST selectedChat if needed, 
+      //     but here we depend on the closure variable 'selectedChat' from the render scope.
+      //     Since we add 'selectedChat' to the dependency array, this listener recreation is fine.)
+      if (selectedChat && newMessage.Chat === selectedChat._id) {
+        return;
+      }
+
+      // 3. Increment unread count for this specific chat
+      setUnreadCounts((prev) => ({
+        ...prev,
+        [newMessage.Chat]: (prev[newMessage.Chat] || 0) + 1,
+      }));
+      console.log("Global Listener: New message in chat", newMessage.Chat);
+    };
+
+    socket.on("RECEIVE_MESSAGE", handleNewMessage);
+
+    return () => {
+      socket.off("RECEIVE_MESSAGE", handleNewMessage);
+    };
+  }, [selectedChat]); // Re-bind listener when selectedChat changes
+
+  const markChatAsRead = (chatId) => {
+    setUnreadCounts((prev) => {
+      const newCounts = { ...prev };
+      delete newCounts[chatId]; // Remove the entry to reset count to 0 (or undefined)
+      return newCounts;
+    });
+  };
+
   return (
     <ChatContext.Provider
       value={{
@@ -38,8 +86,9 @@ export default function ChatProvider({ children }) {
         chatlist,
         setchatlist,
         selectedChat,
-        setSelectedChat
-        
+        setSelectedChat,
+        unreadCounts,      // Exposed
+        markChatAsRead,    // Exposed
       }}
     >
       {children}

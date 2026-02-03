@@ -76,8 +76,8 @@ export default function PrevChat({ msg }) {
 
       {/* Message Bubble */}
       <div className={`relative flex flex-col px-3 py-1.5 shadow-md pb-5 min-w-[100px] max-w-[85%] md:max-w-[70%] ${isUser
-          ? "bg-emerald-700 rounded-l-xl rounded-tr-xl rounded-br-none text-white"
-          : "bg-gray-800 rounded-r-xl rounded-tl-xl rounded-bl-none text-gray-100"
+        ? "bg-emerald-700 rounded-l-xl rounded-tr-xl rounded-br-none text-white"
+        : "bg-gray-800 rounded-r-xl rounded-tl-xl rounded-bl-none text-gray-100"
         }`}>
 
         {/* Sender Name */}
@@ -97,8 +97,8 @@ export default function PrevChat({ msg }) {
           <span className="text-[10px] text-gray-300 opacity-80">
             {msg.time}
           </span>
-          {/* Status Indicator logic swapped as requested: Show on Receiver bubble (!isUser), Hide on User bubble (isUser) */}
-          {!isUser && <StatusIndicator status={msg.status} />}
+          {/* Status Indicator: Only show on User's sent bubbles */}
+          {isUser && <StatusIndicator status={msg.status} />}
         </div>
       </div>
 

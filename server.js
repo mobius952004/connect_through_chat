@@ -20,7 +20,7 @@ const io = new Server(server, {
       "http://localhost:5173",
       "http://172.21.161.186:5173",
       "http://192.168.1.10:5173",
-      "http://10.209.88.186:5173",
+      "http://10.131.120.186:5173",
     ],
     methods: ["GET", "POST"],
     credentials: true

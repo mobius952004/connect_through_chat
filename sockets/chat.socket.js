@@ -18,6 +18,12 @@ export default function chatSocketHandler(io, socket) {
 
     userId = payload.sub;
     socket.user = payload;
+
+
+    socket.join(userId);
+    console.log(`User ${userId} joined their personal room`);
+    // --- FIX ENDS HERE ---
+
   } catch (err) {
     // console.error(' Socket auth failed');
     return socket.disconnect();
@@ -40,17 +46,27 @@ export default function chatSocketHandler(io, socket) {
     SOCKET_EVENTS.SEND_PRIVATE_MESSAGE,
     async ({ toUserId, newmessage }, callback) => {
       if (!userId || !toUserId) return;
-      
+
 
       const roomId = getRoomId({ userId: userId, withUserId: toUserId });
 
-      newmessage.status = "Sent";
+      const cleanMessage = {
+        content: newmessage.content,
+        to: toUserId,
+        from: userId,
+        fromName: newmessage.fromName,
+        roomId: getRoomId({ userId, withUserId: toUserId }),
+        Chat: newmessage.Chat,
+        time: newmessage.time,
+        date: newmessage.date,
+        status: "Sent",
+      };
 
-      const updatedmessage = await Message.create(newmessage);
+      const updatedmessage = await Message.create(cleanMessage);
       callback(updatedmessage);
 
-      
-      
+
+
       io.to(roomId).emit(SOCKET_EVENTS.RECEIVE_MESSAGE, updatedmessage);
       updatedmessage.status = "Delivered";
       await updatedmessage.save();

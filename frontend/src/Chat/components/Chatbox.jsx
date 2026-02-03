@@ -8,7 +8,7 @@ import { ChatEvents } from "../../sockets/chat.events";
 import { getMessages } from "../../api/auth";
 
 export default function ChatBox() {
-    const { socket, selectedChat, getCurrentUser } = useContext(ChatContext);
+    const { socket, selectedChat, getCurrentUser, markChatAsRead } = useContext(ChatContext);
     const [textMessage, setTextMessage] = useState("");
     const [pastMessages, setPastMessages] = useState([]);
 
@@ -30,8 +30,8 @@ export default function ChatBox() {
         const newMessage = {
             content: Message,
             to: otheruser._id,
-            from:UserId,
-            fromName:username,
+            from: UserId,
+            fromName: username,
             roomId,
             Chat: selectedChat._id,
             time: new Date().toLocaleTimeString([], {
@@ -47,8 +47,6 @@ export default function ChatBox() {
             status: "Pending",
             username,
         };
-
-
 
         // message emmited
         socket.emit(
@@ -69,6 +67,9 @@ export default function ChatBox() {
         // if (!selecteduser) return;
         if (!otheruser) return;
 
+        // Mark as read immediately when opening/viewing
+        markChatAsRead(selectedChat._id);
+
         // const accessToken = localStorage.getItem("accessToken")
         const messages = async () => {
 
@@ -81,22 +82,28 @@ export default function ChatBox() {
             setPastMessages(transformed);
             // setPastMessages(prev => [...prev, transformed]);
 
+            // FIX: Mark existing unread messages as read
+            transformed.forEach(msg => {
+                if (msg.to === UserId && msg.status !== "Read") {
+                    socket.emit("MESSAGE_READ", { messageId: msg._id });
+                }
+            });
+
         }
         messages()
 
 
-        // for selected user
-        // socket.emit(ChatEvents.JOIN_ROOM, { withUserId: selecteduser?._id });
+
         socket.emit(ChatEvents.JOIN_ROOM, { withUserId: otheruser?._id });
 
         // for selected chat
 
         socket.on(ChatEvents.RECEIVE_MESSAGE, async (recievedmessage) => {
-            //   recievedmessage.map(msg => {
-            //         if (msg.to === UserId && msg.status !== "read") {
-            //             socket.emit("MESSAGE_READ", { messageId: msg._id });
-            //         }
-            //     });
+
+            // DEBUG FIX: Only allow messages for the CURRENT active chat
+            if (recievedmessage.Chat !== selectedChat._id) return;
+            // Additional check: If global listener handles it, do we need this? 
+            // Yes, because this is for the LIVE view. Global handles background counts.
 
             //for a single message
             if (
@@ -106,13 +113,10 @@ export default function ChatBox() {
                 socket.emit("MESSAGE_READ", { messageId: recievedmessage._id });
             }
 
-            // recievedmessage.from === UserId
-            //     ? (recievedmessage.belongstouser = true)
-            //     : (recievedmessage.belongstouser = false);
-              recievedmessage.belongstouser = recievedmessage.from === UserId;
+            recievedmessage.belongstouser = recievedmessage.from === UserId;
 
             setPastMessages((prev) => [recievedmessage, ...prev]);
-            // setPastMessages((prev) => [ ...prev,recievedmessage]);
+
         });
         socket.on("MESSAGE_UPDATED", (updatedMsg) => {
             setPastMessages((prev) =>
