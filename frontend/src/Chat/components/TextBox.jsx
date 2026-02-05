@@ -85,7 +85,7 @@ export default function TextBox({ textMessage, setTextMessage, sendmessage }) {
                 </button>
 
                 {showPicker && (
-                    <div className="absolute bottom-12 left-[-40px] z-50 shadow-2xl rounded-2xl overflow-y-scroll ">
+                    <div className="absolute bottom-12 left-[-40px] z-50 shadow-2xl rounded-2xl overflow-auto ">
                         <EmojiPicker
                             onEmojiClick={onEmojiClick}
                             theme={Theme.DARK}

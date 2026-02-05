@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import "flowbite"
-
+import Ballpit from '../components/UI/Ballpit'
 
 export default function Navbar() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -105,12 +105,47 @@ export default function Navbar() {
         )}
       </nav>
 
-      <div
-        className="w-full min-h-screen bg-cover bg-center"
-        style={{ backgroundImage: "url('/Halo.png')" }}
-      >
-        Content
+
+
+
+<div 
+// style={{position: 'relative', overflow: 'hidden', width: '100%'}}
+className="fixed inset-0 z-10">
+  <Ballpit
+    count={100}
+    gravity={0}
+    friction={0.9975}
+    wallBounce={0.95}
+    followCursor={false}
+  />
+  <div className="pointer-events-none absolute inset-0 z-10 flex items-center justify-center">
+    <div className="flex flex-col items-center gap-3">
+      <div className="w-20 h-20 bg-gradient-to-b from-green-400 to-emerald-700 rounded-2xl flex items-center justify-center shadow-2xl">
+        <svg
+          className="w-10 h-10 text-black"
+          fill="none"
+          stroke="currentColor"
+          viewBox="0 0 24 24"
+        >
+          <path
+            strokeLinecap="round"
+            strokeLinejoin="round"
+            strokeWidth={2}
+            d="M13 10V3L4 14h7v7l9-11h-7z"
+          />
+        </svg>
       </div>
+
+      <h1 className="text-5xl font-bold bg-gradient-to-r from-green-400 to-emerald-400 bg-clip-text text-transparent">
+        Connect
+      </h1>
+
+      <p className="text-gray-300 text-sm tracking-wide">
+        trying to be a platform
+      </p>
+    </div>
+  </div>
+</div>
 
 
     </div>

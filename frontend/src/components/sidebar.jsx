@@ -11,6 +11,7 @@ import { IoCallOutline } from "react-icons/io5";
 import { useNavigate } from "react-router-dom";
 import "flowbite"
 import { ChatContext } from "../store/socketContext";
+import { HomeIcon } from "lucide-react";
 
 
 export default function Sidebar() {
@@ -19,7 +20,7 @@ export default function Sidebar() {
     const navigate = useNavigate()
 
 
-    const [isMenuOpen, setIsMenuOpen] = useState(false)
+    // const [isMenuOpen, setIsMenuOpen] = useState(false)
     const { selectedChat } = useContext(ChatContext);
     // const {dopost,setdopost} = useContext(Postlist)
 
@@ -32,7 +33,7 @@ export default function Sidebar() {
 
                     <div className="flex flex-col items-center w-14 sm:w-10 md:w-16">
 
-                        <div className="relative group sm:my-2 my-1">
+                        {/* <div className="relative group sm:my-2 my-1">
                             <button className="relative p-2 rounded-lg hover:bg-gray-800 transition-colors" onClick={() => setIsMenuOpen(!isMenuOpen)}>
                                 {isMenuOpen ? <IoCloseSharp className="sm:w-7 sm:h-9 w-6 h-8 text-white hover:text-green-600 transition-all transform hover:scale-[1.1] cursor-pointer" /> : <IoMenu className="sm:w-7 sm:h-9 w-6 h-8 text-white hover:text-green-600 transition-all transform hover:scale-[1.1] cursor-pointer" />
                                 }
@@ -42,8 +43,18 @@ export default function Sidebar() {
                                 {isMenuOpen ? "Close Menus" : "Open Menu"}
                             </span>
                             {/* {isMenuOpen &&<Drawer/>} */}
-                        </div>
+                        {/* </div>  */}
+                        
 
+                        <div className="relative group sm:my-2 my-1">
+                            <button className="relative p-2 rounded-lg hover:bg-gray-800 transition-colors" onClick={() => navigate(`/connect/home`)} >
+                                <HomeIcon className="sm:w-7 sm:h-7 w-6 h-6 text-white hover:text-green-600 transition-all transform hover:scale-[1.1] cursor-pointer" />
+                            </button>
+
+                            <span className="hidden md:block absolute bottom-full mb-1 left-1/2 -translate-x-1/4 px-2 py-1 bg-gray-700 text-white text-xs rounded-full opacity-0 group-hover:opacity-100 transition-opacity duration-100  pointer-events-none whitespace-nowrap z-50">
+                                Home
+                            </span>
+                        </div>
                         <div className="relative group sm:my-2 my-1">
                             <button className="relative p-2 rounded-lg hover:bg-gray-800 transition-colors" onClick={() => navigate(`/connect/home/chats`)} >
                                 <IoChatboxEllipsesOutline className="sm:w-7 sm:h-7 w-6 h-6 text-white hover:text-green-600 transition-all transform hover:scale-[1.1] cursor-pointer" />
