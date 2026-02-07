@@ -1,17 +1,14 @@
 import { CgProfile } from "react-icons/cg";
-import { IoMenu } from "react-icons/io5";
 import { CgRemote } from "react-icons/cg";
 import { IoIosSettings } from "react-icons/io";
 import { MdOutlineLightMode } from "react-icons/md";
-import { IoCloseSharp } from "react-icons/io5";
 import { PiGlobeStandDuotone } from "react-icons/pi";
-import { useState, useContext } from "react";
 import { IoChatboxEllipsesOutline } from "react-icons/io5";
 import { IoCallOutline } from "react-icons/io5";
 import { useNavigate } from "react-router-dom";
-import "flowbite"
 import { ChatContext } from "../store/socketContext";
 import { HomeIcon } from "lucide-react";
+import { useContext } from "react";
 
 
 export default function Sidebar() {
@@ -21,7 +18,7 @@ export default function Sidebar() {
 
 
     // const [isMenuOpen, setIsMenuOpen] = useState(false)
-    const { selectedChat } = useContext(ChatContext);
+    const { selectedChat ,unreadcounts} = useContext(ChatContext);
     // const {dopost,setdopost} = useContext(Postlist)
 
     return (
@@ -57,6 +54,9 @@ export default function Sidebar() {
                         </div>
                         <div className="relative group sm:my-2 my-1">
                             <button className="relative p-2 rounded-lg hover:bg-gray-800 transition-colors" onClick={() => navigate(`/connect/home/chats`)} >
+                             {unreadcounts && <label className="bg-green-500 rounded-full h-2 w-2 m-0 p-1">
+                                unreadcount()
+                                </label>}
                                 <IoChatboxEllipsesOutline className="sm:w-7 sm:h-7 w-6 h-6 text-white hover:text-green-600 transition-all transform hover:scale-[1.1] cursor-pointer" />
                             </button>
 

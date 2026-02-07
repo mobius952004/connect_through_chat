@@ -1,12 +1,14 @@
 import { Send, SmileIcon, PlusIcon, FileText, Image, Camera } from "lucide-react";
-import { useState, useRef, useEffect } from "react";
+import { useState, useRef, useEffect, useContext } from "react";
 import EmojiPicker, { Theme } from "emoji-picker-react";
+import { ChatContext } from "../../store/socketContext";
 
 export default function TextBox({ textMessage, setTextMessage, sendmessage }) {
     const [showPicker, setShowPicker] = useState(false);
     const [showAttachMenu, setShowAttachMenu] = useState(false);
     const pickerRef = useRef(null);
     const attachRef = useRef(null);
+    const { replyMessage, setReplyMessage } = useContext(ChatContext);
 
     const onEmojiClick = (emojiObject) => {
         setTextMessage((prev) => prev + emojiObject.emoji);
@@ -15,9 +17,10 @@ export default function TextBox({ textMessage, setTextMessage, sendmessage }) {
     const sendText = (e) => {
         e.preventDefault();
         if (!textMessage.trim()) return;
-
-        sendmessage(textMessage);
+        console.log(replyMessage)
+        sendmessage(textMessage, replyMessage);
         setTextMessage("");
+        setReplyMessage(null)
         setShowPicker(false);
     };
 
@@ -98,18 +101,45 @@ export default function TextBox({ textMessage, setTextMessage, sendmessage }) {
 
             {/* Input Field */}
             <form onSubmit={sendText} className="flex-1">
+                {replyMessage && (
+                    <div className="absolute bottom-full left-0 right-0 px-4 py-2 bg-emerald-900/90 text-white rounded-t-lg flex justify-between items-start gap-2">
+                        <div className="flex flex-col">
+                            <span className="text-xs opacity-80">
+                                Replying to {replyMessage.from?.username || "User"}
+                            </span>
+                            <span className="text-sm truncate max-w-[90%]">
+                                {replyMessage.content}
+                            </span>
+                        </div>
+
+                        <button
+                            onClick={() => setReplyMessage(null)}
+                            className="text-white/70 hover:text-white"
+                        >
+                            ✕
+                        </button>
+                    </div>
+                )}
                 <input
                     type="text"
                     value={textMessage}
                     onChange={(e) => setTextMessage(e.target.value)}
+                    onKeyDown={(e) => {
+                        if (e.key === "Enter" && !e.shiftKey) {
+                            sendText(e);
+                        }
+                    }}
                     placeholder="Type a message"
                     className="w-full py-2.5 px-4 bg-white dark:bg-gray-700 rounded-lg border-none focus:ring-0 text-gray-800 dark:text-gray-100 placeholder-gray-500 dark:placeholder-gray-400 text-[15px] outline-none"
                 />
+
+
             </form>
 
             {/* Send Button */}
             <button
                 onClick={sendText}
+                type="Submit"
                 disabled={!textMessage.trim()}
                 className={`p-2.5 rounded-full transition-all duration-200 ${textMessage.trim()
                     ? "bg-emerald-500 text-slate900 dark:text-white hover:bg-emerald-600 shadow-sm"

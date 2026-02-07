@@ -11,7 +11,7 @@ export default function Navbar() {
     <div>
 
 
-      <nav className="bg-gradient-to-l from-gray-900 via-gray-800 to-gray-900 text-white border-b border-gray-700/50 backdrop-blur-sm relative overflow-hidden">
+      <nav className="bg-gradient-to-l z-20 from-gray-900 via-transparent to-gray-900 text-white border-b border-gray-700/50 backdrop-blur-sm relative overflow-hidden">
         {/* Subtle background gradient overlay */}
         <div className="absolute inset-0 bg-gradient-to-r from-green-900/5 via-transparent to-emerald-900/5 pointer-events-none"></div>
 
@@ -120,7 +120,7 @@ className="fixed inset-0 z-10">
   />
   <div className="pointer-events-none absolute inset-0 z-10 flex items-center justify-center">
     <div className="flex flex-col items-center gap-3">
-      <div className="w-20 h-20 bg-gradient-to-b from-green-400 to-emerald-700 rounded-2xl flex items-center justify-center shadow-2xl">
+      <div className="w-20 h-20 bg-gradient-to-b from-green-400  to-emerald-700 rounded-2xl flex items-center justify-center shadow-2xl">
         <svg
           className="w-10 h-10 text-black"
           fill="none"

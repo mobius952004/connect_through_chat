@@ -7,3 +7,6 @@ node_modules/
 dist/
 coverage/
 documentations/
+socket_events_report.md
+fixes_report.md
+chat_flow_review.md

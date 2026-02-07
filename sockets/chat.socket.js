@@ -59,10 +59,16 @@ export default function chatSocketHandler(io, socket) {
         Chat: newmessage.Chat,
         time: newmessage.time,
         date: newmessage.date,
+        replyTo: newmessage.replyTo,
         status: "Sent",
       };
 
       const updatedmessage = await Message.create(cleanMessage);
+
+      await updatedmessage.populate({
+        path: "replyTo",
+        select: "content from" 
+      });
       callback(updatedmessage);
 
 

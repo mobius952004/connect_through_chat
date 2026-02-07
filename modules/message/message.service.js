@@ -19,7 +19,14 @@ class MessageService{
     async getMessages(chatId) {
         return Message.find({ Chat: chatId })
           .populate("from").select('-password -email')
-          .populate("Chat")
+          .populate("Chat").populate({
+    path: "replyTo",
+    select: "content from",
+    populate: {
+      path: "from",
+      select: "username",
+    },
+  })
           .sort({ createdAt: -1 });
     }
 }

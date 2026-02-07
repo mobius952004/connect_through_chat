@@ -1,4 +1,4 @@
-import { createContext } from "react";
+import { createContext, useRef,  } from "react";
 import { socket } from "../sockets/socket";
 import { useState, useEffect } from "react";
 import { jwtDecode } from "jwt-decode";
@@ -31,6 +31,19 @@ export default function ChatProvider({ children }) {
   const [chatlist, setchatlist] = useState([]);
   const [selectedChat, setSelectedChat] = useState(null)
 
+
+  //messages
+      const [textMessage, setTextMessage] = useState("");
+    const [pastMessages, setPastMessages] = useState([]);
+    const replyref = useRef(null)
+const [replyMessage, setReplyMessage] = useState(null);
+
+    const value = {
+  textMessage,
+  setTextMessage,
+  replyMessage,
+  setReplyMessage,
+};
 
 
   const [unreadCounts, setUnreadCounts] = useState({});
@@ -89,6 +102,17 @@ export default function ChatProvider({ children }) {
         setSelectedChat,
         unreadCounts,      // Exposed
         markChatAsRead,    // Exposed
+
+        // messages
+        replyref,
+        textMessage,
+        setTextMessage,
+        pastMessages,
+        setPastMessages,
+        replyMessage,
+        setReplyMessage,
+        value,
+
       }}
     >
       {children}

@@ -3,7 +3,7 @@ import { useEffect, useRef, useState, useContext } from "react";
 import { ChatContext } from "../../store/socketContext";
 
 export default function PrevChat({ msg }) {
-  const { selectedChat } = useContext(ChatContext);
+  const { selectedChat, setTextMessage,replyMessage, setReplyMessage, } = useContext(ChatContext);
   const menueRef = useRef(null);
   const buttonRef = useRef(null);
   const [menueopen, setmenueopen] = useState(false);
@@ -65,6 +65,14 @@ export default function PrevChat({ msg }) {
       return <div className="w-1.5 h-1.5 rounded-full bg-gray-400"></div>;
     }
   };
+  const handlemenueaction = (action ) => {
+    if (action === "Reply") {
+
+      setReplyMessage(msg)
+      console.log(replyMessage)
+      setTextMessage("")
+    }
+  }
 
   return (
     <div className={`flex my-2.5 items-end gap-2 group relative w-full ${isUser ? "flex-row-reverse" : "flex-row"}`}>
@@ -87,6 +95,17 @@ export default function PrevChat({ msg }) {
           </span>
         )}
 
+        {msg.replyTo && (
+          <div className="mb-1 px-2 py-1 text-xs bg-black/20 border-l-4 border-emerald-400 rounded">
+            <span className="block font-semibold text-emerald-300">
+              {msg.replyTo.fromName}
+            </span>
+            <span className="block truncate opacity-90">
+              {msg.replyTo.content}
+            </span>
+          </div>
+        )}
+
         {/* Content */}
         <p className="text-sm leading-relaxed whitespace-pre-wrap break-words">
           {msg.content}
@@ -97,12 +116,10 @@ export default function PrevChat({ msg }) {
           <span className="text-[10px] text-gray-300 opacity-80">
             {msg.time}
           </span>
-          {/* Status Indicator: Only show on User's sent bubbles */}
           {isUser && <StatusIndicator status={msg.status} />}
         </div>
       </div>
 
-      {/* Menu Trigger - Always Visible (Permanent) as requested */}
       <button
         ref={buttonRef}
         className="opacity-100 text-gray-500 hover:text-white p-2 rounded-full hover:bg-white/10 transition-colors"
@@ -123,7 +140,7 @@ export default function PrevChat({ msg }) {
               <li key={action}>
                 <button
                   className="w-full text-left px-4 py-2 hover:bg-gray-700 transition flex items-center gap-2"
-                  onClick={() => { console.log(action); setmenueopen(false); }}
+                  onClick={() => { handlemenueaction(action); setmenueopen(false); }}
                 >
                   {action}
                 </button>

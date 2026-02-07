@@ -2,15 +2,17 @@ import ChatAvatar from "./ChatAvatar";
 // import RightChatBubble from "./RightChatBubble";
 import PrevChat from "./PrevChat";
 import TextBox from "./TextBox";
-import { useContext, useState, useEffect } from "react";
+import { useContext, useEffect } from "react";
 import { ChatContext } from "../../store/socketContext";
 import { ChatEvents } from "../../sockets/chat.events";
 import { getMessages } from "../../api/auth";
 
 export default function ChatBox() {
-    const { socket, selectedChat, getCurrentUser, markChatAsRead } = useContext(ChatContext);
-    const [textMessage, setTextMessage] = useState("");
-    const [pastMessages, setPastMessages] = useState([]);
+    const { socket, selectedChat, getCurrentUser, markChatAsRead,
+        textMessage, setTextMessage, pastMessages, setPastMessages
+    } = useContext(ChatContext);
+    // const [textMessage, setTextMessage] = useState("");
+    // const [pastMessages, setPastMessages] = useState([]);
 
     //getting the current userif form the help of belo function which is using jwt-decode
     const UserId = getCurrentUser().userId;
@@ -23,10 +25,10 @@ export default function ChatBox() {
         return [userId, withUserId].sort().join("_");
     };
     // message coming from textbox
-    const sendmessage = (Message) => {
+    const sendmessage = (Message, replyMessage) => {
         // const roomId = getRoomId({ userId: UserId, withUserId: selecteduser });
         const roomId = getRoomId({ userId: UserId, withUserId: otheruser._id });
-
+        console.log(replyMessage)
         const newMessage = {
             content: Message,
             to: otheruser._id,
@@ -46,6 +48,9 @@ export default function ChatBox() {
             belongstouser: true,
             status: "Pending",
             username,
+            replyTo: replyMessage
+                ? replyMessage._id
+                : null,
         };
 
         // message emmited
@@ -93,14 +98,24 @@ export default function ChatBox() {
         messages()
 
 
+        // Initial Join
+        if (socket.connected) {
+            socket.emit(ChatEvents.JOIN_ROOM, { withUserId: otheruser?._id });
+        }
 
-        socket.emit(ChatEvents.JOIN_ROOM, { withUserId: otheruser?._id });
+        // Handle Reconnection
+        const handleConnect = () => {
+            console.log("Socket connected, joining room...");
+            socket.emit(ChatEvents.JOIN_ROOM, { withUserId: otheruser?._id });
+        };
+
+        socket.on("connect", handleConnect);
+
 
         // for selected chat
 
-        socket.on(ChatEvents.RECEIVE_MESSAGE, async (recievedmessage) => {
+        const handleReceiveMessage = async (recievedmessage) => {
 
-            // DEBUG FIX: Only allow messages for the CURRENT active chat
             if (recievedmessage.Chat !== selectedChat._id) return;
             // Additional check: If global listener handles it, do we need this? 
             // Yes, because this is for the LIVE view. Global handles background counts.
@@ -117,22 +132,28 @@ export default function ChatBox() {
 
             setPastMessages((prev) => [recievedmessage, ...prev]);
 
-        });
-        socket.on("MESSAGE_UPDATED", (updatedMsg) => {
+        };
+
+        socket.on(ChatEvents.RECEIVE_MESSAGE, handleReceiveMessage);
+
+        const handleMessageUpdated = (updatedMsg) => {
             setPastMessages((prev) =>
                 prev.map((m) => (m._id === updatedMsg._id ? updatedMsg : m))
             );
-        });
+        };
+
+        socket.on("MESSAGE_UPDATED", handleMessageUpdated);
 
         return () => {
-            socket.off(ChatEvents.RECEIVE_MESSAGE);
-            socket.off("MESSAGE_UPDATED");
+            socket.off("connect", handleConnect);
+            socket.off(ChatEvents.RECEIVE_MESSAGE, handleReceiveMessage);
+            socket.off("MESSAGE_UPDATED", handleMessageUpdated);
         };
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [socket, selectedChat, UserId,]);
 
     return (
-        <div className=" flex-1 relative  bg-gradient-to-r from-gray-900 via-gray-600 to-gray-900 flex flex-col overflow-y-auto ">
+        <div className=" flex-1 relative  bg-gradient-to-r  from-gray-900 via-gray-600 to-gray-900 flex flex-col overflow-y-auto ">
             <ChatAvatar UserId={UserId} />
             <div className="dark:bg-gray-900  relative  flex-1  flex flex-col-reverse overflow-y-scroll scrollbar-hide bg-graay-800 ">
                 {pastMessages.length === 0 ? (

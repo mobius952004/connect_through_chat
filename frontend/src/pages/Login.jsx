@@ -54,7 +54,7 @@ export default function Login() {
       nodes = [];
       // Adjust node count based on screen width
       const isMobile = window.innerWidth < 768;
-      const NUM_NODES = isMobile ? 20 : 45;
+      const NUM_NODES = isMobile ? 20 : 100;
 
       for (let i = 0; i < NUM_NODES; i++) {
         nodes.push({

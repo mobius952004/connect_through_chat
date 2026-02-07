@@ -9,7 +9,7 @@ const messageSchema = new mongoose.Schema({
         type: mongoose.Schema.Types.ObjectId,
         ref: "User",
     },
-    fromName:{type:String},
+    fromName: { type: String },
     to: {
         type: mongoose.Schema.Types.ObjectId,
         ref: "User",
@@ -18,13 +18,17 @@ const messageSchema = new mongoose.Schema({
         type: String,
         // required: true
     },
-    roomId:String,
+    roomId: String,
     time: { type: String },
     date: { type: String },
     status: {
         type: String,
-        // enum: ["Pending","sent", "delivered", "seen"],
-        // default: "Pending"
+
+    },
+    replyTo: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: "Message",
+        default: null,
     },
 }, { timestamps: true });
 
