@@ -7,6 +7,7 @@ import ChatBox from "../components/Chatbox";
 import { ChatContext } from "../../store/socketContext";
 import GlobalUsers from "../components/GlobalUsers";
 import UserInfoPanel from "../components/UserInfoPanel";
+import ForwardCheckList from "../components/forwardCheckList";
 
 
 
@@ -59,7 +60,7 @@ export default function UserChats() {
     md:relative
     md:opacity-100 md:pointer-events-auto
     md:transition-[width] md:duration-300
-    ${sidepanel ? "md:w-[450px]" : "md:opacity-0 md:w-0"}
+    ${sidepanel ? "md:w-[400px] w:[250px]" : "md:opacity-0 md:w-0"}
   `}
             >
                 {sidepanel !== "UserInfo" && (
@@ -76,6 +77,7 @@ export default function UserChats() {
 
                 {sidepanel == "UserInfo" && <UserInfoPanel />}
                 {sidepanel == "AddFriend" && <GlobalUsers />}
+                {sidepanel == "Forward" && <ForwardCheckList />}
 
             </div>
 

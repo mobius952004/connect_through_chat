@@ -8,7 +8,7 @@ import { getAccessToken } from "../../utils/token";
 
 export default function ChatList() {
   const { chatlist, setchatlist, selecteduser } = useContext(ChatContext);
-  const[filtereChats,setFilteredChats]=useState([])
+  const[filteredChats,setFilteredChats]=useState([])
 
   useEffect(() => {
     // const accessToken = getAccessToken();
@@ -59,8 +59,8 @@ export default function ChatList() {
   return (
     <div className="flex-1 min-h-0 p-2 lg:w-[340px] overflow-y-scroll scrollbar-hide">
       <SearchBar onSearch={search}/>
-      {filtereChats &&
-        filtereChats.map((chat) => <ChatCard chat={chat} key={chat._id} />)}
+      {filteredChats &&
+        filteredChats.map((chat) => <ChatCard chat={chat} key={chat._id} />)}
     </div>
   );
 }

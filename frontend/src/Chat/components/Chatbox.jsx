@@ -9,7 +9,7 @@ import { getMessages } from "../../api/auth";
 
 export default function ChatBox() {
     const { socket, selectedChat, getCurrentUser, markChatAsRead,
-        textMessage, setTextMessage, pastMessages, setPastMessages
+        textMessage, setTextMessage, pastMessages, setPastMessages, 
     } = useContext(ChatContext);
     // const [textMessage, setTextMessage] = useState("");
     // const [pastMessages, setPastMessages] = useState([]);
@@ -153,9 +153,14 @@ export default function ChatBox() {
     }, [socket, selectedChat, UserId,]);
 
     return (
-        <div className=" flex-1 relative  bg-gradient-to-r  from-gray-900 via-gray-600 to-gray-900 flex flex-col overflow-y-auto ">
+        <div className=" flex-1 relative  bg-gradient-to-l  from-gray-900 via-gray-600 to-gray-200 flex flex-col overflow-y-auto ">
+            
             <ChatAvatar UserId={UserId} />
+ 
+            
+           
             <div className="dark:bg-gray-900  relative  flex-1  flex flex-col-reverse overflow-y-scroll scrollbar-hide bg-graay-800 ">
+                
                 {pastMessages.length === 0 ? (
                     <p className="absolute bottom-0 text-gray-300 self-center-safe">
                         No conversation yet
@@ -163,6 +168,8 @@ export default function ChatBox() {
                 ) : (
                     pastMessages.map((msg, key) => <PrevChat key={key} msg={msg} />)
                 )}
+
+                
             </div>
             <div className="">
                 <TextBox

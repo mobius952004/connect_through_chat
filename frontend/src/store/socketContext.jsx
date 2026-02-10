@@ -37,13 +37,8 @@ export default function ChatProvider({ children }) {
     const [pastMessages, setPastMessages] = useState([]);
     const replyref = useRef(null)
 const [replyMessage, setReplyMessage] = useState(null);
-
-    const value = {
-  textMessage,
-  setTextMessage,
-  replyMessage,
-  setReplyMessage,
-};
+const[forwardMessage , setForwardMessage]=useState([])
+const[forwardTo,setForwardTo]=useState([])
 
 
   const [unreadCounts, setUnreadCounts] = useState({});
@@ -111,7 +106,10 @@ const [replyMessage, setReplyMessage] = useState(null);
         setPastMessages,
         replyMessage,
         setReplyMessage,
-        value,
+        setForwardMessage,
+        forwardMessage,
+        forwardTo,
+        setForwardTo,
 
       }}
     >
