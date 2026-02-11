@@ -51,6 +51,7 @@ export default function ChatBox() {
             replyTo: replyMessage
                 ? replyMessage._id
                 : null,
+            isForward:false,
         };
 
         // message emmited

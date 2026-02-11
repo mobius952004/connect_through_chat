@@ -1,7 +1,7 @@
 import { EllipsisVerticalIcon } from "lucide-react";
 import { useEffect, useRef, useState, useContext } from "react";
 import { ChatContext } from "../../store/socketContext";
-
+import { IoPlayForwardSharp } from "react-icons/io5";
 export default function PrevChat({ msg }) {
   const { selectedChat, setTextMessage, replyMessage, setReplyMessage, setForwardMessage, setsidepanel, } = useContext(ChatContext);
   const menueRef = useRef(null);
@@ -107,6 +107,14 @@ export default function PrevChat({ msg }) {
             <span className="block truncate opacity-90">
               {msg.replyTo.content}
             </span>
+          </div>
+        )}
+        {msg.isForward && (
+          <div className="mb-1 px-2 py-1 text-xs bg-black/20 border-l-4 border-emerald-400 rounded">
+            <span className="block font-semibold text-emerald-300">
+              <IoPlayForwardSharp/> 
+            </span>
+         
           </div>
         )}
 

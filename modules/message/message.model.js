@@ -30,6 +30,7 @@ const messageSchema = new mongoose.Schema({
         ref: "Message",
         default: null,
     },
+    isForward:Boolean,
 }, { timestamps: true });
 
 const Message = mongoose.model("Message", messageSchema);

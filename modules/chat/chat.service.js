@@ -17,7 +17,7 @@ class chat_Services {
        
       });
       // console.log(`controller-${chat}`)
-      return chat;
+      return chat.populate("users", "username profilePic status isOnline");
     } catch (err) {
       throw new Error(err);
     }

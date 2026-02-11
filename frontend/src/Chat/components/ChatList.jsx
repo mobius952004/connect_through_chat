@@ -31,14 +31,22 @@ export default function ChatList() {
     const accessToken = localStorage.getItem("accessToken");
 
     const createChat = async () => {
-      await setChatList({
+     const newChat= await setChatList({
         accessToken,
         selecteduserId: selecteduser._id,
         selectedusername: selecteduser.username,
       });
+      if (newChat) {
+        setchatlist((prev) => {
+          // Prevent duplicates
+          const exists = prev.find((c) => c._id === newChat._id);
+          if (exists) return prev;
+          return [newChat, ...prev];
+        });
+      }
     };
     createChat();
-  }, [selecteduser]);
+  }, );
 
 
   const search=(query)=>{

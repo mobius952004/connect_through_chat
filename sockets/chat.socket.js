@@ -143,17 +143,12 @@ export default function chatSocketHandler(io, socket) {
               year: "numeric",
             }),
             status: "Sent",
-            // We can add a 'forwarded' flag or Reference if schema supported it, 
-            // but for now just content copy as per original code, 
-            // maybe keep 'replyTo' null or original? Usually null for forward.
+            isForward:true,
+           
           };
 
           const savedMessage = await Message.create(newMessageData);
 
-          // Emit to the room (works for 1-v-1 if both strictly join 'roomId')
-          // Note: In 1-v-1, we use getRoomId(). In Group, we need to ensure they join 'chatId'.
-          // Assuming Group Chat implementation joins 'chatId' somewhere.
-          // If 1-v-1, use roomId.
           io.to(roomId).emit(SOCKET_EVENTS.RECEIVE_MESSAGE, savedMessage);
 
           savedMessage.status = "Delivered";
