@@ -3,7 +3,7 @@ import { useEffect, useRef, useState, useContext } from "react";
 import { ChatContext } from "../../store/socketContext";
 
 export default function PrevChat({ msg }) {
-  const { selectedChat, setTextMessage,replyMessage, setReplyMessage, setForwardMessage,setsidepanel,} = useContext(ChatContext);
+  const { selectedChat, setTextMessage, replyMessage, setReplyMessage, setForwardMessage, setsidepanel, } = useContext(ChatContext);
   const menueRef = useRef(null);
   const buttonRef = useRef(null);
   const [menueopen, setmenueopen] = useState(false);
@@ -65,17 +65,17 @@ export default function PrevChat({ msg }) {
       return <div className="w-1.5 h-1.5 rounded-full bg-gray-400"></div>;
     }
   };
-  const handlemenueaction = (action ) => {
+  const handlemenueaction = (action) => {
     if (action === "Reply") {
 
       setReplyMessage(msg)
       console.log(replyMessage)
       setTextMessage("")
     }
-    if(action==="Forward"){
-setForwardMessage((prev)=>[...prev,msg]) 
-setsidepanel("Forward")
-   }
+    if (action === "Forward") {
+      setForwardMessage((prev) => [...prev, msg._id])
+      setsidepanel("Forward")
+    }
   }
 
   return (

@@ -2,6 +2,7 @@
 import jwtServices from "../shared/utils/jwt.utils.js";
 import { SOCKET_EVENTS } from "../middleware/socket.events.js";
 import Message from "../modules/message/message.model.js";
+import Chat from "../modules/chat/chat.model.js";
 
 const getRoomId = ({ userId, withUserId }) => {
   return [userId, withUserId].sort().join("_");
@@ -67,7 +68,7 @@ export default function chatSocketHandler(io, socket) {
 
       await updatedmessage.populate({
         path: "replyTo",
-        select: "content from" 
+        select: "content from"
       });
       callback(updatedmessage);
 
@@ -94,4 +95,83 @@ export default function chatSocketHandler(io, socket) {
     // notify sender
     io.to(msg.from).emit("MESSAGE_UPDATED", msg);
   });
+
+
+  socket.on("forward:messages", async ({ forwardMessage, forwardTo }) => {
+    try {
+      if (!forwardMessage || !forwardTo || !Array.isArray(forwardTo)) return;
+
+      const originalMessages = await Message.find({
+        _id: { $in: forwardMessage }
+      });
+
+      if (!originalMessages.length) return;
+
+      for (const chatId of forwardTo) {
+        // Find the chat to get participants and determine 'to' user (for 1-v-1)
+        const chat = await Chat.findById(chatId).populate("users");
+        if (!chat) continue;
+
+        let toUserId = null;
+        let roomId = chatId.toString(); // Default for group
+
+        if (!chat.isGroup) {
+          // Find the other user
+          const otherUser = chat.users.find(u => u._id.toString() !== userId);
+          if (otherUser) {
+            toUserId = otherUser._id;
+            roomId = getRoomId({ userId, withUserId: toUserId });
+          }
+        }
+
+        // Process each message
+        for (const originalMsg of originalMessages) {
+          const newMessageData = {
+            content: originalMsg.content,
+            Chat: chatId,
+            from: userId,
+            fromName: socket.user.username, // Assuming username is in payload
+            to: toUserId, // Can be null for group chats if schema allows
+            roomId: roomId,
+            time: new Date().toLocaleTimeString([], {
+              hour: "2-digit",
+              minute: "2-digit",
+            }),
+            date: new Date().toLocaleDateString([], {
+              day: "2-digit",
+              month: "short",
+              year: "numeric",
+            }),
+            status: "Sent",
+            // We can add a 'forwarded' flag or Reference if schema supported it, 
+            // but for now just content copy as per original code, 
+            // maybe keep 'replyTo' null or original? Usually null for forward.
+          };
+
+          const savedMessage = await Message.create(newMessageData);
+
+          // Emit to the room (works for 1-v-1 if both strictly join 'roomId')
+          // Note: In 1-v-1, we use getRoomId(). In Group, we need to ensure they join 'chatId'.
+          // Assuming Group Chat implementation joins 'chatId' somewhere.
+          // If 1-v-1, use roomId.
+          io.to(roomId).emit(SOCKET_EVENTS.RECEIVE_MESSAGE, savedMessage);
+
+          savedMessage.status = "Delivered";
+          await savedMessage.save();
+
+          // Update last message in Chat
+          await Chat.findByIdAndUpdate(chatId, { lastMessage: savedMessage._id });
+        }
+      }
+
+      // Notify sender that forwarding is done (optional)
+      // socket.emit("FORWARD_SUCCESS"); 
+
+    } catch (error) {
+      console.error("Forward Error:", error);
+    }
+  });
+
+
+
 }

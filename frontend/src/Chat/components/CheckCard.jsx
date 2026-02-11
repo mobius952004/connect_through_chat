@@ -3,21 +3,28 @@ import { ChatContext } from "../../store/socketContext";
 import { PersonStandingIcon } from "lucide-react";
 
 export default function CheckCard({ chat }) {
-  const {  getCurrentUser, unreadCounts,setForwardTo } = useContext(ChatContext);
+  const { getCurrentUser, setForwardTo, forwardTo } = useContext(ChatContext);
 
   if (!chat) return null; // guard against undefined
   // console.log(user)
   const UserId = getCurrentUser().userId;
   const otheruser = chat?.users.find(u => u._id !== UserId);
 
+  const isSelected = forwardTo.includes(chat._id);
+
+  const toggleSelection = () => {
+    if (isSelected) {
+      setForwardTo(prev => prev.filter(id => id !== chat._id));
+    } else {
+      setForwardTo(prev => [...prev, chat._id]);
+    }
+  };
+
   return (
     <button
       type="button"
-      onClick={() => {
-        setForwardTo((prev)=>[...prev,chat._id])
-
-      }}
-      className=" w-full bg-gradient-to-r from-bg-slate-700 via-bg-slate-800 to-bg-slate-700 hover:bg-slate-800 rounded-2xl p-2 "
+      onClick={toggleSelection}
+      className={`w-full rounded-2xl p-2 transition-colors ${isSelected ? "bg-emerald-900/50 border border-emerald-500" : "hover:bg-slate-800"}`}
     >
       <div className="flex flex-row gap-4 px-3 sm:flex-row items-center sm:gap-6 sm:py-1 ... ">
         <img
@@ -36,14 +43,13 @@ export default function CheckCard({ chat }) {
           </div>
         </div>
 
-        {/* Unread Count Badge */}
-        <div className="flex flex-col items-end justify-center">
-          {unreadCounts[chat._id] > 0 && (
-            <span className="bg-green-500 text-[#111b21] text-xs font-bold rounded-full h-5 w-5 flex items-center justify-center">
-              {unreadCounts[chat._id]}
-            </span>
-          )}
-        </div>
+        {isSelected && (
+          <div className="text-emerald-500">
+            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg>
+          </div>
+        )}
+
+
       </div>
     </button>
   );
