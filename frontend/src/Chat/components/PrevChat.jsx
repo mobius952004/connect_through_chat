@@ -2,6 +2,7 @@ import { EllipsisVerticalIcon } from "lucide-react";
 import { useEffect, useRef, useState, useContext } from "react";
 import { ChatContext } from "../../store/socketContext";
 import { IoPlayForwardSharp } from "react-icons/io5";
+import { deleteMessage } from "../../api/messages";
 export default function PrevChat({ msg }) {
   const { selectedChat, setTextMessage, replyMessage, setReplyMessage, setForwardMessage, setsidepanel, } = useContext(ChatContext);
   const menueRef = useRef(null);
@@ -65,6 +66,30 @@ export default function PrevChat({ msg }) {
       return <div className="w-1.5 h-1.5 rounded-full bg-gray-400"></div>;
     }
   };
+
+
+  const  HandleDelete= async ()=>{
+    console.log(msg.Chat._id)
+
+   return  await deleteMessage( {chatId:msg.Chat._id,messageId:msg._id})
+
+
+  }
+  const handleCopy = async ({text}) => {
+   if (!navigator.clipboard) {
+    console.error("Clipboard not supported");
+    return;
+  }
+
+  try {
+    await navigator.clipboard.writeText(text);
+    console.log("Copied");
+  } catch (err) {
+    console.error("Copy failed", err);
+  }
+};
+
+
   const handlemenueaction = (action) => {
     if (action === "Reply") {
 
@@ -76,6 +101,13 @@ export default function PrevChat({ msg }) {
       setForwardMessage((prev) => [...prev, msg._id])
       setsidepanel("Forward")
     }
+    if(action==="Delete"){
+ HandleDelete()
+    }
+    if(action==="Copy"){
+      handleCopy({text:msg.content})
+    }
+
   }
 
   return (

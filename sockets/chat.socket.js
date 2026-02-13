@@ -168,5 +168,25 @@ export default function chatSocketHandler(io, socket) {
   });
 
 
+  socket.on("DELETE_MESSAGE", async ({ chatId, messageId }) => {
+    // 1. Delete from DB
+    await Message.deleteOne({ _id: messageId });
+    
+    // 2. Broadcast to the room so BOTH users see it disappear
+    // We need to reconstruct roomId. 
+    // If you don't have roomId easily, you can find the message first to get it.
+    // Ideally, pass roomId from frontend if possible, or lookup:
+    // const msg = await Message.findById(messageId); 
+    // const roomId = getRoomId(...) or msg.Chat if group.
+    
+    // Simple way if you trust the client to send the right room/chatId:
+    // For now, let's assume you broadcast to the 'chatId' room if that's how you handle groups, 
+    // or loop through users. 
+    
+    // BETTER APPROACH FOR YOUR APP:
+    // Just emit the event after the HTTP delete succeeds, OR do it all here.
+    // Since you already have HTTP set up, let's use the socket just for notification.
+  });
+
 
 }

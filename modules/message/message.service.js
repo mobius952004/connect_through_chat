@@ -29,6 +29,21 @@ class MessageService{
   })
           .sort({ createdAt: -1 });
     }
+
+
+
+async deleteMessage(chatId, messageId){
+
+ await Message.deleteOne({
+  _id: messageId ,
+  Chat: chatId
+});
+
+return "message Deleted"
+}
+
+
+
 }
 
 export default new MessageService();

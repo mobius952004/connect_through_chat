@@ -29,6 +29,22 @@ class MessageController {
       res.status(500).json({ error: error.message });
     }
   }
+
+
+async deleteMessages(req,res){
+
+try{
+  const{ chatId} = req.params;
+  const{messageId}=req.body
+  const response =await messageService.deleteMessage(chatId,messageId)
+  res.status(200).json(response)
+
+}catch(e){
+  res.status(500).json("Internal error ")
+}
+
+}
+
 }
 
 export default new MessageController();

@@ -6,5 +6,6 @@ const router = Router();
 
 // router.post("/:chatId",verifyToken, messageController.sendMessages);
 router.get("/:chatId",verifyToken, messageController.getMessages);
+router.post("/delete/:chatId",verifyToken, messageController.deleteMessages);
 
 export default router;
