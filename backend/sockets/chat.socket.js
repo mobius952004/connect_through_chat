@@ -31,32 +31,30 @@ export default function chatSocketHandler(io, socket) {
   }
   // console.log(userId)
 
+  
   // Join 1-on-1 room
 
-  socket.on(SOCKET_EVENTS.JOIN_ROOM, ({ withUserId }) => {
-    if (!userId || !withUserId) return;
-    const roomId = getRoomId({ userId: userId, withUserId: withUserId });
-    socket.join(roomId);
-    console.log(` ${userId} joined room ${roomId}`);
+  // Join room by Chat ID
+  socket.on(SOCKET_EVENTS.JOIN_ROOM, ({ chatId }) => {
+    if (!chatId) return;
+    socket.join(chatId);
+    console.log(`User ${userId} joined room ${chatId}`);
   });
 
   // Send private message
-  //can add feedback function to confirm mesage delivery
-
   socket.on(
     SOCKET_EVENTS.SEND_PRIVATE_MESSAGE,
-    async ({ toUserId, newmessage }, callback) => {
-      if (!userId || !toUserId) return;
+    async ({ newmessage }, callback) => {
+      if (!userId || !newmessage.Chat) return;
 
-
-      const roomId = getRoomId({ userId: userId, withUserId: toUserId });
+      const roomId = newmessage.Chat; // Use Chat ID as room ID
 
       const cleanMessage = {
         content: newmessage.content,
-        to: toUserId,
+        to: newmessage.to,
         from: userId,
         fromName: newmessage.fromName,
-        roomId: getRoomId({ userId, withUserId: toUserId }),
+        roomId: roomId,
         Chat: newmessage.Chat,
         time: newmessage.time,
         date: newmessage.date,
@@ -72,15 +70,13 @@ export default function chatSocketHandler(io, socket) {
       });
       callback(updatedmessage);
 
-
-
       io.to(roomId).emit(SOCKET_EVENTS.RECEIVE_MESSAGE, updatedmessage);
       updatedmessage.status = "Delivered";
       await updatedmessage.save();
 
       io.to(userId).emit("MESSAGE_STATUS", updatedmessage);
       console.log(
-        `Message sent from ${userId} to ${toUserId} in room ${roomId}`
+        `Message sent from ${userId} to room ${roomId}`
       );
     }
   );
@@ -143,8 +139,8 @@ export default function chatSocketHandler(io, socket) {
               year: "numeric",
             }),
             status: "Sent",
-            isForward:true,
-           
+            isForward: true,
+
           };
 
           const savedMessage = await Message.create(newMessageData);
@@ -171,18 +167,18 @@ export default function chatSocketHandler(io, socket) {
   socket.on("DELETE_MESSAGE", async ({ chatId, messageId }) => {
     // 1. Delete from DB
     await Message.deleteOne({ _id: messageId });
-    
+
     // 2. Broadcast to the room so BOTH users see it disappear
     // We need to reconstruct roomId. 
     // If you don't have roomId easily, you can find the message first to get it.
     // Ideally, pass roomId from frontend if possible, or lookup:
     // const msg = await Message.findById(messageId); 
     // const roomId = getRoomId(...) or msg.Chat if group.
-    
+
     // Simple way if you trust the client to send the right room/chatId:
     // For now, let's assume you broadcast to the 'chatId' room if that's how you handle groups, 
     // or loop through users. 
-    
+
     // BETTER APPROACH FOR YOUR APP:
     // Just emit the event after the HTTP delete succeeds, OR do it all here.
     // Since you already have HTTP set up, let's use the socket just for notification.

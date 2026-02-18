@@ -2,13 +2,15 @@ import { useContext, useState } from "react";
 import ChatCard from "./ChatCard";
 import { ChatContext } from "../../store/socketContext";
 import { useEffect } from "react";
-import { getChatList, setChatList } from "../../api/chat";
+import { getChatList,
+  //  setChatList
+   } from "../../api/chat";
 import SearchBar from "./SearchBar";
 import { getAccessToken } from "../../utils/token";
 
 export default function ChatList() {
-  const { chatlist, setchatlist, selecteduser } = useContext(ChatContext);
-  const[filteredChats,setFilteredChats]=useState([])
+  const { chatlist, setchatlist,} = useContext(ChatContext);
+  const [filteredChats, setFilteredChats] = useState([])
 
   useEffect(() => {
     // const accessToken = getAccessToken();
@@ -26,47 +28,27 @@ export default function ChatList() {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [getAccessToken()]);
 
-  useEffect(() => {
-    if (!selecteduser) return;
-    const accessToken = localStorage.getItem("accessToken");
-
-    const createChat = async () => {
-     const newChat= await setChatList({
-        accessToken,
-        selecteduserId: selecteduser._id,
-        selectedusername: selecteduser.username,
-      });
-      if (newChat) {
-        setchatlist((prev) => {
-          // Prevent duplicates
-          const exists = prev.find((c) => c._id === newChat._id);
-          if (exists) return prev;
-          return [newChat, ...prev];
-        });
-      }
-    };
-    createChat();
-  }, );
 
 
-  const search=(query)=>{
-   console.log(query)
-     if(!query.trim()){
+
+  const search = (query) => {
+    console.log(query)
+    if (!query.trim()) {
       setFilteredChats(chatlist)
-      return 
-     }
+      return
+    }
 
-     const searchText=query.toLowerCase()
+    const searchText = query.toLowerCase()
     //  console.log(searchText)
-     const searched= chatlist.filter(chat=> chat.chatName?.toLowerCase().includes(searchText))
+    const searched = chatlist.filter(chat => chat.chatName?.toLowerCase().includes(searchText))
     //  console.log(searched)
-     setFilteredChats(searched)
+    setFilteredChats(searched)
 
   }
 
   return (
     <div className="flex-1 min-h-0 p-2 lg:w-[340px] overflow-y-scroll scrollbar-hide">
-      <SearchBar onSearch={search}/>
+      <SearchBar onSearch={search} />
       {filteredChats &&
         filteredChats.map((chat) => <ChatCard chat={chat} key={chat._id} />)}
     </div>

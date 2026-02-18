@@ -1,8 +1,11 @@
 import SearchBar from "./SearchBar";
 import UserCard from "./UserCard";
 import { getallusers } from "../../api/userApi";
-import { useEffect } from "react";
+import { useContext, useEffect } from "react";
 import { useState } from "react";
+import { setChatList } from "../../api/chat";
+import { ChatContext } from "../../store/socketContext";
+
 // import { useContext } from "react";
 // import { ChatContext } from "../../store/socketContext";
 
@@ -11,11 +14,11 @@ export default function GlobalUsers() {
   const [allusers, setallusers] = useState([]);
   const [filteredUsers, setFilteredUsers] = useState([]); //filtered users
 
-  
-  
-    useEffect(() => {
-      const accessToken = localStorage.getItem("accessToken");
-  
+  const { setchatlist } = useContext(ChatContext)
+
+  useEffect(() => {
+    const accessToken = localStorage.getItem("accessToken");
+
     if (!accessToken) {
       return <div className="text-red-600"> Not authorized</div>;
     }
@@ -25,34 +28,64 @@ export default function GlobalUsers() {
       setallusers(response);
       setFilteredUsers(response);
     };
-    
+
     showAll();
   }, [])
-  
+
   const searching = (query) => {
-  if(!query.trim()) {
-    setFilteredUsers(allusers);
-    return;
+    if (!query.trim()) {
+      setFilteredUsers(allusers);
+      return;
+    }
+
+    const searchText = query.toLowerCase();
+
+    const results = allusers.filter(user => {
+      return user.username?.toLowerCase().includes(searchText);
+    });
+
+    setFilteredUsers(results);
   }
 
-  const searchText = query.toLowerCase();
+  const handleUserClick = async (user) => {
+    // 1. Create/Fetch chat via API
+    try {
+      const accessToken = localStorage.getItem("accessToken");
+      const chat = await setChatList({
+        accessToken,
+        selecteduserId: user._id,
+        selectedusername: user.username
+      });
 
-  const results = allusers.filter(user => {
-    return user.username?.toLowerCase().includes(searchText);
-  });
+      // 2. Update Context DIRECTLY
+      if (chat) {
+        setchatlist(prev => {
+          // Check if chat already exists in list to avoid duplicates
+          const exists = prev.find(c => c._id === chat._id);
+          if (exists) return prev;
+          return [chat, ...prev]; // Add to top
+        });
 
-  setFilteredUsers(results);
-}
+        // 3. Select the chat
+        // setSelectedChat(chat); // Uncomment if we want to auto-open
+      }
+      // 4. Close sidebar (optional, depending on UX)
+      // setsidepanel(null); 
+
+    } catch (error) {
+      console.error("Failed to create chat", error);
+    }
+  };
 
 
 
-  
+
   return (
-    <div className="w-full h-full flex flex-col bg-gray-950 border-emerald-300/60 border-1">
-      <SearchBar onSearch={searching}/>
+    <div className="w-full h-full relative overflow-y-scroll scrollbar-hide flex flex-col bg-gray-950 border-emerald-300/60 border-1">
+      <SearchBar onSearch={searching} className="fixed" />
 
-      {filteredUsers 
-      && filteredUsers.map((user) => <UserCard user={user} key={user._id} />)}
+      {filteredUsers
+        && filteredUsers.map((user) => <UserCard handleUserClick={handleUserClick} user={user} key={user._id} />)}
     </div>
   );
 }

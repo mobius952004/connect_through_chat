@@ -8,6 +8,7 @@ import { ChatContext } from "../../store/socketContext";
 import GlobalUsers from "../components/GlobalUsers";
 import UserInfoPanel from "../components/UserInfoPanel";
 import ForwardCheckList from "../components/forwardCheckList";
+import CreateGroup from "../components/CreateGroup";
 
 
 
@@ -78,6 +79,7 @@ export default function UserChats() {
                 {sidepanel == "UserInfo" && <UserInfoPanel />}
                 {sidepanel == "AddFriend" && <GlobalUsers />}
                 {sidepanel == "Forward" && <ForwardCheckList />}
+                {sidepanel=="Create Group"&&<CreateGroup/>}
 
             </div>
 

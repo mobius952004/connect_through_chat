@@ -92,8 +92,8 @@ export default function TextBox({ textMessage, setTextMessage, sendmessage }) {
                         <EmojiPicker
                             onEmojiClick={onEmojiClick}
                             theme={Theme.DARK}
-                            width={500}
-                            height={400}
+                            width={400}
+                            height={500}
                         />
                     </div>
                 )}

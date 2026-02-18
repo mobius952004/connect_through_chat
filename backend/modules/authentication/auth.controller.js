@@ -44,8 +44,9 @@ res.cookie('refreshToken',refreshToken,{
 
 
       console.log(user);
+      console.log(accessToken)
       console.log("congratulations u are now signedup ");
-      res.status(200).json(user,deviceId,accessToken);
+      res.status(200).json({user,deviceId,accessToken});
     } catch (err) {
       console.error(err);
       return res.status(500).json("Something went wrong");

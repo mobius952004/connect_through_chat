@@ -1,4 +1,4 @@
-import { createContext, useRef,  } from "react";
+import { createContext, useRef, } from "react";
 import { socket } from "../sockets/socket";
 import { useState, useEffect } from "react";
 import { jwtDecode } from "jwt-decode";
@@ -30,15 +30,18 @@ export default function ChatProvider({ children }) {
   const [selecteduser, setselecteduser] = useState(null);
   const [chatlist, setchatlist] = useState([]);
   const [selectedChat, setSelectedChat] = useState(null)
+     const [showGroupModal, setShowGroupModal] = useState(false);
+     const[createGroup, setCreateGroup]=useState([])
+
 
 
   //messages
-      const [textMessage, setTextMessage] = useState("");
-    const [pastMessages, setPastMessages] = useState([]);
-    const replyref = useRef(null)
-const [replyMessage, setReplyMessage] = useState(null);
-const[forwardMessage , setForwardMessage]=useState([])
-const[forwardTo,setForwardTo]=useState([])
+  const [textMessage, setTextMessage] = useState("");
+  const [pastMessages, setPastMessages] = useState([]);
+  const replyref = useRef(null)
+  const [replyMessage, setReplyMessage] = useState(null);
+  const [forwardMessage, setForwardMessage] = useState([])
+  const [forwardTo, setForwardTo] = useState([])
 
 
   const [unreadCounts, setUnreadCounts] = useState({});
@@ -67,8 +70,16 @@ const[forwardTo,setForwardTo]=useState([])
 
     socket.on("RECEIVE_MESSAGE", handleNewMessage);
 
+    const handleNewChat = (newChat) => {
+      console.log("Global Listener: New Chat", newChat);
+      setchatlist(prev => [newChat, ...prev]);
+    }
+
+    socket.on("new_chat", handleNewChat);
+
     return () => {
       socket.off("RECEIVE_MESSAGE", handleNewMessage);
+      socket.off("new_chat", handleNewChat);
     };
   }, [selectedChat]); // Re-bind listener when selectedChat changes
 
@@ -97,6 +108,10 @@ const[forwardTo,setForwardTo]=useState([])
         setSelectedChat,
         unreadCounts,      // Exposed
         markChatAsRead,    // Exposed
+        showGroupModal,
+        setShowGroupModal,
+        createGroup,
+        setCreateGroup,
 
         // messages
         replyref,

@@ -7,11 +7,13 @@ import { ChatContext } from "../../store/socketContext";
 
 
 
+import CreateGroupModal from "./CreateGroup";
+
 export default function AddButton({ onadd, setonadd }) {
 
    const menuRef = useRef(null);
-   const {setsidepanel}=useContext(ChatContext)
-   
+   const { setsidepanel } = useContext(ChatContext)
+
 
    useEffect(() => {
 
@@ -33,6 +35,7 @@ export default function AddButton({ onadd, setonadd }) {
                <PlusCircle />
             </span>
          </button>
+
          {onadd && <div
             className={`absolute bottom-25 right-4 w-64 h-45 bg-slate-800 shadow-lg rounded-lg transition-transform duration-1000 text-slate-400 ${onadd ? "translate-y-0 opacity-100" : "translate-y-10 opacity-0 pointer-events-none "
                }`}
@@ -40,10 +43,10 @@ export default function AddButton({ onadd, setonadd }) {
 
             <ul className="text-sm text-gray-700 dark:text-gray-200" >
                <li>
-                  <button type="button" id="Add Friend" onClick={()=>setsidepanel("AddFriend")} className="text-start w-full rounded-t-lg px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">Add Friend</button>
+                  <button type="button" id="Add Friend" onClick={() => setsidepanel("AddFriend")} className="text-start w-full rounded-t-lg px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">Add Friend</button>
                </li>
                <li>
-                  <button type="button" id="Create Group" className="w-full block px-4 py-2 text-start hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">Create Group</button>
+                  <button type="button" id="Create Group" onClick={() => { setonadd(false);setsidepanel("Create Group") }} className="w-full block px-4 py-2 text-start hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">Create Group</button>
                </li>
                <li>
                   <button type="button" id="Join Group" className="w-full block px-4 py-2 text-start hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">Join Group</button>

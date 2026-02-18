@@ -2,16 +2,18 @@ import { useContext } from "react";
 import { ChatContext } from "../../store/socketContext";
 import { PersonStandingIcon } from "lucide-react";
 
-export default function UserCard({ user }) {
+export default function UserCard({ user ,handleUserClick}) {
   const { setselecteduser } = useContext(ChatContext);
 
   if (!user) return null; // guard against undefined
   // console.log(user)
+
+  
   return (
     <button
       type="button"
       onClick={() => {
-        setselecteduser(user);
+        setselecteduser(user),handleUserClick(user);
       }}
       className=" w-full  bg-gray-800  hover:bg-slate-700  m-0.5 rounded-2xl hover:border-emerald-100 border-1"
     >

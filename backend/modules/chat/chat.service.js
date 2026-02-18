@@ -2,24 +2,41 @@ import Chat from "./chat.model.js";
 
 class chat_Services {
   async setChatList(userId, otherUserId, otherUserName) {
-
-    // console.log('H1')
-
     const chat = await Chat.findOne({
-        users: { $all: [userId, otherUserId], $size: 2 }
+      users: { $all: [userId, otherUserId], $size: 2 }
     });
 
-    if (chat) return chat; // chat already exists
-  // console.log("H4")
+    if (chat) return { chat, isNew: false };
+
     try {
-      // console.log("h5")
-      const chat = await Chat.create({ users: [userId, otherUserId] ,
-       
+      const newChat = await Chat.create({
+        users: [userId, otherUserId],
       });
-      // console.log(`controller-${chat}`)
-      return chat.populate("users", "username profilePic status isOnline");
+      const populatedChat = await newChat.populate("users", "username profilePic status isOnline");
+      return { chat: populatedChat, isNew: true };
     } catch (err) {
       throw new Error(err);
+    }
+  }
+
+  async createGroupChat(userId, users, chatName) {
+    if (!users || users.length < 2) {
+      throw new Error("Group chat requires at least 2 other users");
+    }
+    users.push(userId);
+
+    try {
+      const groupChat = await Chat.create({
+        users: users,
+        isGroup: true,
+        chatName: chatName,
+        groupAdmin: userId,
+      });
+
+      const populatedChat = await groupChat.populate("users", "username profilePic status isOnline");
+      return { chat: populatedChat, isNew: true };
+    } catch (err) {
+      throw new Error(err.message);
     }
   }
 

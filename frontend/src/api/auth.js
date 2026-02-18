@@ -39,7 +39,7 @@ export async function loginUser({ email, password }) {
   const data = await res.json()
 
   if (!res.ok) {
-    throw new Error(data.message || "Signup Failed")
+    throw new Error(data.message || "Signin Failed")
   }
   return data
 }

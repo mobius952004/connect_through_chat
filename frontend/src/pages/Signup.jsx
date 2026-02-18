@@ -25,8 +25,9 @@ export default function Signup() {
     try {
       const { accessToken } = await signupUser(formData);
       localStorage.setItem("accessToken", accessToken);
+      console.log(accessToken)
 
-      // navigate("/connect/signup/setProfileInformation");
+      navigate("/connect/signup/setProfileInformation");
       connectSocket();
     } catch (err) {
       setError(err.message || "Signup failed");

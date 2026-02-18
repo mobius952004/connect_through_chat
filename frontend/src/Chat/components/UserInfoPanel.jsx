@@ -49,7 +49,7 @@ export default function UserInfoPanel() {
                         />
                     </div>
                     <h1 className="text-2xl font-normal text-gray-100 mb-1">{user.username || "Unknown"}</h1>
-                    <p className="text-lg text-gray-500 font-normal">handels</p>  {/* Placeholder/Static as per requirement/image */}
+                    <p className="text-lg text-gray-500 font-normal">{user.status}</p>  {/* Placeholder/Static as per requirement/image */}
                 </div>
 
                 {/* Quick Actions Row */}

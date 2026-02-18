@@ -9,7 +9,7 @@ import { getMessages } from "../../api/auth";
 
 export default function ChatBox() {
     const { socket, selectedChat, getCurrentUser, markChatAsRead,
-        textMessage, setTextMessage, pastMessages, setPastMessages, 
+        textMessage, setTextMessage, pastMessages, setPastMessages,
     } = useContext(ChatContext);
     // const [textMessage, setTextMessage] = useState("");
     // const [pastMessages, setPastMessages] = useState([]);
@@ -20,18 +20,13 @@ export default function ChatBox() {
     // console.log(username)
     const otheruser = selectedChat?.users.find(u => u._id !== UserId);
 
-    //creating unique roomid for one on one chat consistion of ids of both the users
-    const getRoomId = ({ userId, withUserId }) => {
-        return [userId, withUserId].sort().join("_");
-    };
     // message coming from textbox
     const sendmessage = (Message, replyMessage) => {
-        // const roomId = getRoomId({ userId: UserId, withUserId: selecteduser });
-        const roomId = getRoomId({ userId: UserId, withUserId: otheruser._id });
+        const roomId = selectedChat._id;
         console.log(replyMessage)
         const newMessage = {
             content: Message,
-            to: otheruser._id,
+            to: otheruser?._id, // Can be undefined for groups, handled by backend
             from: UserId,
             fromName: username,
             roomId,
@@ -51,16 +46,13 @@ export default function ChatBox() {
             replyTo: replyMessage
                 ? replyMessage._id
                 : null,
-            isForward:false,
+            isForward: false,
         };
 
         // message emmited
         socket.emit(
             ChatEvents.SEND_PRIVATE_MESSAGE,
             {
-                // toUserId: selecteduser?._id,
-                toUserId: otheruser?._id,
-                // Chat:selectedChat._id,
                 newmessage: newMessage,
             },
             (response) => {
@@ -101,13 +93,13 @@ export default function ChatBox() {
 
         // Initial Join
         if (socket.connected) {
-            socket.emit(ChatEvents.JOIN_ROOM, { withUserId: otheruser?._id });
+            socket.emit(ChatEvents.JOIN_ROOM, { chatId: selectedChat._id });
         }
 
         // Handle Reconnection
         const handleConnect = () => {
             console.log("Socket connected, joining room...");
-            socket.emit(ChatEvents.JOIN_ROOM, { withUserId: otheruser?._id });
+            socket.emit(ChatEvents.JOIN_ROOM, { chatId: selectedChat._id });
         };
 
         socket.on("connect", handleConnect);
@@ -155,13 +147,13 @@ export default function ChatBox() {
 
     return (
         <div className=" flex-1 relative  bg-gradient-to-l  from-gray-900 via-gray-600 to-gray-200 flex flex-col overflow-y-auto ">
-            
+
             <ChatAvatar UserId={UserId} />
- 
-            
-           
+
+
+
             <div className="dark:bg-gray-900  relative  flex-1  flex flex-col-reverse overflow-y-scroll scrollbar-hide bg-graay-800 ">
-                
+
                 {pastMessages.length === 0 ? (
                     <p className="absolute bottom-0 text-gray-300 self-center-safe">
                         No conversation yet
@@ -170,7 +162,7 @@ export default function ChatBox() {
                     pastMessages.map((msg, key) => <PrevChat key={key} msg={msg} />)
                 )}
 
-                
+
             </div>
             <div className="">
                 <TextBox

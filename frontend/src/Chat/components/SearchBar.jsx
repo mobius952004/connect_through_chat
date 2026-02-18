@@ -11,7 +11,7 @@ export default function SearchBar({onSearch}) {
     }
 
   return (
-    <form className="flex items-center max-w-sm mx-2 my-3 bg-blend-saturation ">
+    <form className="flex  items-center max-w-sm mx-2 my-3 bg-blend-saturation ">
       {/* <label htmlFor="simple-search" className="sr-only">
         Search
       </label> */}

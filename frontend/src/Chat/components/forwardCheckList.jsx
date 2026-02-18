@@ -3,6 +3,8 @@ import { ChatContext } from "../../store/socketContext";
 import SearchBar from "./SearchBar";
 import CheckCard from "./CheckCard";
 import { ArrowBigRight } from "lucide-react";
+import { IoArrowForwardCircle } from "react-icons/io5";
+
 export default function ForwardCheckList() {
 
   const { chatlist, socket, forwardMessage, setForwardMessage, forwardTo, setForwardTo, setsidepanel } = useContext(ChatContext)
@@ -29,6 +31,7 @@ export default function ForwardCheckList() {
 
   useEffect(() => {
     setFilteredChats(chatlist);
+    console.log(chatlist)
   }, [chatlist]);
 
   const search = (query) => {
@@ -57,9 +60,9 @@ export default function ForwardCheckList() {
         filteredChats.map((chat) => <CheckCard chat={chat} key={chat._id} />)}
 
       {forwardTo.length > 0 && (
-        <div className="absolute right-10 py-2 bottom-20 rounded-full bg-green-600 w-16 h-16 flex items-center justify-center shadow-lg hover:bg-green-700 transition-colors">
-          <button onClick={handleForward} className="flex items-center justify-center w-full h-full">
-            <ArrowBigRight className="h-10 w-10 text-white" />
+        <div className=" bottom-2 right-4 fixed text-left rounded-full inline-block shadow-lg transition-colors p-3">
+          <button onClick={handleForward} >
+            <IoArrowForwardCircle className="h-15 w-15 text-green-500" />
           </button>
         </div>
       )}
