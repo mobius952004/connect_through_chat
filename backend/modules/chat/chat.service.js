@@ -11,6 +11,7 @@ class chat_Services {
     try {
       const newChat = await Chat.create({
         users: [userId, otherUserId],
+        chatName:otherUserName,
       });
       const populatedChat = await newChat.populate("users", "username profilePic status isOnline");
       return { chat: populatedChat, isNew: true };
