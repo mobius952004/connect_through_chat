@@ -16,12 +16,12 @@ return(
 
 
 
-<div className="flex-1 overflow-hidden flex items-center  justify-center ">
+<div className="flex-1 overflow-hidden flex items-center bg-indigo-800/80  justify-center ">
    
  {isHomeRoot ? 
  <div className="relative overflow-hidden  z-10 h-screen w-full">
-  <DotGrid
-    dotSize={5}
+  {/* <DotGrid
+    dotSize={10}
     gap={15}
     baseColor="#271E37"
     activeColor="#5227FF"
@@ -30,7 +30,7 @@ return(
     shockStrength={5}
     resistance={750}
     returnDuration={1.5}
-  />
+  /> */}
 
  <div className="pointer-events-none absolute inset-0 z-20 flex items-center justify-center">
     <div className=" pointer-events-auto flex flex-col items-center gap-3">
@@ -41,13 +41,13 @@ return(
   enableSpotlight
   enableBorderGlow={true}
   enableTilt
-  enableMagnetism={false}
+  enableMagnetism={true}
   clickEffect
   spotlightRadius={740}
   particleCount={12}
   glowColor="34,197,94"
-  disableAnimations={false}
-  className=" flex align-middle "
+  disableAnimations={true}
+  className="  "
 />
         </div>
         </div>

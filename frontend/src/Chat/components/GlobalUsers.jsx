@@ -81,8 +81,12 @@ export default function GlobalUsers() {
 
 
   return (
-    <div className="w-full h-full relative overflow-y-scroll scrollbar-hide flex flex-col bg-gray-950 border-emerald-300/60 border-1">
-      <SearchBar onSearch={searching} className="fixed" />
+
+    
+    <div className="w-full h-full  overflow-y-scroll scrollbar-hide flex flex-col bg-gray-950 border-emerald-300/60 border-1">
+       <div className="sticky top-0 z-20 bg-gray-950">
+    <SearchBar onSearch={searching} />
+  </div>
 
       {filteredUsers
         && filteredUsers.map((user) => <UserCard handleUserClick={handleUserClick} user={user} key={user._id} />)}

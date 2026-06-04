@@ -37,5 +37,7 @@ export default function SearchBar({onSearch}) {
         <span className="sr-only">Search</span>
       </button>
     </form>
+
+    
   );
 }
