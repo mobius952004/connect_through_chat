@@ -11,8 +11,9 @@ export default function registerSocketHandlers(io) {
     // Register chat-related socket events
     chatSocketHandler(io, socket);
 
-    socket.on('disconnect', () => {
+    socket.on('disconnect', (reason) => {
       console.log('Socket disconnected:', socket.id);
+      console.log("DISCONNECT:", reason);
     });
   });
 }

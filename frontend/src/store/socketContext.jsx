@@ -2,7 +2,6 @@ import { createContext, useRef, } from "react";
 import { socket } from "../sockets/socket";
 import { useState, useEffect } from "react";
 import { jwtDecode } from "jwt-decode";
-// import { ThermometerSnowflakeIcon } from "lucide-react";
 const ChatContext = createContext();
 
 export default function ChatProvider({ children }) {

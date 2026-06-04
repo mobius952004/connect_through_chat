@@ -2,6 +2,7 @@ import { useContext } from "react";
 import { ChatContext } from "../../store/socketContext";
 import { PersonStandingIcon } from "lucide-react";
 
+
 export default function UserGroupCard({ chat }) {
   const { getCurrentUser, createGroup,setCreateGroup} = useContext(ChatContext);
 
@@ -10,13 +11,13 @@ export default function UserGroupCard({ chat }) {
   const UserId = getCurrentUser().userId;
   const otheruser = chat?.users.find(u => u._id !== UserId);
 
-  const isSelected = createGroup.includes(chat._id);
+  const isSelected = createGroup.includes(otheruser._id);
 
   const toggleSelection = () => {
     if (isSelected) {
-      setCreateGroup(prev => prev.filter(id => id !== chat._id));
+      setCreateGroup(prev => prev.filter(id => id !== otheruser._id));
     } else {
-      setCreateGroup(prev => [...prev, chat._id]);
+      setCreateGroup(prev => [...prev, otheruser._id]);
     }
   };
 

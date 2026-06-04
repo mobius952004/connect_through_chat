@@ -33,15 +33,15 @@ class Chat_controller {
 
   async createGroupChat(req, res) {
     const userId = req.user.sub;
-    const { users, chatName } = req.body;
+    const { createGroup, Name } = req.body;
 
-    if (!users || !chatName) {
+    if (!createGroup || !Name) {
       return res.status(400).send({ message: "Please fill all the fields" });
     }
 
     try {
       // Ensure users is an array (parse if stringified)
-      const usersArray = typeof users === 'string' ? JSON.parse(users) : users;
+      const usersArray = typeof users === 'string' ? JSON.parse(createGroup) : users;
 
       const { chat, isNew } = await chatServices.createGroupChat(userId, usersArray, chatName);
 

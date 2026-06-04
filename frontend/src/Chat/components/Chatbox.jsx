@@ -107,7 +107,25 @@ export default function ChatBox() {
 
         // for selected chat
 
-        const handleReceiveMessage = async (recievedmessage) => {
+       
+
+       
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [socket, selectedChat, UserId]);
+
+
+    useEffect(()=>{
+
+         const handleConnect = () => {
+            console.log("Socket connected, joining room...");
+            socket.emit(ChatEvents.JOIN_ROOM, { chatId: selectedChat._id });
+        };
+
+        socket.on("connect", handleConnect);
+         const handleReceiveMessage = async (recievedmessage) => {
+
+            console.log("Received:", recievedmessage.Chat);
+console.log("Selected:", selectedChat._id);
 
             if (recievedmessage.Chat !== selectedChat._id) return;
             // Additional check: If global listener handles it, do we need this? 
@@ -125,9 +143,10 @@ export default function ChatBox() {
 
             setPastMessages((prev) => [recievedmessage, ...prev]);
 
+
         };
 
-        socket.on(ChatEvents.RECEIVE_MESSAGE, handleReceiveMessage);
+         socket.on(ChatEvents.RECEIVE_MESSAGE, handleReceiveMessage);
 
         const handleMessageUpdated = (updatedMsg) => {
             setPastMessages((prev) =>
@@ -142,8 +161,7 @@ export default function ChatBox() {
             socket.off(ChatEvents.RECEIVE_MESSAGE, handleReceiveMessage);
             socket.off("MESSAGE_UPDATED", handleMessageUpdated);
         };
-        // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [socket, selectedChat, UserId,]);
+    },)
 
     return (
         <div className=" flex-1 relative  bg-gradient-to-l  from-gray-900 via-gray-600 to-gray-200 flex flex-col overflow-y-auto ">
