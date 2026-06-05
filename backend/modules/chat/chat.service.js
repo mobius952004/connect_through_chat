@@ -20,24 +20,27 @@ class chat_Services {
     }
   }
 
-  async createGroupChat(userId, users, chatName) {
-    if (!users || users.length < 2) {
-      throw new Error("Group chat requires at least 2 other users");
-    }
-    users.push(userId);
-
+  async createGroupChat(userId, usersArray, Name) {
+    // if (!usersArray || usersArrray.length < 2) {
+    //   throw new Error("Group chat requires at least 2 other users");
+    // }
+const participants = [...usersArray, userId];
+ console.log("reached service")
     try {
+      console.log("service trying ")
       const groupChat = await Chat.create({
-        users: users,
+        users: participants,
         isGroup: true,
-        chatName: chatName,
-        groupAdmin: userId,
+        chatName: Name,
       });
 
       const populatedChat = await groupChat.populate("users", "username profilePic status isOnline");
+      console.log("groupcreated")
       return { chat: populatedChat, isNew: true };
     } catch (err) {
+      console.log("groupcreation fialed")
       throw new Error(err.message);
+
     }
   }
 

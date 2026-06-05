@@ -10,6 +10,13 @@ export default function ChatCard({ chat }) {
   const UserId = getCurrentUser().userId;
   const otheruser = chat?.users.find(u => u._id !== UserId);
 
+//   if(chat.isGroup){
+//    displayName = chat.chatName;
+// }
+// else{
+//    displayName = otheruser.username;
+// }
+
   return (
     <button
       type="button"
@@ -27,7 +34,7 @@ export default function ChatCard({ chat }) {
         <div className=" flex-1 text-left sm:text-left items-center">
           <div className="space-y-0">
             <p className="text-lg font-semibold dark:text-zinc-300 text-zinc-500">
-              {otheruser.username || "Unknown"}
+              {chat.isGroup?chat.chatName:otheruser.username || "Unknown"}
             </p>
             <p className="font-medium dark:text-zinc-400 text-gray-500">
               {chat.lastmessage || "hey "}

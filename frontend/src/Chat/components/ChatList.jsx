@@ -22,7 +22,7 @@ export default function ChatList() {
 
     };
 
-    console.log(chatlist)
+    // console.log(chatlist)
     getchats();
 
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -41,11 +41,17 @@ const filteredChats = chatlist.filter(chat =>
   }
 
   return (
+    <div className="h-full w-full overflow-y-scroll scrollbar-hide">
+
+        <div className="sticky z-20 top-0 bg-gray-900">
+        <SearchBar onSearch={search} />
+
+        </div>   
     <div className="flex-1 min-h-0 p-2 lg:w-[340px] overflow-y-scroll scrollbar-hide">
-      <SearchBar onSearch={search} />
-      {filteredChats &&
+           {filteredChats &&
         filteredChats.map((chat) => <ChatCard chat={chat} key={chat._id} />)}
 
+    </div>
     </div>
   );
 }

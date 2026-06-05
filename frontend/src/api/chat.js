@@ -36,8 +36,13 @@ export async function getChatList() {
 }
 
 export async function createGroupChat({  createGroup, Name }) {
+
   const res = await fetchWithAuth(`${API_BASE}/api/chat/group`, {
     method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+      // Authorization: `Bearer ${accessToken}`,
+    },
     // headers: {
     //   "Content-Type": "application/json",
       // Authorization: `Bearer ${accessToken}`, // fetchWithAuth handles this? No, it seems fetchWithAuth might not inject token if not standard. 

@@ -3,21 +3,20 @@ import { ChatContext } from "../../store/socketContext";
 import { PersonStandingIcon } from "lucide-react";
 
 
-export default function UserGroupCard({ chat }) {
-  const { getCurrentUser, createGroup,setCreateGroup} = useContext(ChatContext);
+export default function UserGroupCard({ user }) {
+  const {  createGroup,setCreateGroup} = useContext(ChatContext);
 
-  if (!chat) return null; // guard against undefined
+  if (!user) return null; // guard against undefined
   // console.log(user)
-  const UserId = getCurrentUser().userId;
-  const otheruser = chat?.users.find(u => u._id !== UserId);
+  
 
-  const isSelected = createGroup.includes(otheruser._id);
+  const isSelected = createGroup.includes(user._id);
 
   const toggleSelection = () => {
     if (isSelected) {
-      setCreateGroup(prev => prev.filter(id => id !== otheruser._id));
+      setCreateGroup(prev => prev.filter(id => id !== user._id));
     } else {
-      setCreateGroup(prev => [...prev, otheruser._id]);
+      setCreateGroup(prev => [...prev, user._id]);
     }
   };
 
@@ -36,10 +35,10 @@ export default function UserGroupCard({ chat }) {
         <div className=" flex-1 text-left sm:text-left items-center">
           <div className="space-y-0">
             <p className="text-lg font-semibold dark:text-zinc-300 text-zinc-500">
-              {otheruser.username || "Unknown"}
+              {user.username || "Unknown"}
             </p>
             <p className="font-medium dark:text-zinc-400 text-gray-500">
-              {chat.lastmessage || "yorushukuonegaishimasu "}
+              {user.lastmessage || "yorushukuonegaishimasu "}
             </p>
           </div>
         </div>

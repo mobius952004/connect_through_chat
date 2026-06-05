@@ -23,7 +23,7 @@ export default function UserChats() {
         <div className="flex-1 flex  gap-0.5 h-full">
             {/* chats containers */}
             {/* Hidden on mobile if chat selected, visible on md+ always */}
-            <div className={`flex-col  md:w-[340px]  bg-gray-900 border-spacing-2  border-0 border-white ${selectedChat ? "hidden md:flex" : "flex"
+            <div className={`flex-col  md:w-[340px] sm:w-[270px] bg-gray-900 border-spacing-2  border-0 border-white ${selectedChat ? "hidden md:flex" : "flex"
                 }`}>
                 {/* <SearchBar /> */}
                 <ChatList />
@@ -43,8 +43,8 @@ export default function UserChats() {
     <ChatBox />
   ) : (
     <div className="hidden md:flex h-full items-center justify-center text-gray-400 flex-col gap-4">
-      <img src="/chat-logo.svg" className="w-20 opacity-70" />
-      <p className="text-lg">Select a chat to get started</p>
+      <img src="/chat_bg.jpg" className="w-full h-full opacity-70" />
+      <p className="text-4xl z-20 absolute ">Select a chat to get started</p>
     </div>
   )}
 </div>

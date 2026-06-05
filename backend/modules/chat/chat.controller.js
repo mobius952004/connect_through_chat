@@ -34,16 +34,21 @@ class Chat_controller {
   async createGroupChat(req, res) {
     const userId = req.user.sub;
     const { createGroup, Name } = req.body;
-
-    if (!createGroup || !Name) {
-      return res.status(400).send({ message: "Please fill all the fields" });
-    }
-
+    console.log("reached controller")
+ console.log(Name)
+ console.log(createGroup)
+  if (!createGroup?.length || !Name?.trim()) {
+    return res.status(400).json({
+      message: "Please fill all fields"
+    });
+  }
+      console.log("passed first statement ")
     try {
       // Ensure users is an array (parse if stringified)
-      const usersArray = typeof users === 'string' ? JSON.parse(createGroup) : users;
+      console.log("trying")
+      const usersArray = typeof users === 'string' ? JSON.parse(createGroup) : createGroup;
 
-      const { chat, isNew } = await chatServices.createGroupChat(userId, usersArray, chatName);
+      const { chat, isNew } = await chatServices.createGroupChat(userId, usersArray, Name);
 
       if (isNew) {
         const io = req.app.get("io");
@@ -60,6 +65,7 @@ class Chat_controller {
 
       res.status(200).json(chat);
     } catch (err) {
+      console.log("failed")
       res.status(400).json({ message: err.message });
     }
   }
