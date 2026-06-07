@@ -1,5 +1,5 @@
 import ChatAvatar from "./ChatAvatar";
-// import RightChatBubble from "./RightChatBubble";
+
 import PrevChat from "./PrevChat";
 import TextBox from "./TextBox";
 import { useContext, useEffect } from "react";
@@ -11,10 +11,8 @@ export default function ChatBox() {
     const { socket, selectedChat, getCurrentUser, markChatAsRead,
         textMessage, setTextMessage, pastMessages, setPastMessages,
     } = useContext(ChatContext);
-    // const [textMessage, setTextMessage] = useState("");
-    // const [pastMessages, setPastMessages] = useState([]);
 
-    //getting the current userif form the help of belo function which is using jwt-decode
+
     const UserId = getCurrentUser().userId;
     const username = getCurrentUser().username
     // console.log(username)
@@ -62,28 +60,32 @@ export default function ChatBox() {
     };
 
     useEffect(() => {
-        // if (!selecteduser) return;
         if (!otheruser) return;
 
-        // Mark as read immediately when opening/viewing
         markChatAsRead(selectedChat._id);
 
-        // const accessToken = localStorage.getItem("accessToken")
         const messages = async () => {
 
             const allMessages = await getMessages(selectedChat._id)
             const transformed = allMessages.map(msg => ({
                 ...msg,
-                belongstouser: msg.from._id === UserId
+                belongstouser: msg.from._id.toString() === UserId
             }));
 
             setPastMessages(transformed);
-            // setPastMessages(prev => [...prev, transformed]);
 
             // FIX: Mark existing unread messages as read
-            transformed.forEach(msg => {
-                if (msg.to === UserId && msg.status !== "Read") {
-                    socket.emit("MESSAGE_READ", { messageId: msg._id });
+            transformed.forEach((msg) => {
+                const receiverId =
+                    msg.to?.toString?.() || msg.to;
+
+                if (
+                    receiverId === UserId &&
+                    msg.status !== "Read"
+                ) {
+                    socket.emit("MESSAGE_READ", {
+                        messageId: msg._id,
+                    });
                 }
             });
 
@@ -92,46 +94,33 @@ export default function ChatBox() {
 
 
         // Initial Join
-        if (socket.connected) {
-            socket.emit(ChatEvents.JOIN_ROOM, { chatId: selectedChat._id });
-        }
+        // if (socket.connected) {
+        //     socket.emit(ChatEvents.JOIN_ROOM, { chatId: selectedChat._id });
+        // }
 
-        // Handle Reconnection
-        const handleConnect = () => {
-            console.log("Socket connected, joining room...");
-            socket.emit(ChatEvents.JOIN_ROOM, { chatId: selectedChat._id });
-        };
-
-        socket.on("connect", handleConnect);
-
-
-        // for selected chat
-
-       
-
-       
         // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [socket, selectedChat, UserId]);
+    }, [ selectedChat, UserId]);
 
 
-    useEffect(()=>{
+    useEffect(() => {
+        if (!selectedChat) return;
 
-         const handleConnect = () => {
-            console.log("Socket connected, joining room...");
-            socket.emit(ChatEvents.JOIN_ROOM, { chatId: selectedChat._id });
-        };
+        socket.emit(ChatEvents.JOIN_ROOM, {
+            chatId: selectedChat._id,
+        });
 
-        socket.on("connect", handleConnect);
-         const handleReceiveMessage = async (recievedmessage) => {
+    }, [selectedChat, socket]);
 
-            console.log("Received:", recievedmessage.Chat);
-console.log("Selected:", selectedChat._id);
+
+    useEffect(() => {
+
+
+        const handleReceiveMessage = async (recievedmessage) => {
+            ;
 
             if (recievedmessage.Chat !== selectedChat._id) return;
-            // Additional check: If global listener handles it, do we need this? 
-            // Yes, because this is for the LIVE view. Global handles background counts.
+            //  this is for the LIVE view. Global handles background counts.
 
-            //for a single message
             if (
                 recievedmessage.to == UserId &&
                 recievedmessage.status != "Read"
@@ -146,22 +135,34 @@ console.log("Selected:", selectedChat._id);
 
         };
 
-         socket.on(ChatEvents.RECEIVE_MESSAGE, handleReceiveMessage);
 
-        const handleMessageUpdated = (updatedMsg) => {
+
+        socket.on(ChatEvents.RECEIVE_MESSAGE, handleReceiveMessage);
+
+
+        return () => {
+            socket.off(ChatEvents.RECEIVE_MESSAGE, handleReceiveMessage);
+            // socket.off("MESSAGE_UPDATE", handleMessageUpdated);
+        };
+    }, [socket, selectedChat, UserId,setPastMessages])
+
+    useEffect(() => {
+        const handleStatusChange = ({ messageId, status }) => {
             setPastMessages((prev) =>
-                prev.map((m) => (m._id === updatedMsg._id ? updatedMsg : m))
+                prev.map((msg) =>
+                    msg._id === messageId
+                        ? { ...msg, status }
+                        : msg
+                )
             );
         };
 
-        socket.on("MESSAGE_UPDATED", handleMessageUpdated);
+        socket.on("MESSAGE_STATUS_CHANGED", handleStatusChange);
 
         return () => {
-            socket.off("connect", handleConnect);
-            socket.off(ChatEvents.RECEIVE_MESSAGE, handleReceiveMessage);
-            socket.off("MESSAGE_UPDATED", handleMessageUpdated);
+            socket.off("MESSAGE_STATUS_CHANGED", handleStatusChange);
         };
-    },)
+    }, [socket,setPastMessages]);
 
     return (
         <div className=" flex-1 relative  bg-gradient-to-l  from-gray-900 via-gray-600 to-gray-200 flex flex-col overflow-y-auto ">

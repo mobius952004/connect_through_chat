@@ -65,8 +65,8 @@ const filteredUsers = allUsers.filter(user =>
   const handleCreate = async () => {
     
     const Name = groupName.current?.value
-    console.log(Name)
-    console.log(createGroup)
+    // console.log(Name)
+    // console.log(createGroup)
     
      if (!Name) return;
 

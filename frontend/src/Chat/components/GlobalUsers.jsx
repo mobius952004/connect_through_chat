@@ -1,7 +1,7 @@
 import SearchBar from "./SearchBar";
 import UserCard from "./UserCard";
 import { getallusers } from "../../api/userApi";
-import { useContext, useEffect } from "react";
+import { useEffect } from "react";
 import { useState } from "react";
 import { setChatList } from "../../api/chat";
 import { ChatContext } from "../../store/socketContext";
@@ -14,7 +14,7 @@ export default function GlobalUsers() {
   const [allusers, setallusers] = useState([]);
   const [filteredUsers, setFilteredUsers] = useState([]); //filtered users
 
-  const { setchatlist } = useContext(ChatContext)
+  // const { setchatlist } = useContext(ChatContext)
 
   useEffect(() => {
     const accessToken = localStorage.getItem("accessToken");
@@ -51,26 +51,23 @@ export default function GlobalUsers() {
     // 1. Create/Fetch chat via API
     try {
       const accessToken = localStorage.getItem("accessToken");
-      const chat = await setChatList({
+       await setChatList({
         accessToken,
         selecteduserId: user._id,
         selectedusername: user.username
       });
 
       // 2. Update Context DIRECTLY
-      if (chat) {
-        setchatlist(prev => {
-          // Check if chat already exists in list to avoid duplicates
-          const exists = prev.find(c => c._id === chat._id);
-          if (exists) return prev;
-          return [chat, ...prev]; // Add to top
-        });
+      // if (chat) {
+      //   setchatlist(prev => {
+      //     const exists = prev.find(c => c._id === chat._id);
+      //     if (exists) return prev;
+      //     return [chat, ...prev]; // Add to top
+      //   });
 
-        // 3. Select the chat
-        // setSelectedChat(chat); // Uncomment if we want to auto-open
-      }
-      // 4. Close sidebar (optional, depending on UX)
-      // setsidepanel(null); 
+
+      // }
+
 
     } catch (error) {
       console.error("Failed to create chat", error);

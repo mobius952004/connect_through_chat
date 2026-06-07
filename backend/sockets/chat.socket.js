@@ -38,7 +38,7 @@ export default function chatSocketHandler(io, socket) {
   socket.on(SOCKET_EVENTS.JOIN_ROOM, ({ chatId }) => {
     if (!chatId) return;
     socket.join(chatId);
-    console.log(`User ${userId} joined room ${chatId}`);
+    // console.log(`User ${userId} joined room ${chatId}`);
   });
 
   // Send private message
@@ -74,10 +74,10 @@ export default function chatSocketHandler(io, socket) {
       updatedmessage.status = "Delivered";
       await updatedmessage.save();
 
-      io.to(userId).emit("MESSAGE_STATUS", updatedmessage);
-      console.log(
-        `Message sent from ${userId} to room ${roomId}`
-      );
+     io.to(userId).emit("MESSAGE_STATUS_CHANGED", {
+  messageId: updatedmessage._id,
+  status: "Delivered",
+});
     }
   );
 
@@ -89,7 +89,10 @@ export default function chatSocketHandler(io, socket) {
     await msg.save();
 
     // notify sender
-    io.to(msg.from).emit("MESSAGE_UPDATED", msg);
+io.to(msg.from.toString()).emit("MESSAGE_STATUS_CHANGED", {
+  messageId: msg._id,
+  status: "Read",
+});
   });
 
 
@@ -116,7 +119,7 @@ export default function chatSocketHandler(io, socket) {
           const otherUser = chat.users.find(u => u._id.toString() !== userId);
           if (otherUser) {
             toUserId = otherUser._id;
-            roomId = getRoomId({ userId, withUserId: toUserId });
+            roomId = chatId.toString();
           }
         }
 

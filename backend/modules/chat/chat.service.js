@@ -25,9 +25,9 @@ class chat_Services {
     //   throw new Error("Group chat requires at least 2 other users");
     // }
 const participants = [...usersArray, userId];
- console.log("reached service")
+
     try {
-      console.log("service trying ")
+
       const groupChat = await Chat.create({
         users: participants,
         isGroup: true,
@@ -35,10 +35,10 @@ const participants = [...usersArray, userId];
       });
 
       const populatedChat = await groupChat.populate("users", "username profilePic status isOnline");
-      console.log("groupcreated")
+
       return { chat: populatedChat, isNew: true };
     } catch (err) {
-      console.log("groupcreation fialed")
+
       throw new Error(err.message);
 
     }

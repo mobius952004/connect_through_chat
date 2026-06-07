@@ -17,9 +17,9 @@ class Chat_controller {
         if (io) {
           chat.users.forEach(user => {
             // Don't emit to sender if they already got it via response (optional/redundant but safe)
-            if (user._id.toString() !== userId) {
+            // if (user._id.toString() !== userId) {
               io.to(user._id.toString()).emit(SOCKET_EVENTS.NEW_CHAT, chat);
-            }
+            // }
           });
         }
       }
@@ -42,10 +42,10 @@ class Chat_controller {
       message: "Please fill all fields"
     });
   }
-      console.log("passed first statement ")
+
     try {
       // Ensure users is an array (parse if stringified)
-      console.log("trying")
+
       const usersArray = typeof users === 'string' ? JSON.parse(createGroup) : createGroup;
 
       const { chat, isNew } = await chatServices.createGroupChat(userId, usersArray, Name);
@@ -54,18 +54,16 @@ class Chat_controller {
         const io = req.app.get("io");
         if (io) {
           chat.users.forEach(user => {
-            if (user._id.toString() !== userId) {
-
-
+           
               io.to(user._id.toString()).emit(SOCKET_EVENTS.NEW_CHAT, chat);
-            }
+            
           });
         }
       }
 
       res.status(200).json(chat);
     } catch (err) {
-      console.log("failed")
+      console.log("failed to create group")
       res.status(400).json({ message: err.message });
     }
   }

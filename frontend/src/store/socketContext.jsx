@@ -29,8 +29,8 @@ export default function ChatProvider({ children }) {
   const [selecteduser, setselecteduser] = useState(null);
   const [chatlist, setchatlist] = useState([]);
   const [selectedChat, setSelectedChat] = useState(null)
-     const [showGroupModal, setShowGroupModal] = useState(false);
-     const[createGroup, setCreateGroup]=useState([])
+  const [showGroupModal, setShowGroupModal] = useState(false);
+  const [createGroup, setCreateGroup] = useState([])
 
 
 
@@ -71,7 +71,15 @@ export default function ChatProvider({ children }) {
 
     const handleNewChat = (newChat) => {
       console.log("Global Listener: New Chat", newChat);
-      setchatlist(prev => [newChat, ...prev]);
+      setchatlist(prev => {
+        const exists = prev.some(
+          chat => chat._id === newChat._id
+        );
+
+        if (exists) return prev;
+
+        return [newChat, ...prev];
+      });
     }
 
     socket.on("new_chat", handleNewChat);
