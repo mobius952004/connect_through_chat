@@ -3,6 +3,7 @@ import { socket } from "../sockets/socket";
 import { useState, useEffect } from "react";
 import { jwtDecode } from "jwt-decode";
 const ChatContext = createContext();
+import { ChatEvents } from "../sockets/chat.events";
 
 export default function ChatProvider({ children }) {
 
@@ -46,9 +47,16 @@ export default function ChatProvider({ children }) {
   const [unreadCounts, setUnreadCounts] = useState({});
 
   useEffect(() => {
+    // console.log("Registering global listener");
     const handleNewMessage = (newMessage) => {
+      // console.log("Message Chat:", newMessage.Chat);
+
+      // console.log("RECEIVED MESSAGE", newMessage);
       // 1. Don't count own messages
       const currentUser = getCurrentUser();
+      // console.log("Message Chat:", newMessage.Chat);
+      // console.log("GLOBAL LISTENER FIRED");
+      // console.log("Selected Chat:", selectedChat?._id);
       if (newMessage.from === currentUser?.userId) return;
 
       // 2. If the message belongs to the currently open chat, do NOT increment
@@ -63,11 +71,26 @@ export default function ChatProvider({ children }) {
       setUnreadCounts((prev) => ({
         ...prev,
         [newMessage.Chat]: (prev[newMessage.Chat] || 0) + 1,
+
       }));
+
+      setchatlist(prev => {
+
+        const chat =prev.find(c => c._id === newMessage.Chat);
+
+        if (!chat) return prev;
+
+        chat.lastMessage = newMessage;
+
+        const rest =prev.filter( c => c._id !== newMessage.Chat);
+
+        return [chat,...rest
+        ];
+      });
       console.log("Global Listener: New message in chat", newMessage.Chat);
     };
 
-    socket.on("RECEIVE_MESSAGE", handleNewMessage);
+    socket.on(ChatEvents.RECEIVE_MESSAGE, handleNewMessage);
 
     const handleNewChat = (newChat) => {
       console.log("Global Listener: New Chat", newChat);
@@ -85,7 +108,8 @@ export default function ChatProvider({ children }) {
     socket.on("new_chat", handleNewChat);
 
     return () => {
-      socket.off("RECEIVE_MESSAGE", handleNewMessage);
+      //  console.log("Removing global listener");
+      socket.off(ChatEvents.RECEIVE_MESSAGE, handleNewMessage);
       socket.off("new_chat", handleNewChat);
     };
   }, [selectedChat]); // Re-bind listener when selectedChat changes
@@ -113,7 +137,8 @@ export default function ChatProvider({ children }) {
         setchatlist,
         selectedChat,
         setSelectedChat,
-        unreadCounts,      // Exposed
+        unreadCounts,
+        setUnreadCounts,// Exposed
         markChatAsRead,    // Exposed
         showGroupModal,
         setShowGroupModal,

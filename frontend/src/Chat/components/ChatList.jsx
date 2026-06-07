@@ -2,56 +2,72 @@ import { useContext, useState } from "react";
 import ChatCard from "./ChatCard";
 import { ChatContext } from "../../store/socketContext";
 import { useEffect } from "react";
-import { getChatList,
+import {
+  getChatList,
   //  setChatList
-   } from "../../api/chat";
+} from "../../api/chat";
 import SearchBar from "./SearchBar";
 // import { getAccessToken } from "../../utils/token";
 
 export default function ChatList() {
-  const { chatlist, setchatlist,} = useContext(ChatContext);
-  const [searchText,setSearchText] = useState("")
+  const { chatlist, setchatlist, setUnreadCounts } = useContext(ChatContext);
+  const [searchText, setSearchText] = useState("")
 
   useEffect(() => {
     // const accessToken = getAccessToken();
 
     const getchats = async () => {
       const chats = await getChatList();
+      // console.log("Chats:", chats);
+      // console.log("Type:", typeof chats);
+      // console.log("Array?", Array.isArray(chats));
       // console.log(chats);
+
+      const counts = {};
+
+      chats.forEach(chat => {
+        if (chat.unreadCount > 0) {
+          counts[chat._id] = chat.unreadCount;
+        }
+      });
+      
+
       setchatlist(chats)
+      setUnreadCounts(counts);
 
     };
 
     // console.log(chatlist)
     getchats();
 
+
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
 
-const filteredChats = chatlist.filter(chat =>
-  chat.chatName?.toLowerCase()
+  const filteredChats = chatlist.filter(chat =>
+    chat.chatName?.toLowerCase()
       .includes(searchText.toLowerCase())
-);
+  );
 
 
   const search = (query) => {
-   setSearchText(query)
+    setSearchText(query)
 
   }
 
   return (
     <div className="h-full w-full overflow-y-scroll scrollbar-hide">
 
-        <div className="sticky z-20 top-0 bg-gray-900">
+      <div className="sticky z-20 top-0 bg-gray-900">
         <SearchBar onSearch={search} />
 
-        </div>   
-    <div className="flex-1 min-h-0 p-2 lg:w-[340px] overflow-y-scroll scrollbar-hide">
-           {filteredChats &&
-        filteredChats.map((chat) => <ChatCard chat={chat} key={chat._id} />)}
+      </div>
+      <div className="flex-1 min-h-0 p-2 lg:w-[340px] overflow-y-scroll scrollbar-hide">
+        {filteredChats &&
+          filteredChats.map((chat) => <ChatCard chat={chat} key={chat._id} />)}
 
-    </div>
+      </div>
     </div>
   );
 }

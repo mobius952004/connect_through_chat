@@ -31,7 +31,7 @@ export default function chatSocketHandler(io, socket) {
   }
   // console.log(userId)
 
-  
+
   // Join 1-on-1 room
 
   // Join room by Chat ID
@@ -69,15 +69,21 @@ export default function chatSocketHandler(io, socket) {
         select: "content from"
       });
       callback(updatedmessage);
+      await Chat.findByIdAndUpdate(
+        updatedmessage.Chat,
+        {
+          lastMessage: updatedmessage._id
+        }
+      );
 
       io.to(roomId).emit(SOCKET_EVENTS.RECEIVE_MESSAGE, updatedmessage);
       updatedmessage.status = "Delivered";
       await updatedmessage.save();
 
-     io.to(userId).emit("MESSAGE_STATUS_CHANGED", {
-  messageId: updatedmessage._id,
-  status: "Delivered",
-});
+      io.to(userId).emit("MESSAGE_STATUS_CHANGED", {
+        messageId: updatedmessage._id,
+        status: "Delivered",
+      });
     }
   );
 
@@ -89,10 +95,38 @@ export default function chatSocketHandler(io, socket) {
     await msg.save();
 
     // notify sender
-io.to(msg.from.toString()).emit("MESSAGE_STATUS_CHANGED", {
-  messageId: msg._id,
-  status: "Read",
-});
+    io.to(msg.from.toString()).emit("MESSAGE_STATUS_CHANGED", {
+      messageId: msg._id,
+      status: "Read",
+    });
+  });
+
+  socket.on("chat_read", async ({ chatId }) => {
+
+    try {
+
+      const latestMessage = await Message
+        .findOne({ Chat: chatId })
+        .sort({ createdAt: -1 });
+
+      if (!latestMessage) return;
+
+      await Chat.findByIdAndUpdate(
+        chatId,
+        {
+          $set: {
+            [`lastReadBy.${userId}`]: {
+              messageId: latestMessage._id,
+              readAt: new Date(),
+            },
+          },
+        }
+      );
+
+    } catch (error) {
+      console.error(error);
+    }
+
   });
 
 

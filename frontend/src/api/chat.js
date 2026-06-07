@@ -28,6 +28,7 @@ export async function getChatList() {
 
   })
   const data = await res.json();
+  console.log("API RESPONSE:", data);
   if (!res.ok) {
     throw new Error(data.message || "Chat list getting error");
   }

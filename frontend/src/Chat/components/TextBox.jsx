@@ -54,25 +54,73 @@ export default function TextBox({ textMessage, setTextMessage, sendmessage }) {
                 </button>
 
                 {showAttachMenu && (
-                    <div className="absolute bottom-12 left-0 flex flex-col gap-2 p-4 bg-white dark:bg-gray-800 rounded-xl shadow-lg border border-gray-200 dark:border-gray-700 animate-in fade-in zoom-in-95 duration-200 z-50 min-w-[150px]">
-                        <button className="flex items-center gap-3 p-2 hover:bg-gray-900 dark:hover:bg-gray-900 rounded-lg transition-colors text-gray-700 dark:text-gray-200">
-                            <div className="p-2 bg-purple-100 dark:bg-purple-900 rounded-full text-purple-600 dark:text-purple-300">
+                    <div className="absolute bottom-12 left-0 flex flex-col gap-2 p-2 bg-white dark:bg-gray-800 rounded-xl shadow-lg border border-gray-200 dark:border-gray-700 animate-in fade-in zoom-in-95 duration-200 z-50 min-w-[150px]">
+                        
+                         <input
+                            id="docInput"
+                            type="file"
+                            accept=".pdf,.doc,.docx,application/msword,application/vnd.openxmlformats-officedocument.wordprocessingml.document/*"
+                            className="hidden"
+                            // onChange={handleImageChange}
+                        />
+
+                        <label
+                            htmlFor="imageInput"
+                            className="flex items-center gap-3 cursor-pointer hover:bg-gray-900 dark:hover:bg-[#111b21] rounded-lg transition-colors text-gray-700 dark:text-gray-200"
+                        >
+                            <div className="p-2 bg-red-400 dark:bg-red-400 rounded-full text-black dark:text-white">
                                 <FileText size={20} />
                             </div>
-                            <span className="text-sm font-medium">Document</span>
-                        </button>
-                        <button className="flex items-center gap-3 p-2 hover:bg-gray-900 dark:hover:bg-[#111b21] rounded-lg transition-colors text-gray-700 dark:text-gray-200">
+
+                            <span className="text-sm font-medium">
+                                Document
+                            </span>
+                        </label>
+
+
+                        <input
+                            id="imageInput"
+                            type="file"
+                            accept="image/*"
+                            className="hidden"
+                            // onChange={handleImageChange}
+                        />
+
+                        <label
+                            htmlFor="imageInput"
+                            className="flex items-center gap-3 cursor-pointer hover:bg-gray-900 dark:hover:bg-[#111b21] rounded-lg transition-colors text-gray-700 dark:text-gray-200"
+                        >
                             <div className="p-2 bg-blue-100 dark:bg-blue-900 rounded-full text-blue-600 dark:text-blue-300">
                                 <Image size={20} />
                             </div>
-                            <span className="text-sm font-medium">Photos</span>
-                        </button>
-                        <button className="flex items-center gap-3 p-2 hover:bg-gray-900 dark:hover:bg-[#111b21] rounded-lg transition-colors text-gray-700 dark:text-gray-200">
-                            <div className="p-2 bg-red-100 dark:bg-red-900 rounded-full text-red-600 dark:text-red-300">
-                                <Camera size={20} />
+
+                            <span className="text-sm font-medium">
+                                Photos
+                            </span>
+                        </label>
+                       
+                       
+                        <input
+                            id="cameraInput"
+                            type="file"
+                            accept="image/*"
+                            className="hidden"
+                            capture="user"
+                            // onChange={handleImageChange}
+                        />
+
+                        <label
+                            htmlFor="imageInput"
+                            className="flex items-center gap-3 cursor-pointer hover:bg-gray-900 dark:hover:bg-[#111b21] rounded-lg transition-colors text-gray-700 dark:text-gray-200"
+                        >
+                            <div className="p-2 bg-green-500 dark:bg-green-500 rounded-full text-gray-500 dark:text-white">
+                                <Camera size={20} className="" />
                             </div>
-                            <span className="text-sm font-medium">Camera</span>
-                        </button>
+
+                            <span className="text-sm font-medium">
+                                Photos
+                            </span>
+                        </label>
                     </div>
                 )}
             </div>

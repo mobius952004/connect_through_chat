@@ -6,16 +6,12 @@ export default function ChatCard({ chat }) {
   const { setSelectedChat, getCurrentUser, unreadCounts } = useContext(ChatContext);
 
   if (!chat) return null; // guard against undefined
-  // console.log(user)
   const UserId = getCurrentUser().userId;
   const otheruser = chat?.users.find(u => u._id !== UserId);
 
-//   if(chat.isGroup){
-//    displayName = chat.chatName;
-// }
-// else{
-//    displayName = otheruser.username;
-// }
+  // console.log(chat._id);
+  // console.log(unreadCounts)
+  // console.log(unreadCounts[chat._id]);
 
   return (
     <button
@@ -36,8 +32,8 @@ export default function ChatCard({ chat }) {
             <p className="text-lg font-semibold dark:text-zinc-300 text-zinc-500">
               {chat.isGroup?chat.chatName:otheruser.username || "Unknown"}
             </p>
-            <p className="font-medium dark:text-zinc-400 text-gray-500">
-              {chat.lastmessage || "hey "}
+            <p className="font-medium dark:text-gray-200 text-gray-200 md:text-[12px] ">
+              {chat.lastMessage?.content || "hey there i am using this app "}
             </p>
           </div>
         </div>

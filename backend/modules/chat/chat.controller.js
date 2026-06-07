@@ -76,8 +76,12 @@ class Chat_controller {
       res.status(200).json(chatlist)
 
     } catch (err) {
-      res.json({ message: err })
-    }
+ console.error("GET CHAT LIST ERROR:");
+    console.error(err);
+
+    res.status(500).json({
+      message: err.message,
+    });    }
   }
 }
 

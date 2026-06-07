@@ -20,7 +20,7 @@ app.use(
    origin: [
       "http://localhost:5173",
 
-      "http://10.153.33.186:5173" ,
+      "http://10.185.141.186:5173" ,
 
     ],
     credentials:true,

@@ -18,7 +18,7 @@ export default function Sidebar() {
 
 
     // const [isMenuOpen, setIsMenuOpen] = useState(false)
-    const { selectedChat ,unreadcounts} = useContext(ChatContext);
+    const { selectedChat, unreadCounts } = useContext(ChatContext);
     // const {dopost,setdopost} = useContext(Postlist)
 
     return (
@@ -41,7 +41,7 @@ export default function Sidebar() {
                             </span>
                             {/* {isMenuOpen &&<Drawer/>} */}
                         {/* </div>  */}
-                        
+
 
                         <div className="relative group sm:my-2 my-1">
                             <button className="relative p-2 rounded-lg hover:bg-gray-800 transition-colors" onClick={() => navigate(`/connect/home`)} >
@@ -54,9 +54,29 @@ export default function Sidebar() {
                         </div>
                         <div className="relative group sm:my-2 my-1">
                             <button className="relative p-2 rounded-lg hover:bg-gray-800 transition-colors" onClick={() => navigate(`/connect/home/chats`)} >
-                             {unreadcounts && <label className="bg-green-500 rounded-full h-2 w-2 m-0 p-1">
-                                unreadcount()
-                                </label>}
+                                {Object.keys(unreadCounts).length > 0 && (
+                                    <span
+                                        className="
+                                                            absolute
+                                                            -top-0
+                                                            -right-0
+                                                            z-20
+                                                            bg-green-500
+                                                            text-black
+                                                            text-[10px]
+                                                            font-bold
+                                                            min-w-4
+                                                            h-4
+                                                            rounded-full
+                                                            flex
+                                                            items-center
+                                                            justify-center
+                                                            px-1
+                                                         "
+                                    >
+                                        {Object.keys(unreadCounts).length}
+                                    </span>
+                                )}
                                 <IoChatboxEllipsesOutline className="sm:w-7 sm:h-7 w-6 h-6 text-white hover:text-green-600 transition-all transform hover:scale-[1.1] cursor-pointer" />
                             </button>
 
@@ -111,7 +131,7 @@ export default function Sidebar() {
 
 
                         <div className="relative group sm:my-2 my-1">
-                            <button className="relative p-2 rounded-lg hover:bg-gray-800 transition-colors"  onClick={() => navigate(`/connect/home/profile`)}>
+                            <button className="relative p-2 rounded-lg hover:bg-gray-800 transition-colors" onClick={() => navigate(`/connect/home/profile`)}>
 
                                 <CgProfile className="sm:w-7 sm:h-7 w-6 h-6 text-white hover:text-green-600 transition-all transform hover:scale-[1.1] cursor-pointer" />
                             </button>

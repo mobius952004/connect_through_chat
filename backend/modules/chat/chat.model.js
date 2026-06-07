@@ -8,6 +8,27 @@ const chatSchema = new mongoose.Schema({
         type: mongoose.Schema.Types.ObjectId,
         ref: 'Message'
     },
+     lastReadBy: {
+      type: Map,
+      of: new mongoose.Schema(
+        {
+          messageId: {
+            type: mongoose.Schema.Types.ObjectId,
+            ref: "Message",
+            default: null,
+          },
+
+          readAt: {
+            type: Date,
+            default: null,
+          },
+        },
+        { _id: false }
+      ),
+
+      default: {},
+    },
+  },{
     createdAt: { type: Date, default: Date.now }
 });
 const Chat = mongoose.model('Chat', chatSchema);

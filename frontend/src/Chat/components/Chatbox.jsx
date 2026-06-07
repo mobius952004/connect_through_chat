@@ -63,6 +63,9 @@ export default function ChatBox() {
         if (!otheruser) return;
 
         markChatAsRead(selectedChat._id);
+        socket.emit(ChatEvents.CHAT_READ, {
+  chatId: selectedChat._id,
+});
 
         const messages = async () => {
 
@@ -131,6 +134,8 @@ export default function ChatBox() {
             recievedmessage.belongstouser = recievedmessage.from === UserId;
 
             setPastMessages((prev) => [recievedmessage, ...prev]);
+
+        
 
 
         };
